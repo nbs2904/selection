@@ -11,8 +11,6 @@ const io = new Server(server);
 
 app.use(express.static("public"));
 
-// ? this is a test 5
-esesfef;
 // * config
 const PORT = process.env.PORT || 3000;
 const ARRAY_SIZE = process.env.ARRAY_SIZE || 50;

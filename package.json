@@ -30,19 +30,8 @@
     "lint-staged": "^12.2.2",
     "nodemon": "^2.0.15"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "lint-staged": {
-    "**/*.js": [
-      "eslint --fix",
-      "git add"
-    ],
-    "**/*.ts": [
-      "eslint --fix",
-      "git add"
-    ]
+    "**/*.js": [ "eslint --fix" ],
+    "**/*.ts": [ "eslint --fix" ]
   }
 }
