@@ -1,4 +1,3 @@
-import { Cell } from "./lib/interfaces/cell";
 require("dotenv").config({path: __dirname + "/.env"});
 const express = require("express");
 const logger = require("./config/logger").logger;
@@ -13,29 +12,32 @@ app.use(express.static("public"));
 
 // * config
 const PORT = process.env.PORT || 3000;
-const ARRAY_SIZE = process.env.ARRAY_SIZE || 50;
+const GRID_SIZE = process.env.GRID_SIZE || 50;
+const PXL_HEIGHT = process.env.PXL_HEIGHT || 750;
+const FPS = process.env.FPS || 50;
 
-const field : Cell[][] = [];
-// * fill array
-let temp_array : Cell[] = [];
-for (let index = 0; index < ARRAY_SIZE; index++) {
-    temp_array.push({ occupied: false });
-}
+// classes
+import { Simulation } from "./lib/classes/simulation";
+import { Node } from "./lib/classes/node";
+import { Color } from "./lib/classes/color";
 
-for (let index = 0; index < ARRAY_SIZE; index++) {
-    field.push(temp_array);    
-}
+const simulation = new Simulation(GRID_SIZE as number);
 
-temp_array = [];
+const testNode1 = new Node("1", 25, 25, new Color(255, 0, 0));
+const testNode2 = new Node("2", 26, 25, new Color(0, 255, 0));
+const testNode3 = new Node("3", 24, 25, new Color(0, 0, 255));
+const testNode4 = new Node("4", 25, 24, new Color(255, 0, 255));
+const testNode5 = new Node("5", 25, 26, new Color(255, 255, 0));
 
-// interfaces
-import { Color } from "./lib/interfaces/color";
-import {node} from "./lib/classes/node";
+// TODO function that pushes node to list and adds node to correct cell in grid which also updates the cell i.e. occupied
 
-const testNodeColor : Color = { r: 255, g: 0, b: 0 };
-const testNode = new node("1560abc", 30, 30, testNodeColor);
+simulation.nodes.push(testNode1);
+simulation.nodes.push(testNode2);
+simulation.nodes.push(testNode3);
+simulation.nodes.push(testNode4);
+simulation.nodes.push(testNode5);
 
-field[0][0] = { occupied: true, color: testNode.color };
+simulation.grid[0][0].update(true, testNode1.color);
 
 
 app.get("/", function (req : any, res : any) {
@@ -43,12 +45,14 @@ app.get("/", function (req : any, res : any) {
 });
 
 io.on("connection", (socket : any) => {
-    logger.info("Socket connected");
+    logger.info(`Socket "${socket.id}" connected`);
 
-    socket.emit("fieldUpdate", field);
+    testDrawingFunction(socket);
+    // TODO nodelist dictionary not array
+
 
     socket.on("disconnect", () => {
-        logger.info("Socket disconnected");
+        logger.info(`Socket "${socket.id}" disconnected`);
     });
 });
 
@@ -56,5 +60,21 @@ server.listen(PORT || 3000, function () {
     logger.info("App listening on Port " + PORT);
 });
 
+
+async function testDrawingFunction(socket : any){
+    for (let move = 0; move < 5; move++) {
+        testNode1.moveY(-1);
+        simulation.nodes[0] = testNode1;
+        socket.emit("updateNodeList", simulation.nodes);
+        await sleep(1000);
+        
+    }
+}
+
+function sleep(ms : number) {
+    return new Promise((resolve : any) => {
+        setTimeout(resolve, ms);
+    });
+}
 
 // tanh(sum(inputs)) for inner neurons and action neurons
