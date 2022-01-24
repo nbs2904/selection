@@ -1,4 +1,4 @@
-import { Color } from "./../classes/color";
+import { Color } from "@classes/color";
 
 export class Cell {
     public occupied : boolean;
@@ -12,5 +12,10 @@ export class Cell {
     public update(occupied : boolean, color? : Color) {
         this.occupied = occupied;
         this.color = color || undefined;
+    }
+
+    public reset() {
+        this.occupied = false;
+        this.color = undefined;
     }
 }

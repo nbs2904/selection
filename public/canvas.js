@@ -1,5 +1,4 @@
 /* eslint-disable */
-// TODO create simple list of all nodes in order to make it easier to loop through all nodes
 // TODO load env or init file which equals backend config
 
 let config = {
