@@ -10,6 +10,13 @@ gulp.task("lint", () => {
         .pipe(eslint.failOnError());
 });
 
+gulp.task("lint-build", () => {
+    return gulp.src(["build/**/*.js", "!**/p5/**"])
+        .pipe(eslint({ configFile: "./.eslintrc.json", fix: true }))
+        .pipe(eslint.format())
+        .pipe(eslint.failOnError());
+});
+
 gulp.task("build", () => {
     return gulp.src(["**/*.ts", "!**/node_modules/**"])
         .pipe(ts({
@@ -27,4 +34,5 @@ gulp.task("start", run("npm run prod", {
     env: { NODE_ENV: "production" }
 }));
 
-gulp.task("default", gulp.series("lint", "build", "copy-config", "start"));
+// TODO lint build folder
+gulp.task("default", gulp.series("lint", "build", "copy-config", "lint-build", "start"));

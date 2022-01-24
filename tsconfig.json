@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+        "baseUrl": "./",
+        "target": "es5",
+        "paths": {
+        "@classes/*": ["./lib/classes/*"],
+        "@interfaces/*": ["./lib/interfaces/*"],
+        "@errors/*": ["./lib/errors/*"]
+        }
+    }
+}
