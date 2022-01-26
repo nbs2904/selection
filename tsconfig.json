@@ -5,6 +5,7 @@
         "paths": {
         "@classes/*": ["./lib/classes/*"],
         "@interfaces/*": ["./lib/interfaces/*"],
+        "@utility/*": ["./lib/utility/*"],
         "@errors/*": ["./lib/errors/*"]
         }
     }
