@@ -50,10 +50,10 @@ export class Simulation {
      */
     public updateNodePosition(node : Node, oldPosition : Position) {
         // TODO if cell is alreay occupied throw error (need to figure out if that is the best solution to handle that)
-        if(!this.grid[node.getPosition.x][node.getPosition.y].occupied){
+        if(!this.grid[node.x][node.y].occupied){
             this.grid[oldPosition.x][oldPosition.y].reset();
             this.nodes[node.id] = node;
-            this.grid[node.getPosition.x][node.getPosition.y].update(true, node.getColor);
+            this.grid[node.x][node.y].update(true, node.getColor);
         } else {
             throw new CellOccupied("Cell is already occupied.");
         }
@@ -82,7 +82,7 @@ export class Simulation {
         const node = new Node(id, position, color, this.cellOccupied);
         
         // TODO might implement addNode to do all three actions below
-        this.grid[node.getPosition.x][node.getPosition.y].update(true, node.getColor);
+        this.grid[node.x][node.y].update(true, node.getColor);
         
         this.nodes[node.id] = node;
         this.livingNodes++;
