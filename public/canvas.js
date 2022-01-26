@@ -10,8 +10,9 @@ let nodeList = [];
 
 socket.on("updateNodeList", (updateNodeList) => {
     nodeList = updateNodeList;
-    console.log(nodeList);    
 })
+
+// TODO socket on disconnect
 
 function setup(){
     createCanvas(750, 750);
@@ -19,23 +20,18 @@ function setup(){
 }
 
 function draw(){
-    background(220);
+    background(240);
     fill(255, 0, 0);
     noStroke();
-    drawNodes();
+    drawNodes(); 
 }
 
 function drawNodes(){
     cellLength = config.PXL_HEIGHT/config.GRID_SIZE;
 
-    // for (let i = 0; i < config.GRID_SIZE; i++) {
-    //     for (let j = 0; j < config.GRID_SIZE; j++) {      
-    //         circle(i * cellLength + cellLength/2, j * cellLength + cellLength/2, 10);        
-    //     }
-    // }
-
-    nodeList.forEach(node => {
+    // TODO figure out how to make position private 
+    for(const [key, node] of Object.entries(nodeList)) {
         fill(node.color.r, node.color.g, node.color.b);
-        circle(node.x * cellLength + cellLength/2, node.y * cellLength + cellLength/2, 10);    
-    });
+        circle(node.position.x * cellLength + cellLength/2, node.position.y * cellLength + cellLength/2, 7);  
+    }
 }
