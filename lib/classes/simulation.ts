@@ -1,7 +1,8 @@
 import { nanoid } from "nanoid";
 import { randomInteger } from "@utility/randomInteger";
-import { logger } from "config/logger";
 
+// * logger
+import { simulation as logger} from "config/log4js";
 // * errors
 import { CellOccupied } from "@errors/cell.errors";
 
@@ -39,6 +40,7 @@ export class Simulation {
     }
 
     public cellOccupied(x : number, y : number){
+        logger.debug(x, y);
         return this.grid[x][y].occupied;
     }
 
@@ -49,12 +51,14 @@ export class Simulation {
      * @throws {CellOccupied} - if new postition is already occupied grid won't be updated
      */
     public updateNodePosition(node : Node, oldPosition : Position) {
+        // TODO function zeile für zeile durchgehen
         // TODO if cell is alreay occupied throw error (need to figure out if that is the best solution to handle that)
         if(!this.grid[node.x][node.y].occupied){
             this.grid[oldPosition.x][oldPosition.y].reset();
             this.nodes[node.id] = node;
             this.grid[node.x][node.y].update(true, node.getColor);
         } else {
+            logger.warn("Cell is already occupied.");
             throw new CellOccupied("Cell is already occupied.");
         }
     }
@@ -79,7 +83,7 @@ export class Simulation {
         // TODO assign color depending on genome
         const color = new Color(randomInteger(255), randomInteger(255), randomInteger(255));
 
-        const node = new Node(id, position, color, this.cellOccupied);
+        const node = new Node(id, position, color, this.cellOccupied.bind(this), this.updateNodePosition.bind(this));
         
         // TODO might implement addNode to do all three actions below
         this.grid[node.x][node.y].update(true, node.getColor);
@@ -87,7 +91,7 @@ export class Simulation {
         this.nodes[node.id] = node;
         this.livingNodes++;
 
-        logger.info(`Node with id: ${node.id} was spawned`);
+        // logger.info(`Node with id: ${node.id} was spawned`);
 
         return node;
     }

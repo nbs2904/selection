@@ -1,12 +1,12 @@
+// * logger
+const logger = require("../../config/log4js").node;
+
 // * errors
 import { CellOccupied } from "@errors/cell.errors";
 
 // * classes
 import { Position } from "@classes/position";
 import { Color } from "@classes/color";
-
-// * interfaces
-import { Position as PositionInterface } from "@interfaces/position.interface";
 
 export class Node {
     public id : string;
@@ -15,14 +15,16 @@ export class Node {
     private color : Color;
 
     public cellOccupied : (x : number, y : number) => boolean;
+    public updateNodePosition : (node : Node, oldPosition : Position) => void;
 
     // TODO change function to object containing all simulation functions which are needed. (Such as updateNodePosition)
-    public constructor(id : string, position : Position, color : Color, cellOccupied : (x : number, y : number) => boolean) {
+    public constructor(id : string, position : Position, color : Color, cellOccupied : (x : number, y : number) => boolean, updateNodePosition : (node : Node, oldPosition : Position) => void) {
         this.id = id;
         this.position = position;
         this.color = color;
 
         this.cellOccupied = cellOccupied;
+        this.updateNodePosition = updateNodePosition;
     }
 
     /**
@@ -49,24 +51,29 @@ export class Node {
         return this.color;
     }
     
-
+    /**
+     * 
+     * @param direction 
+     */
     public moveX(direction : number) {
-        if(direction < 0) {
-            if(!this.cellOccupied(this.position.x - 1, this.position.y)) {
-                this.position.x -= 1;
-            } else {
-                throw new CellOccupied("Cell is already occupied."); 
-            }
+        // TODO check if already at most left or right position
+        if(direction != 1 && direction != -1) {
+            logger.error("Input of function moveX must be either 1 or -1.");
+            throw new Error("Input of function moveX must be either 1 or -1.");
         }
-        else if(direction > 0) {
-            if(!this.cellOccupied(this.position.x + 1, this.position.y)) {
-                this.position.x += 1;
-            } else {
-                throw new CellOccupied("Cell is already occupied.");
-            }
+        
+        const oldPosition = this.position;
+        const newPosition = new Position(this.x + direction, this.y);
+
+        if(this.cellOccupied(newPosition.x, newPosition.y)) {
+            logger.warn("Cell already occupied");
+            throw new CellOccupied("Cell already occupied.");
         }
 
-        // TODO update grid somehow
+        this.position.x = newPosition.x;
+        this.position.y = newPosition.y;
+
+        this.updateNodePosition(this, oldPosition);
     }
 
     public moveY(direction : number) {
