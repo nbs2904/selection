@@ -7,7 +7,7 @@
     "dev": "set NODE_ENV=development && nodemon server.ts",
     "prod": "cd ./build && node server.js",
     "gulp": "gulp",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "author": "Nick B. Schroeder",
   "license": "ISC",
@@ -28,6 +28,7 @@
     "gulp-run-command": "^0.0.10",
     "gulp-typescript": "^5.0.1",
     "husky": "^7.0.4",
+    "jest": "^27.4.7",
     "lint-staged": "^12.2.2",
     "nodemon": "^2.0.15",
     "ts-node": "^10.4.0",
