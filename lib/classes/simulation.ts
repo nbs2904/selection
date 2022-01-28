@@ -28,21 +28,51 @@ export class Simulation {
 
         let tempArray : Cell[] = [];
 
-        for (let index = 0; index < this.gridSize; index++) {
-            tempArray.push(new Cell(false));            
-        }
+        for(let i = 0; i < this.gridSize; i++){
+            for(let j = 0; j < this.gridSize; j++){
+                tempArray.push(new Cell());
+            }
 
-        for (let index = 0; index < this.gridSize; index++) {
             this.grid.push(tempArray);
+            tempArray = [];
         }
 
         tempArray = [];
     }
 
-    public cellOccupied(x : number, y : number){
-        logger.debug(x, y);
-        return this.grid[x][y].occupied;
+    // * function Overloading ---------------------------------------
+    public cellOccupied(x : number, y : number) : boolean;
+    public cellOccupied(position : Position) : boolean;
+    
+    /**
+     * Checks if cell is already occupied
+     * @param xOrPosition first paramter is either x : number or position : Position
+     * @param y second parameter is optional
+     * @returns boolean
+     */
+    // TODO Test cases:
+    // TODO cell occupied
+    // TODO node off-grid
+    // TODO each with coordinates and position
+    public cellOccupied(xOrPosition : any, y? : number) : boolean {
+        if(typeof xOrPosition === "number") {
+            if(xOrPosition < 0 || xOrPosition >= this.gridSize || y < 0 || y >= this.gridSize) {
+                logger.warn("Node wants to move off the grid!");
+                return true;
+            }
+
+            return this.grid[xOrPosition][y].occupied;
+        } else {
+            if(xOrPosition.x < 0 || xOrPosition.x >= this.gridSize || xOrPosition.y < 0 || xOrPosition.y >= this.gridSize) {
+                logger.warn("Node wants to move off the grid!");
+                return true;
+            }
+
+            return this.grid[xOrPosition.x][xOrPosition.y].occupied;
+        }
     }
+    // * ----------------------------------------------------------------
+
 
     /**
      * removes node from the cell it was before and updates new cell
@@ -50,24 +80,22 @@ export class Simulation {
      * @param oldPosition - contains old position to reset old cell
      * @throws {CellOccupied} - if new postition is already occupied grid won't be updated
      */
-    public updateNodePosition(node : Node, oldPosition : Position) {
-        // TODO function zeile für zeile durchgehen
-        // TODO if cell is alreay occupied throw error (need to figure out if that is the best solution to handle that)
-        if(!this.grid[node.x][node.y].occupied){
-            this.grid[oldPosition.x][oldPosition.y].reset();
-            this.nodes[node.id] = node;
-            this.grid[node.x][node.y].update(true, node.getColor);
-        } else {
-            logger.warn("Cell is already occupied.");
-            throw new CellOccupied("Cell is already occupied.");
+    public updateNodePosition(node : Node, newPosition : Position) : boolean {
+        if(this.cellOccupied(newPosition)) {
+            return false;
         }
+
+        this.grid[node.x][node.y].reset();
+        this.grid[newPosition.x][newPosition.y].update(true, node.getColor);
+
+        return true;
     }
 
     /**
      * spawns a new node onto the grid
      * @returns new node
      */
-    public spawnNode(genome? : any) : Node {
+    public async spawnNode(genome? : any) : Promise<Node> {
         // TODO genome missing
         // TODO assign id depending on genome
         const id = nanoid(5);
@@ -83,7 +111,7 @@ export class Simulation {
         // TODO assign color depending on genome
         const color = new Color(randomInteger(255), randomInteger(255), randomInteger(255));
 
-        const node = new Node(id, position, color, this.cellOccupied.bind(this), this.updateNodePosition.bind(this));
+        const node = new Node(id, position, color, this.updateNodePosition.bind(this));
         
         // TODO might implement addNode to do all three actions below
         this.grid[node.x][node.y].update(true, node.getColor);

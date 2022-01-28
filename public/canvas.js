@@ -29,7 +29,6 @@ function draw(){
 function drawNodes(){
     cellLength = config.PXL_HEIGHT/config.GRID_SIZE;
 
-    // TODO figure out how to make position private 
     for(const [key, node] of Object.entries(nodeList)) {
         fill(node.color.r, node.color.g, node.color.b);
         circle(node.position.x * cellLength + cellLength/2, node.position.y * cellLength + cellLength/2, 7);  

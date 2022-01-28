@@ -4,8 +4,8 @@ export class Cell {
     public occupied : boolean;
     public color : Color | undefined;
 
-    public constructor(occupied : boolean, color? : Color) {
-        this.occupied = occupied;
+    public constructor(occupied? : boolean, color? : Color) {
+        this.occupied = occupied || false;
         this.color = color || undefined;
     }
 

@@ -1,9 +1,6 @@
 // * logger
 const logger = require("../../config/log4js").node;
 
-// * errors
-import { CellOccupied } from "@errors/cell.errors";
-
 // * classes
 import { Position } from "@classes/position";
 import { Color } from "@classes/color";
@@ -14,16 +11,14 @@ export class Node {
     private position : Position;
     private color : Color;
 
-    public cellOccupied : (x : number, y : number) => boolean;
-    public updateNodePosition : (node : Node, oldPosition : Position) => void;
+    public updateNodePosition : (node : Node, oldPosition : Position) => boolean;
 
     // TODO change function to object containing all simulation functions which are needed. (Such as updateNodePosition)
-    public constructor(id : string, position : Position, color : Color, cellOccupied : (x : number, y : number) => boolean, updateNodePosition : (node : Node, oldPosition : Position) => void) {
+    public constructor(id : string, position : Position, color : Color, updateNodePosition : (node : Node, oldPosition : Position) => boolean) {
         this.id = id;
         this.position = position;
         this.color = color;
 
-        this.cellOccupied = cellOccupied;
         this.updateNodePosition = updateNodePosition;
     }
 
@@ -53,45 +48,45 @@ export class Node {
     
     /**
      * 
-     * @param direction 
+     * @param direction gives direction to move towards
      */
-    public moveX(direction : number) {
-        // TODO check if already at most left or right position
+    // TODO Test cases:
+    // TODO cause error
+    public async moveX(direction : number) {
         if(direction != 1 && direction != -1) {
             logger.error("Input of function moveX must be either 1 or -1.");
             throw new Error("Input of function moveX must be either 1 or -1.");
         }
-        
-        const oldPosition = this.position;
+
         const newPosition = new Position(this.x + direction, this.y);
 
-        if(this.cellOccupied(newPosition.x, newPosition.y)) {
-            logger.warn("Cell already occupied");
-            throw new CellOccupied("Cell already occupied.");
+        if(this.updateNodePosition(this, newPosition)) {
+            this.position = newPosition;
+            logger.info("One step closer to freedom");
+        } else {
+            logger.warn("Cannot move", this.position);
         }
-
-        this.position.x = newPosition.x;
-        this.position.y = newPosition.y;
-
-        this.updateNodePosition(this, oldPosition);
     }
-
-    public moveY(direction : number) {
-        if(direction < 0) {
-            if(!this.cellOccupied(this.position.x, this.position.y - 1)) {
-                this.position.y -= 1;
-            } else {
-                throw new CellOccupied("Cell is already occupied."); 
-            }
+    
+    /**
+     * 
+     * @param direction gives direction to move towards
+     */
+    // TODO Test cases:
+    // TODO cause error
+    public async moveY(direction : number) {
+        if(direction != 1 && direction != -1) {
+            logger.error("Input of function moveY must be either 1 or -1.");
+            throw new Error("Input of function moveY must be either 1 or -1.");
         }
-        else if(direction > 0) {
-            if(!this.cellOccupied(this.position.x, this.position.y + 1)) {
-                this.position.y += 1;
-            } else {
-                throw new CellOccupied("Cell is already occupied.");
-            }
-        }
+        
+        const newPosition = new Position(this.x, this.y + direction);
 
-        // TODO update grid somehow
+        if(this.updateNodePosition(this, newPosition)) {
+            this.position = newPosition;
+            logger.info("One step closer to freedom");
+        } else {
+            logger.warn("Cannot move", this.position);
+        }
     }
 }
