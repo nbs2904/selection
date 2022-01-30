@@ -42,7 +42,8 @@
       "eslint --fix"
     ],
     "**/*.ts": [
-      "eslint --fix"
+      "eslint --fix",
+      "jest --findRelatedTests"
     ]
   }
 }

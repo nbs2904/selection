@@ -95,12 +95,13 @@ export class Simulation {
      * spawns a new node onto the grid
      * @returns new node
      */
-    public async spawnNode(genome? : any) : Promise<Node | boolean> {
+    public async spawnNode(genome? : any) : Promise<Node> {
         // TODO genome missing
         // TODO assign id depending on genome
 
         if(this.livingNodes === this.gridSize * this.gridSize) {
-            return false;
+            logger.warn("Grid seems to be overflowing.");
+            throw Error("Grid is full");
         }
 
         const id = nanoid(5);

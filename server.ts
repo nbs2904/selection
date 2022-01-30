@@ -43,14 +43,15 @@ io.on("connection", async (socket : typeof Socket) => {
     const dummyNodeList : Node[] = [];
 
     for (let i = 0; i < DUMMY_NODE_LIST_LENGTH; i++) {
-        simulation.spawnNode().then((node) => {
-            dummyNodeList.push(node);
-        });      
+        simulation.spawnNode()
+            .then((node) => {
+                dummyNodeList.push(node);
+            })
+            .catch((error) => {
+                logger.error(error);
+            });      
     }
 
-    // for (let index = 0; index < 250; index++) {
-    //     simulation.spawnNode();        
-    // }
     let repitition = 0;
     while(repitition < 7200) {
         if(randomInteger(2)) {
