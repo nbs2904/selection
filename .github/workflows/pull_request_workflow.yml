@@ -1,6 +1,9 @@
 name: Test Application
 
 on:
+  push:
+    branches:
+      - master
   pull_request:
     branches:
       - master
