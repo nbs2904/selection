@@ -95,14 +95,20 @@ export class Simulation {
      * spawns a new node onto the grid
      * @returns new node
      */
-    public async spawnNode(genome? : any) : Promise<Node> {
+    public async spawnNode(genome? : any) : Promise<Node | boolean> {
         // TODO genome missing
         // TODO assign id depending on genome
+
+        if(this.livingNodes === this.gridSize * this.gridSize) {
+            return false;
+        }
+
         const id = nanoid(5);
         
         // ? assign random position, repeat until cell not occupied
         let x = randomInteger(this.gridSize);
         let y = randomInteger(this.gridSize);
+
         while (this.cellOccupied(x, y)) {
             x = randomInteger(this.gridSize);
             y = randomInteger(this.gridSize);
