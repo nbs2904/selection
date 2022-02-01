@@ -1,5 +1,5 @@
 // * logger
-const logger = require("../../config/log4js").node;
+const logger = require("@config/log4js").node;
 
 // * classes
 import { Position } from "@classes/position";

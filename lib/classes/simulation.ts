@@ -2,7 +2,7 @@ import { nanoid } from "nanoid";
 import { randomInteger } from "@utility/randomInteger";
 
 // * logger
-import { simulation as logger} from "config/log4js";
+import { simulation as logger} from "@config/log4js";
 // * errors
 import { CellOccupied } from "@errors/cell.errors";
 

@@ -11,7 +11,7 @@ const io = new Server(server);
 app.use(express.static("public"));
 
 // * logger
-const logger = require("config/log4js").server;
+const logger = require("@config/log4js").server;
 
 // * config
 const NODE_ENV = process.env.NODE_ENV;
