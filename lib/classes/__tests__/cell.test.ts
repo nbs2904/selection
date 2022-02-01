@@ -9,7 +9,7 @@ describe("Test Cell Class", () => {
         expect(typeof cellWithValues.occupied).toBe("boolean");
         expect(cellWithValues.occupied).toBe(true);
         expect(cellWithValues.color).toBeInstanceOf(Color);
-        expect(cellWithValues.color).toStrictEqual( new Color(100, 150, 200));
+        expect(cellWithValues.color).toStrictEqual(new Color(100, 150, 200));
     });
 
     test("Initialize Cell without Values", () => {
