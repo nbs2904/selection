@@ -1,12 +1,16 @@
 {
     "compilerOptions": {
-        "baseUrl": "./",
+        "rootDir": ".",
+        "baseUrl": ".",
         "target": "es5",
         "paths": {
-        "@classes/*": ["./lib/classes/*"],
-        "@interfaces/*": ["./lib/interfaces/*"],
-        "@utility/*": ["./lib/utility/*"],
-        "@errors/*": ["./lib/errors/*"]
-        }
-    }
+            "@classes/*": ["lib/classes/*"],
+            "@interfaces/*": ["lib/interfaces/*"],
+            "@utility/*": ["lib/utility/*"],
+            "@errors/*": ["lib/errors/*"],
+            "@config/*": ["config/*"]
+        },
+        "outDir": "./build"
+    },
+    "exclude": [ "node_modules" ]
 }

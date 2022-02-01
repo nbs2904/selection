@@ -14,11 +14,18 @@ gulp.task("test", run("npm test", {
     env: { NODE_ENV: "production" }
 }));
 
-gulp.task("build", () => {
-    return gulp.src(["**/*.ts", "!**/node_modules/**"])
-        .pipe(ts({
-            noImplicitAny: true
-        }))
+gulp.task("compile", () => {
+    let tsProject = ts.createProject("tsconfig.json");
+
+    return gulp.src(["**/*.ts", "!**/node_modules/**", "!**/__tests__/**"])
+        .pipe(tsProject())
+        .pipe(gulp.dest("build"));
+});
+
+gulp.task("resolve-alias", run("npx tscpaths -p tsconfig.json -s . -o ./build"));
+
+gulp.task("copy-config", () => {
+    return gulp.src([ "index.html", ".env", "nodemon.json", "./config*/**/*", "./public*/**/*" ])
         .pipe(gulp.dest("build"));
 });
 
@@ -26,18 +33,16 @@ gulp.task("lint-build", () => {
     return gulp.src(["build/**/*.js", "!**/p5/**"])
         .pipe(eslint({ configFile: "./.eslintrc.json", fix: true }))
         .pipe(eslint.format())
-        .pipe(eslint.failOnError());
-});
-
-gulp.task("copy-config", () => {
-    return gulp.src([ "index.html", ".env", "nodemon.json", "./config*/**/*", "./public*/**/*" ])
-        .pipe(gulp.dest("build"));
+        .pipe(gulp.dest(file => file.base))
+        .pipe(eslint.failAfterError());
 });
 
 gulp.task("start", run("npm run prod", {
     env: { NODE_ENV: "production" }
 }));
 
+gulp.task("build", gulp.series("compile", "resolve-alias", "copy-config", "lint-build"));
+
 // TODO run test
 // TODO lint build folder
-gulp.task("default", gulp.series("lint", "test", "build", "copy-config", "lint-build", "start"));
+gulp.task("default", gulp.series("lint", "test", "build", "start"));
