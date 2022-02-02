@@ -4,7 +4,7 @@ import { randomInteger } from "@utility/randomInteger";
 // * logger
 import { simulation as logger} from "@config/log4js";
 // * errors
-import { CellOccupied } from "@errors/cell.errors";
+import { CellOccupied } from "@errors/cell.error";
 
 // * classes
 import { Cell } from "@classes/cell";
@@ -54,6 +54,8 @@ export class Simulation {
     // TODO cell occupied
     // TODO node off-grid
     // TODO each with coordinates and position
+
+    // TODO assess if function should not throw error instead of returning true
     public cellOccupied(xOrPosition : any, y? : number) : boolean {
         if(typeof xOrPosition === "number") {
             if(xOrPosition < 0 || xOrPosition >= this.gridSize || y < 0 || y >= this.gridSize) {
@@ -95,39 +97,53 @@ export class Simulation {
      * spawns a new node onto the grid
      * @returns new node
      */
-    public async spawnNode(genome? : any) : Promise<Node> {
-        // TODO genome missing
+    public async spawnNode(node? : Node) : Promise<Node> {
+        // TODO hand over node as optional parameter 
         // TODO assign id depending on genome
-
         if(this.livingNodes === this.gridSize * this.gridSize) {
             logger.warn("Grid seems to be overflowing.");
             throw Error("Grid is full");
         }
 
-        const id = nanoid(5);
-        
-        // ? assign random position, repeat until cell not occupied
-        let x = randomInteger(this.gridSize);
-        let y = randomInteger(this.gridSize);
+        if(node) {
+            // TODO test function if working properly
+            if(this.cellOccupied(node.x, node.y)) {
+                logger.warn("Cell already occupied.");
+                throw new CellOccupied(`Cell at (${node.x}, ${node.y}) occupied.`);
+            } else {
+                node.updateNodePosition = this.updateNodePosition.bind(this);
+                this.grid[node.x][node.y].update(true, node.getColor);
+                this.nodes[node.id] = node;
+                this.livingNodes++;
 
-        while (this.cellOccupied(x, y)) {
-            x = randomInteger(this.gridSize);
-            y = randomInteger(this.gridSize);
+                return node;
+            }
+        } else {
+            const id = nanoid(5);
+            
+            // ? assign random position, repeat until cell not occupied
+            let x = randomInteger(this.gridSize);
+            let y = randomInteger(this.gridSize);
+
+            while(this.cellOccupied(x, y)) {
+                x = randomInteger(this.gridSize);
+                y = randomInteger(this.gridSize);
+            }
+            const position = new Position(x, y);
+            // TODO assign color depending on genome
+            const color = new Color(randomInteger(255), randomInteger(255), randomInteger(255));
+
+            const newNode = new Node(id, position, color, this.updateNodePosition.bind(this));
+            
+            // TODO might implement addNode to do all three actions below
+            this.grid[newNode.x][newNode.y].update(true, newNode.getColor);
+            
+            this.nodes[newNode.id] = newNode;
+            this.livingNodes++;
+
+            // logger.info(`Node with id: ${newNode.id} was spawned`);
+
+            return newNode;
         }
-        const position = new Position(x, y);
-        // TODO assign color depending on genome
-        const color = new Color(randomInteger(255), randomInteger(255), randomInteger(255));
-
-        const node = new Node(id, position, color, this.updateNodePosition.bind(this));
-        
-        // TODO might implement addNode to do all three actions below
-        this.grid[node.x][node.y].update(true, node.getColor);
-        
-        this.nodes[node.id] = node;
-        this.livingNodes++;
-
-        // logger.info(`Node with id: ${node.id} was spawned`);
-
-        return node;
     }
 }

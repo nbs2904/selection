@@ -4,7 +4,6 @@ const logger = require("@config/log4js").node;
 // * classes
 import { Position } from "@classes/position";
 import { Color } from "@classes/color";
-
 export class Node {
     public id : string;
     public age = 0;
@@ -14,7 +13,7 @@ export class Node {
     public updateNodePosition : (node : Node, oldPosition : Position) => boolean;
 
     // TODO change function to object containing all simulation functions which are needed. (Such as updateNodePosition)
-    public constructor(id : string, position : Position, color : Color, updateNodePosition : (node : Node, oldPosition : Position) => boolean) {
+    public constructor(id : string, position : Position, color : Color, updateNodePosition? : (node : Node, oldPosition : Position) => boolean) {
         this.id = id;
         this.position = position;
         this.color = color;

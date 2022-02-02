@@ -4,12 +4,15 @@ import { Color } from "../color";
 describe("Test Cell Class", () => {
     test("Initialize Cell Instance with Values", () => {
         // TODO mock Color class
-        const cellWithValues = new Cell(true, new Color(100, 150, 200));
+        const cell = new Cell(true, new Color(100, 150, 200));
 
-        expect(typeof cellWithValues.occupied).toBe("boolean");
-        expect(cellWithValues.occupied).toBe(true);
-        expect(cellWithValues.color).toBeInstanceOf(Color);
-        expect(cellWithValues.color).toStrictEqual(new Color(100, 150, 200));
+        expect(cell.occupied).toBe(true);
+        expect(cell.color).toBeInstanceOf(Color);
+        expect(cell.color.r).toBe(100);
+        expect(cell.color.g).toBe(150);
+        expect(cell.color.b).toBe(200);
+
+        expect(typeof cell.occupied).toBe("boolean");
     });
 
     test("Initialize Cell without Values", () => {

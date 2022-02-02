@@ -1,6 +1,7 @@
 import { Color } from "../color";
 
 describe("Test Color Class", () => {
+    // TODO initialise color with invalid input values
     test("Initialize Color Instance", () => {
         const color = new Color(1, 2, 3);
 
