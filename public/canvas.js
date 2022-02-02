@@ -26,6 +26,7 @@ function draw(){
     drawNodes(); 
 }
 
+// TODO increase efficiency by just redrawing nodes that chaged position
 function drawNodes(){
     cellLength = config.PXL_HEIGHT/config.GRID_SIZE;
 
