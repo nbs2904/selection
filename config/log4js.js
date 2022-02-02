@@ -1,4 +1,8 @@
 const log4js = require("log4js");
+require("dotenv").config({path: ".env"});
+
+const NODE_ENV = process.env.NODE_ENV || "dev";
+const LOG_LEVEL = NODE_ENV === "prod" ? "WARN" : "DEBUG"; 
 
 log4js.configure({
     appenders: {
@@ -13,27 +17,27 @@ log4js.configure({
     categories: {
         default: {
             appenders: ["out"],
-            level: "DEBUG"
+            level: LOG_LEVEL
         },
         server: {
             appenders: ["out"],
-            level: "DEBUG"
+            level: LOG_LEVEL
         },
         simulation: {
             appenders: ["out"],
-            level: "DEBUG"
+            level: LOG_LEVEL
         },
         cell: {
             appenders: ["out"],
-            level: "DEBUG"
+            level: LOG_LEVEL
         },
         genome: {
             appenders: ["out"],
-            level: "DEBUG"
+            level: LOG_LEVEL
         },
         node: {
             appenders: ["out"],
-            level: "DEBUG"
+            level: LOG_LEVEL
         }
     }
 });

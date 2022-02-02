@@ -33,6 +33,7 @@
             "always"
         ],
         "@typescript-eslint/no-var-requires": "off",
-        "no-fallthrough": "off"
+        "no-fallthrough": "off",
+        "no-unreachable": "warn"
     }
 }

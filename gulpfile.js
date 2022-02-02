@@ -7,11 +7,12 @@ gulp.task("lint", () => {
     return gulp.src(["**/*.js", "**/*.ts", "!**/node_modules/**", "!**/p5/**"])
         .pipe(eslint({ configFile: "./.eslintrc.json", fix: true }))
         .pipe(eslint.format())
-        .pipe(eslint.failOnError());
+        .pipe(gulp.dest(file => file.base))
+        .pipe(eslint.failAfterError());
 });
 
 gulp.task("test", run("npm test", {
-    env: { NODE_ENV: "production" }
+    env: { NODE_ENV: "prod" }
 }));
 
 gulp.task("compile", () => {
@@ -38,7 +39,7 @@ gulp.task("lint-build", () => {
 });
 
 gulp.task("start", run("npm run prod", {
-    env: { NODE_ENV: "production" }
+    env: { NODE_ENV: "prod" }
 }));
 
 gulp.task("build", gulp.series("compile", "resolve-alias", "copy-config", "lint-build"));

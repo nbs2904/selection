@@ -4,7 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --verbose",
+    "test:watch": "jest --verbose --watch",
     "dev": "set NODE_ENV=development && nodemon server.ts",
     "prod": "cd ./build && node server.js",
     "gulp": "gulp"
@@ -34,7 +35,8 @@
     "jest": "^27.4.7",
     "lint-staged": "^12.2.2",
     "nodemon": "^2.0.15",
-    "ts-jest": "^27.1.3"
+    "ts-jest": "^27.1.3",
+    "tsconfig-paths": "^3.12.0"
   },
   "lint-staged": {
     "**/*.js": [
