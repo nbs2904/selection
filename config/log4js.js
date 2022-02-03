@@ -31,6 +31,10 @@ log4js.configure({
             appenders: ["out"],
             level: LOG_LEVEL
         },
+        color: {
+            appenders: ["out"],
+            level: LOG_LEVEL
+        },
         genome: {
             appenders: ["out"],
             level: LOG_LEVEL
@@ -46,6 +50,7 @@ module.exports = {
     server: log4js.getLogger("server"),
     simulation: log4js.getLogger("simulation"),
     cell: log4js.getLogger("cell"),
+    color: log4js.getLogger("color"),
     genome: log4js.getLogger("genome"),
     node: log4js.getLogger("node")
 };
