@@ -2,8 +2,8 @@ import { Cell } from "../cell";
 import { Color } from "../color";
 
 describe("Test Cell Class", () => {
+    // TODO spy on function
     test("Initialize Cell Instance with Values", () => {
-        // TODO mock Color class
         const cell = new Cell(true, new Color(100, 150, 200));
 
         expect(cell.occupied).toBe(true);
@@ -27,19 +27,16 @@ describe("Test Cell Class", () => {
         const testCell = new Cell(true, new Color(1, 2, 3));
 
         expect(testCell.occupied).toBe(true);
-        expect(testCell.color).toStrictEqual(new Color(1, 2, 3));
 
         testCell.update(false, new Color(4, 5, 6));
 
         expect(testCell.occupied).toBe(false);
-        expect(testCell.color).toStrictEqual(new Color(4, 5, 6));
     });
 
     test("Reset Cell", () => {
         const testCell = new Cell(true, new Color(1, 2, 3));
 
         expect(testCell.occupied).toBe(true);
-        expect(testCell.color).toStrictEqual(new Color(1, 2, 3));
 
         testCell.reset();
 
