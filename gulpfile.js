@@ -44,6 +44,4 @@ gulp.task("start", run("npm run prod", {
 
 gulp.task("build", gulp.series("compile", "resolve-alias", "copy-config", "lint-build"));
 
-// TODO run test
-// TODO lint build folder
 gulp.task("default", gulp.series("lint", "test", "build", "start"));
