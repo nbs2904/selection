@@ -12,7 +12,6 @@ export class Node {
 
     public updateNodePosition : (node : Node, oldPosition : Position) => boolean;
 
-    // TODO change function to object containing all simulation functions which are needed. (Such as updateNodePosition)
     public constructor(id : string, position : Position, color : Color, updateNodePosition? : (node : Node, oldPosition : Position) => boolean) {
         this.id = id;
         this.position = position;
