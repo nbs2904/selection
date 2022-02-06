@@ -7,7 +7,7 @@
     "test": "jest --verbose",
     "test:watch": "jest --verbose --watch",
     "dev": "set NODE_ENV=development && nodemon server.ts",
-    "prod": "cd ./build && node server.js",
+    "start": "cd ./build && node server.js",
     "gulp": "gulp"
   },
   "author": "Nick B. Schroeder",

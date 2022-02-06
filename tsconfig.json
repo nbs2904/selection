@@ -8,9 +8,12 @@
             "@interfaces/*": ["lib/interfaces/*"],
             "@utility/*": ["lib/utility/*"],
             "@errors/*": ["lib/errors/*"],
-            "@config/*": ["config/*"]
+            "@config/*": ["config/*"],
+            "@functions/*": ["lib/functions/*"],
+            "@sensors/*": ["lib/sensors/*"]
         },
-        "outDir": "./build"
+        "outDir": "./build",
+        "sourceMap": true
     },
     "exclude": [ "node_modules" ]
 }

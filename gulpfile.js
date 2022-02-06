@@ -38,7 +38,7 @@ gulp.task("lint-build", () => {
         .pipe(eslint.failAfterError());
 });
 
-gulp.task("start", run("npm run prod", {
+gulp.task("start", run("npm run start", {
     env: { NODE_ENV: "prod" }
 }));
 
