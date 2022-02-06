@@ -98,7 +98,6 @@ export class Simulation {
      * @returns new node
      */
     public async spawnNode(node? : Node) : Promise<Node> {
-        // TODO hand over node as optional parameter 
         // TODO assign id depending on genome
         if(this.livingNodes === this.gridSize * this.gridSize) {
             logger.warn("Grid seems to be overflowing.");
