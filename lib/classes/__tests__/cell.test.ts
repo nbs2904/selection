@@ -2,7 +2,6 @@ import { Cell } from "../cell";
 import { Color } from "../color";
 
 describe("Test Cell Class", () => {
-    // TODO spy on function
     test("Initialize Cell Instance with Values", () => {
         const cell = new Cell(true, new Color(100, 150, 200));
 
