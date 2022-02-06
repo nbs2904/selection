@@ -1,3 +1,4 @@
+import { Genome } from "@classes/genome";
 // * logger
 const logger = require("@config/log4js").node;
 
@@ -7,7 +8,10 @@ import { Color } from "@classes/color";
 export class Node {
     public id : string;
     public age = 0;
-    private position : Position;
+    public lifespan = process.env.STEP_PER_GENERATION || 200;
+
+    // TODO set private again
+    public position : Position;
     private color : Color;
 
     public updateNodePosition : (node : Node, oldPosition : Position) => boolean;
@@ -24,6 +28,7 @@ export class Node {
      * Getter function for x coordinate
      * @returns - x coordinate
      */
+
     public get x() : number {
         return this.position.x;
     }
@@ -86,5 +91,9 @@ export class Node {
         } else {
             logger.warn("Cannot move", this.position);
         }
+    }
+
+    private initGenome(genome? : Genome) {
+        // TODO initialise genome
     }
 }
