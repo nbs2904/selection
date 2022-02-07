@@ -4,13 +4,14 @@
         "baseUrl": ".",
         "target": "es5",
         "paths": {
+            "@actions/*": ["lib/actions/*"],
             "@classes/*": ["lib/classes/*"],
             "@interfaces/*": ["lib/interfaces/*"],
             "@utility/*": ["lib/utility/*"],
             "@errors/*": ["lib/errors/*"],
             "@config/*": ["config/*"],
             "@functions/*": ["lib/functions/*"],
-            "@sensors/*": ["lib/sensors/*"]
+            "@sensors/*": ["lib/sensors/*"],
         },
         "outDir": "./build",
         "sourceMap": true
