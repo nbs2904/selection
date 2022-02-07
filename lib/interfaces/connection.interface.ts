@@ -1,6 +1,7 @@
-import { Neuron } from "@classes/neuron";
+import { InnerNeuron } from "@classes/neuron";
+import { Action } from "@actions/action";
 
 export interface Connection {
     weight : number;
-    outputNeuron : Neuron
+    outputNeuron : InnerNeuron | Action
 }

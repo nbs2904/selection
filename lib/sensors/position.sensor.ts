@@ -16,24 +16,26 @@ const PXL_HEIGHT = process.env.PXL_HEIGH || 750;
 
 export function xPosSensor(sensation : Sensation, connections? : Connection[]) : Sensor {
     const config : SensorConfig = {
+        id: "Sensor XPos",
         sensation: sensation,
         senses: ["x"],
         activationFunction: normalise(0, PXL_HEIGHT as number),
         connections: connections || []
     };
 
-    return new Sensor(config.sensation, config.senses, config.activationFunction, config.connections);
+    return new Sensor(config.id, config.sensation, config.senses, config.activationFunction, config.connections);
 }
 
 export function yPosSensor(sensation : Sensation, connections? : Connection[]) : Sensor {
     const config : SensorConfig = {
+        id: "Sensor YPos",
         sensation: sensation,
         senses: ["y"],
         activationFunction: normalise(0, PXL_HEIGHT as number),
         connections: connections || []
     };
 
-    return new Sensor(config.sensation, config.senses, config.activationFunction, config.connections);
+    return new Sensor(config.id, config.sensation, config.senses, config.activationFunction, config.connections);
 }
 
 

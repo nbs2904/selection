@@ -6,21 +6,26 @@ import { Sensation } from "@interfaces/sensation.interface";
 export class Sensor extends Neuron {
     private readonly sensation : Sensation;
     private readonly senses : string[];
+    private connections : Connection[];
 
-    constructor(sensation? : Sensation, senses? : string[], activationFunction? : (input : number) => number, connections? : Connection[]) {
+    private input : number;
+
+    constructor(id : string, sensation? : Sensation, senses? : string[], activationFunction? : (input : number) => number, connections? : Connection[]) {
         // ? set sensor/input neuron bias equal to 0 by default 
-        const bias = 0;
-        super(bias, activationFunction, connections);
+        super(id, 0, activationFunction);
         
         this.senses = senses;
         this.sensation = sensation;
+        this.connections = connections;
     }
 
     public fire() {
-        return this.activationFunction(
-            this.senses
-                .map(sense => this.sensation[sense])
-                .reduce((sum, current) => sum + current)
-        );
+        this.input = this.senses
+            .map(sense => this.sensation[sense])
+            .reduce((sum, current) => sum + current);
+        
+        
+
+        // TODO send output to connections
     }
 }
