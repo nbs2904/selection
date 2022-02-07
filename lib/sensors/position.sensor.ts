@@ -1,28 +1,39 @@
-import { SensorInput } from "./../interfaces/sensorInput.interface";
-import { Color } from "@classes/color";
-import { Neuron } from "@classes/neuron";
-import { Node } from "@classes/node";
-import { Position } from "@classes/position";
+import { Sensation } from "@interfaces/sensation.interface";
+// TODO sort imports in every file
+
+// * interfaces
+import { SensorConfig } from "@interfaces/sensorConfig.interface";
+import { Connection } from "@interfaces/connection.interface";
+
+// * sensors
+import { Sensor } from "@sensors/sensor";
+
+// * functions
 import { normalise } from "@functions/normalise";
+
 
 const PXL_HEIGHT = process.env.PXL_HEIGH || 750;
 
-const node : Node = new Node("123", new Position(0, 0), new Color(1, 2, 3));
-const sensorInput : SensorInput = {
-    x: node.x
-}; 
+export function xPosSensor(sensation : Sensation, connections? : Connection[]) : Sensor {
+    const config : SensorConfig = {
+        sensation: sensation,
+        senses: ["x"],
+        activationFunction: normalise(0, PXL_HEIGHT as number),
+        connections: connections || []
+    };
 
-export const xPositionSensor = new Neuron(sensorInput, 0, normalise(0, PXL_HEIGHT as number));
+    return new Sensor(config.sensation, config.senses, config.activationFunction, config.connections);
+}
 
-console.log("Node:", node.x);
-xPositionSensor.fire(0);
+export function yPosSensor(sensation : Sensation, connections? : Connection[]) : Sensor {
+    const config : SensorConfig = {
+        sensation: sensation,
+        senses: ["y"],
+        activationFunction: normalise(0, PXL_HEIGHT as number),
+        connections: connections || []
+    };
 
-// TODO node properties have be stored in an object/interface
-node.position.x = 10;
-sensorInput.x = 10;
-
-console.log("Node:", node.x);
-xPositionSensor.fire(0);
+    return new Sensor(config.sensation, config.senses, config.activationFunction, config.connections);
+}
 
 
-// export const yPositionSensor = new Neuron(node.y, 0, normalise(0, PXL_HEIGHT as number));
