@@ -8,6 +8,6 @@ export function normalise(lowerBound : number, upperBound : number) {
             throw new Error("Input value is out of given boundary.");
         }
 
-        return input/(upperBound - lowerBound);
+        return (input - lowerBound)/(upperBound - lowerBound);
     };
 }
