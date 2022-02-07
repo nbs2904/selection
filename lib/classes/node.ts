@@ -1,25 +1,36 @@
-import { Genome } from "@classes/genome";
 // * logger
 const logger = require("@config/log4js").node;
 
 // * classes
+import { Genome } from "@classes/genome";
 import { Position } from "@classes/position";
 import { Color } from "@classes/color";
+
+// * interfaces
+import { Sensation } from "@interfaces/sensation.interface";
+
 export class Node {
     public id : string;
-    public age = 0;
     public lifespan = process.env.STEP_PER_GENERATION || 200;
 
-    // TODO set private again
-    public position : Position;
+    readonly sensation : Sensation;
+    
+    // private age = 0;
+    // private position : Position;
+
     private color : Color;
 
     public updateNodePosition : (node : Node, oldPosition : Position) => boolean;
 
     public constructor(id : string, position : Position, color : Color, updateNodePosition? : (node : Node, oldPosition : Position) => boolean) {
         this.id = id;
-        this.position = position;
         this.color = color;
+
+        this.sensation = {
+            age: 0,
+            x: position.x,
+            y: position.y
+        };
 
         this.updateNodePosition = updateNodePosition;
     }
@@ -30,7 +41,7 @@ export class Node {
      */
 
     public get x() : number {
-        return this.position.x;
+        return this.sensation.x;
     }
 
     /**
@@ -38,7 +49,7 @@ export class Node {
      * @returns - y coordinate
      */
     public get y() : number {
-        return this.position.y;
+        return this.sensation.y;
     }
     
     /**
@@ -47,6 +58,10 @@ export class Node {
      */
     public get getColor() : Color {
         return this.color;
+    }
+
+    public get getAge() : number {
+        return this.sensation.age;
     }
     
     /**
@@ -64,10 +79,11 @@ export class Node {
         const newPosition = new Position(this.x + direction, this.y);
 
         if(this.updateNodePosition(this, newPosition)) {
-            this.position = newPosition;
+            this.sensation.x = newPosition.x;
+            this.sensation.y = newPosition.y;
             logger.info("One step closer to freedom");
         } else {
-            logger.warn("Cannot move", this.position);
+            logger.warn("Cannot move", this.sensation.x, this.sensation.y);
         }
     }
     
@@ -86,10 +102,11 @@ export class Node {
         const newPosition = new Position(this.x, this.y + direction);
 
         if(this.updateNodePosition(this, newPosition)) {
-            this.position = newPosition;
+            this.sensation.x = newPosition.x;
+            this.sensation. y= newPosition.y;
             logger.info("One step closer to freedom");
         } else {
-            logger.warn("Cannot move", this.position);
+            logger.warn("Cannot move", this.sensation.x, this.sensation.y);
         }
     }
 

@@ -19,10 +19,10 @@ describe("Test Node Class Instantiation", () => {
         node = new Node("456", new Position(0, 0), new Color(200, 200, 200), simulation.updateNodePosition);
         
         expect(node.id).toBe("456");
-        expect(node.age).toBe(0);
+        expect(node.sensation.age).toBe(0);
 
         expect(typeof node.id).toBe("string");
-        expect(typeof node.age).toBe("number");
+        expect(typeof node.sensation.age).toBe("number");
     });
 
 });

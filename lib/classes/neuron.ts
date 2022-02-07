@@ -1,15 +1,11 @@
-import { SensorInput } from "./../interfaces/sensorInput.interface";
 import { Connection } from "@interfaces/connection.interface";
 
-export class Neuron {
-    private input : SensorInput;
-    private bias : number;
-    private output : number;
-    private activationFunction : (input : number) => number;
-    private connections : Connection[];
+export abstract class Neuron {
+    protected bias : number;
+    protected activationFunction : (input : number) => number;
+    protected connections : Connection[];
 
-    public constructor(input? : SensorInput, bias? : number, activationFunction? : (input : number) => number, connections? : Connection[]) {
-        this.input = input;
+    public constructor(bias? : number, activationFunction? : (input : number) => number, connections? : Connection[]) {
         this.bias = bias || 0;
         this.activationFunction = activationFunction || function (input :number) { return input; };
         this.connections = connections || [];
@@ -18,12 +14,8 @@ export class Neuron {
         // TODO jsdoc every constructor
     }
 
-    public fire(input : number) {
-        // TODO calculate input and loop through connections to give input to connected neurons
-        console.log("Neuron Fire:", this.input.x);
-        
-        // console.log(this.activationFunction(this.input));        
-    }
+    // TODO calculate input and loop through connections to give input to connected neurons
+    public abstract fire() : number;
 }
 
 // ? connection weight: -4 to 4
