@@ -11,7 +11,7 @@
             "@errors/*": ["lib/errors/*"],
             "@config/*": ["config/*"],
             "@functions/*": ["lib/functions/*"],
-            "@sensors/*": ["lib/sensors/*"],
+            "@sensors/*": ["lib/sensors/*"]
         },
         "outDir": "./build",
         "sourceMap": true
