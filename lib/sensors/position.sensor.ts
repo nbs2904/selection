@@ -14,28 +14,30 @@ import { normalise } from "@functions/normalise";
 
 const PXL_HEIGHT = process.env.PXL_HEIGH || 750;
 
-export function xPosSensor(sensation : Sensation, connections? : Connection[]) : Sensor {
+export function xPosSensor(bias : number, sensation : Sensation, connections? : Connection[]) : Sensor {
     const config : SensorConfig = {
         id: "Sensor XPos",
+        bias: bias,
         sensation: sensation,
         senses: ["x"],
-        activationFunction: normalise(0, PXL_HEIGHT as number),
+        activationFunction: normalise(0, PXL_HEIGHT as number, true),
         connections: connections || []
     };
 
-    return new Sensor(config.id, config.sensation, config.senses, config.activationFunction, config.connections);
+    return new Sensor(config.id, config.bias, config.sensation, config.senses, config.activationFunction, config.connections);
 }
 
-export function yPosSensor(sensation : Sensation, connections? : Connection[]) : Sensor {
+export function yPosSensor(bias : number, sensation : Sensation, connections? : Connection[]) : Sensor {
     const config : SensorConfig = {
         id: "Sensor YPos",
+        bias: bias,
         sensation: sensation,
         senses: ["y"],
-        activationFunction: normalise(0, PXL_HEIGHT as number),
+        activationFunction: normalise(0, PXL_HEIGHT as number, true),
         connections: connections || []
     };
 
-    return new Sensor(config.id, config.sensation, config.senses, config.activationFunction, config.connections);
+    return new Sensor(config.id, config.bias, config.sensation, config.senses, config.activationFunction, config.connections);
 }
 
 
