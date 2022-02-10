@@ -1,28 +1,30 @@
+import { Brain } from "@classes/brain";
 // * logger
 const logger = require("@config/log4js").node;
 
 // * classes
-import { Genome } from "@classes/genome";
 import { Position } from "@classes/position";
 import { Color } from "@classes/color";
 
 // * interfaces
 import { Sensation } from "@interfaces/sensation.interface";
+import { Genome } from "@interfaces/genome.interface";
 
 export class Node {
     public id : string;
     public lifespan = process.env.STEP_PER_GENERATION || 200;
 
-    readonly sensation : Sensation;
-    
-    // private age = 0;
-    // private position : Position;
+    public readonly sensation : Sensation;
+    private genome : Genome;
+
+    // TODO make private
+    public brain : Brain;
 
     private color : Color;
 
     public updateNodePosition : (node : Node, oldPosition : Position) => boolean;
 
-    public constructor(id : string, position : Position, color : Color, updateNodePosition? : (node : Node, oldPosition : Position) => boolean) {
+    public constructor(id : string, position : Position, color : Color, genome? : Genome, updateNodePosition? : (node : Node, oldPosition : Position) => boolean) {
         this.id = id;
         this.color = color;
 
@@ -32,7 +34,15 @@ export class Node {
             y: position.y
         };
 
+        this.genome = genome;
+
         this.updateNodePosition = updateNodePosition;
+
+        // ? initialise Brain
+        this.brain = new Brain(this.genome, this.sensation, {
+            MoveX: this.moveX.bind(this),
+            MoveY: this.moveY.bind(this)
+        });
     }
 
     /**
@@ -108,9 +118,5 @@ export class Node {
         } else {
             logger.warn("Cannot move", this.sensation.x, this.sensation.y);
         }
-    }
-
-    private initGenome(genome? : Genome) {
-        // TODO initialise genome
     }
 }
