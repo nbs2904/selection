@@ -77,8 +77,3 @@ io.on("connection", async (socket : typeof Socket) => {
 server.listen(PORT || 3000, function () {
     logger.info("App listening on Port " + PORT);
 });
-
-
-
-
-// TODO tanh(sum(inputs)) for inner neurons and action neurons

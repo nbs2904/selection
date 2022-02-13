@@ -17,8 +17,7 @@ export class Node {
     public readonly sensation : Sensation;
     private genome : Genome;
 
-    // TODO make private
-    public brain : Brain;
+    private brain : Brain;
 
     private color : Color;
 

@@ -15,8 +15,6 @@ export class Brain {
     private innerNeuronsFireOrder : string[] = [];
 
     // TODO specify actionFunctions type (either interface or something similar)
-    // TODO remove sensors or inner neurons that dont have any connections
-    // TODO neurons that are circular connected
     constructor(genome : Genome, sensation : Sensation, actionFunctions : any) {
         this.innerNeuronsFireOrder = genome.fireOrder;
 
@@ -90,7 +88,7 @@ export class Brain {
         let highestAbsOutputActionId = "";
 
         for(const [currentActionId, currentAction] of Object.entries(this.actions)) {
-            if(highestAbsOutputAction < Math.abs(currentAction.output)) {
+            if(Math.abs(highestAbsOutputAction) < Math.abs(currentAction.output)) {
                 highestAbsOutputAction = currentAction.output;
                 highestAbsOutputActionId = currentActionId;
             }
