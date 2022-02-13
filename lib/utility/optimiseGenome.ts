@@ -1,84 +1,124 @@
 /* eslint-disable no-prototype-builtins */
-import { neuronSignalConnection } from "@interfaces/neuronSignalConnection";
+import { Potential } from "@classes/potential";
 import { Genome } from "@interfaces/genome.interface";
 
-export function getFireOrder (innerNeurons : Genome["innerNeurons"]) : string[]{
-    const signalConnectionCount : neuronSignalConnection = {};
+export function getFireOrder (genome : Genome) : string[]{
+    const potentials : {
+        [key : string] : Potential
+    } = {};
 
-    // ? get signal count and connection count for every inner neuron
-    for(const [neuronId, neuronValues] of Object.entries(innerNeurons)) {
-        const neuronConnections = neuronValues.connections;
-
-        if(!(neuronId in signalConnectionCount)) {
-            signalConnectionCount[neuronId] = {
-                signals: 0,
-                connections: 0
-            };
+    // ? get signalsMissing count and connection count for every inner neuron
+    for(const [neuronId, neuron] of Object.entries(genome.innerNeurons)) {
+        if(!(neuronId in potentials)) {
+            potentials[neuronId] = new Potential();
         }
 
-        for(const [connectingNeuronId] of Object.entries(neuronConnections)) {
+        for(const [connectingNeuronId] of Object.entries(neuron.connections)) {
             if(connectingNeuronId.includes("Neuron")) {
-                signalConnectionCount[neuronId].connections++;
+                potentials[neuronId].connections++;
 
-                if(!(connectingNeuronId in signalConnectionCount)) {
-                    signalConnectionCount[connectingNeuronId] = {
-                        signals: 0,
-                        connections: 0
-                    };
+                if(!(connectingNeuronId in potentials)) {
+                    potentials[connectingNeuronId] = new Potential();
                 }
                 
-                signalConnectionCount[connectingNeuronId].signals++;
+                potentials[connectingNeuronId].signalsTotal++;
             }
         }
     }
 
-    // ? return sorted array of neuron ids
-    // ? sorted by:
-    // ?    -   neuron.connectionCount - neuron.signalCount
-    // ?    -   neuron.connectionCount
-    return Object.entries(signalConnectionCount)
-        .map((neuron) => {
-            return {
-                "id": neuron[0],
-                "connectionCount": neuron[1].connections,
-                "connectionSignalBalance": neuron[1].connections - neuron[1].signals
-            };
-        })
-        .sort((firstNeuron, secondNeuron) => {
-            if(firstNeuron.connectionSignalBalance !== secondNeuron.connectionSignalBalance) {
-                return secondNeuron.connectionSignalBalance - firstNeuron.connectionSignalBalance;
+    // ? count signals incoming from sensors
+    // ? also increase signalsReceived for the sorting algorithm later
+    for(const [sensorId, sensor] of Object.entries(genome.sensors)) {
+        for(const [connectingNeuronId] of Object.entries(sensor.connections)) {
+            if(connectingNeuronId.includes("Neuron")) {
+                potentials[connectingNeuronId].signalsTotal++;
+                potentials[connectingNeuronId].signalsReceived++;
+            }
+        }
+        
+    }
+
+    console.log(potentials);
+    
+    const fireOrder : string[] = [];
+
+    const unfiredNeurons = Object.entries(potentials)
+        .sort((firstPotential, secondPotential) => {
+            if(firstPotential[1].potential !== secondPotential[1].potential) {
+                return secondPotential[1].potential - firstPotential[1].potential;
             }
 
-            return secondNeuron.connectionCount - firstNeuron.connectionCount;
+            return secondPotential[1].connections - firstPotential[1].connections;
         })
         .map((neuron) => {
-            return neuron.id;
+            return {
+                id: neuron[0],
+                potential: neuron[1]
+            };
         });
+    
+
+    while(fireOrder.length !== Object.keys(genome.innerNeurons).length) {
+        // ? "fire" first neuron in array
+        fireOrder.push(unfiredNeurons[0].id);
+
+        // ? update potentials
+        for(const [connectingNeuronId] of Object.entries(genome.innerNeurons[unfiredNeurons[0].id].connections)) {
+            if(connectingNeuronId.includes("Neuron") && !fireOrder.includes(connectingNeuronId)) {
+                potentials[connectingNeuronId].signalsReceived++;                        
+            }
+        }
+
+        unfiredNeurons.splice(0, 1);
+        unfiredNeurons.sort(sortFunction);
+
+        // ? "fire" every neuron whose potential is 1
+        for (let index = 0; index < unfiredNeurons.length; index++) {
+            const neuron = unfiredNeurons[index];
+    
+            if(neuron.potential.potential === 1) {
+                fireOrder.push(neuron.id);
+                unfiredNeurons.splice(index, 1);
+                index--;
+    
+                // ? update potentials
+                for(const [connectingNeuronId] of Object.entries(genome.innerNeurons[neuron.id].connections)) {
+                    if(connectingNeuronId.includes("Neuron") && !fireOrder.includes(connectingNeuronId)) {
+                        potentials[connectingNeuronId].signalsReceived++;                        
+                    }
+                }
+
+                unfiredNeurons.sort(sortFunction);
+            } else {
+                break;
+            }
+        }
+    }
+
+    return fireOrder;
 }
 
 export function streamlineGenome(genome : Genome) : Genome {
-    const initialFireOrder = getFireOrder(genome.innerNeurons);
+    // const initialFireOrder = getFireOrder(genome.innerNeurons);
+    const initialFireOrder = getFireOrder(genome);
     let changesMade = 1;
 
     // ? remove useless connection and/or useless inner neurons
     while(changesMade !== 0) {
         changesMade = 0;
 
-        for(const [neuronId, neuronValues] of Object.entries(genome.innerNeurons)) {
-            const neuronConnections = neuronValues.connections;
-
+        for(const [neuronId, neuron] of Object.entries(genome.innerNeurons)) {
             // ? removes inner neuron if it has no connections, which would render it useless
-            if(Object.keys(neuronConnections).length === 0) {
+            if(Object.keys(neuron.connections).length === 0) {
                 delete genome.innerNeurons[neuronId];
                 changesMade++;
             }
 
-            for(const [connectingNeuronId] of Object.entries(neuronConnections)) {
+            for(const [connectingNeuronId] of Object.entries(neuron.connections)) {
                 if(connectingNeuronId.includes("Neuron")) {
                     // ? removes connection if neuron fires after the neuron it is connected to
                     // ? also remove a connection if a neuron is connected to itself
                     if(initialFireOrder.indexOf(connectingNeuronId) <= initialFireOrder.indexOf(neuronId)) {
-                        // TODO remove connection
                         delete genome.innerNeurons[neuronId].connections[connectingNeuronId];
                         changesMade++;
                     } else if(!(connectingNeuronId in genome.innerNeurons)) {
@@ -108,82 +148,138 @@ export function streamlineGenome(genome : Genome) : Genome {
     }
 
     // ? update fireOrder for inner Neurons
-    genome.fireOrder = getFireOrder(genome.innerNeurons);
+    genome.fireOrder = getFireOrder(genome);
 
     return genome;
 }
 
-const testGenome : Genome = {
+function sortFunction(firstNeuron : { id: string, potential: Potential }, secondNeuron : { id: string, potential: Potential }) {
+    if(firstNeuron.potential.potential !== secondNeuron.potential.potential) {
+        return secondNeuron.potential.potential - firstNeuron.potential.potential;
+    }
+
+    return secondNeuron.potential.connections - firstNeuron.potential.connections;
+}
+
+const testGenome1 : Genome = {
     sensors: {
         "XPos": {
             bias: 1,
             connections: {
                 "Neuron 1": 1,
-                "MoveX": 1
+                "Neuron 2": 1
             }
-        },
-        // "YPos": {
-        //     bias: -2,
-        //     connections: {
-        //         "Neuron 1": 1
-        //     }
-        // },
-        // "Age": {
-        //     bias: 1.19,
-        //     connections: {
-        //         "Neuron 1": 1,
-        //         "Neuron 2": 1
-        //     }
-        // }
+        }
     },
     innerNeurons: {
         "Neuron 1": {
-            bias: -0.56,
+            bias: 1,
             connections: {
-                // "MoveX": 1,
-                // "MoveY": 1,
                 "Neuron 3": 1
             }
         },
         "Neuron 2": {
-            bias: -1.09,
+            bias: 1,
             connections: {
                 "Neuron 1": 1,
                 "Neuron 4": 1,
-                // "MoveY": 1
             }
+            
         },
         "Neuron 3": {
-            bias: -1.09,
+            bias: 1,
             connections: {
                 "Neuron 2": 1,
-                "Neuron 3": 1,
                 "Neuron 4": 1,
-                "Neuron 5": 1,
-                // "MoveY": 1
+                "Neuron 5": 1
             }
+            
         },
         "Neuron 4": {
-            bias: -1.09,
+            bias: 1,
             connections: {
                 "Neuron 3": 1,
-                "Neuron 5": 1,
-                // "MoveY": 1
+                "Neuron 5": 1 
             }
+            
         },
         "Neuron 5": {
-            bias: -1.09,
+            bias: 1,
             connections: {
-                "MoveY": 1
+                "Neuron 6": 1,
+                "MoveX": 1
             }
+            
+        },
+        "Neuron 6": {
+            bias: 1,
+            connections: {
+                "MoveX": 1
+            }
+            
         }
     },
     actions: {
         "MoveX": {
-            bias: 1.61
-        },
-        // "MoveY": {
-        //     bias: 0.23
-        // }
+            bias: 1
+        }
     }
 };
+
+const testGenome2 : Genome = {
+    sensors: {
+        "XPos": {
+            bias: 1,
+            connections: {
+                "Neuron 1": 1
+            }
+        }
+    },
+    innerNeurons: {
+        "Neuron 1": {
+            bias: 1,
+            connections: {
+                "Neuron 2": 1
+            }
+        },
+        "Neuron 2": {
+            bias: 1,
+            connections: {
+                "Neuron 3": 1,
+                "Neuron 4": 1,
+                "Neuron 5": 1
+            }
+            
+        },
+        "Neuron 3": {
+            bias: 1,
+            connections: {
+                "MoveX": 1
+            }
+            
+        },
+        "Neuron 4": {
+            bias: 1,
+            connections: {
+                "MoveX": 1
+            }
+            
+        },
+        "Neuron 5": {
+            bias: 1,
+            connections: {
+                "MoveX": 1
+            }
+            
+        }
+    },
+    actions: {
+        "MoveX": {
+            bias: 1
+        }
+    }
+};
+
+console.log(
+    streamlineGenome(testGenome1)
+);
