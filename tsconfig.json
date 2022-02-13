@@ -14,7 +14,8 @@
             "@sensors/*": ["lib/sensors/*"]
         },
         "outDir": "./build",
-        "sourceMap": true
+        "sourceMap": true,
+        "alwaysStrict": true
     },
     "exclude": [ "node_modules" ]
 }
