@@ -5,6 +5,7 @@
         "node_modules",
         "p5"
       ],
-    "watch": "*.*","exec": "node -r tsconfig-paths/register -r ts-node/register server.ts",
+    "watch": "*.*",
+    "exec": "node -r tsconfig-paths/register -r ts-node/register server.ts",
     "ext": "js, mjs, json, ts, html"
 }

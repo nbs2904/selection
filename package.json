@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest --verbose",
     "test:watch": "jest --verbose --watch",
-    "dev": "set NODE_ENV=development && nodemon server.ts",
+    "dev": "set NODE_ENV=dev && nodemon server.ts",
     "start": "cd ./build && node server.js",
     "gulp": "gulp"
   },
