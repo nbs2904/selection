@@ -37,8 +37,6 @@ export function getFireOrder (genome : Genome) : string[]{
         }
         
     }
-
-    console.log(potentials);
     
     const fireOrder : string[] = [];
 
@@ -153,6 +151,10 @@ export function streamlineGenome(genome : Genome) : Genome {
     return genome;
 }
 
+
+// ? sort by:
+// ?    - neuron potential, the neuron with the highest potential will fire next
+// ?    - if multiple neurons have the same potential the one with the most connections will fire next
 function sortFunction(firstNeuron : { id: string, potential: Potential }, secondNeuron : { id: string, potential: Potential }) {
     if(firstNeuron.potential.potential !== secondNeuron.potential.potential) {
         return secondNeuron.potential.potential - firstNeuron.potential.potential;
@@ -279,7 +281,3 @@ const testGenome2 : Genome = {
         }
     }
 };
-
-console.log(
-    streamlineGenome(testGenome1)
-);
