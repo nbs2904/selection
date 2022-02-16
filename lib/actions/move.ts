@@ -20,7 +20,7 @@ export function moveRandom() {
 
 export function moveX(bias : number, actionFunction : (input : any) => any) {
     const config : ActionConfig = {
-        id: "Action MoveX",
+        id: "MoveX",
         bias: bias,
         activationFunction: tanh,
         actionFunction: actionFunction
@@ -31,7 +31,7 @@ export function moveX(bias : number, actionFunction : (input : any) => any) {
 
 export function moveY(bias : number, actionFunction : (input : any) => any) {
     const config : ActionConfig = {
-        id: "Action MoveY",
+        id: "MoveY",
         bias: bias,
         activationFunction: tanh,
         actionFunction: actionFunction

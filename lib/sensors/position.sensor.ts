@@ -16,7 +16,7 @@ const PXL_HEIGHT = +(process.env.PXL_HEIGH || 750) as number;
 
 export function xPosSensor(bias : number, sensation : Sensation, connections? : Connection[]) : Sensor {
     const config : SensorConfig = {
-        id: "Sensor XPos",
+        id: "XPos",
         bias: bias,
         sensation: sensation,
         senses: ["x"],
@@ -29,7 +29,7 @@ export function xPosSensor(bias : number, sensation : Sensation, connections? : 
 
 export function yPosSensor(bias : number, sensation : Sensation, connections? : Connection[]) : Sensor {
     const config : SensorConfig = {
-        id: "Sensor YPos",
+        id: "YPos",
         bias: bias,
         sensation: sensation,
         senses: ["y"],

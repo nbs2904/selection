@@ -28,9 +28,15 @@ export class Action extends Neuron {
 
 }
 
+// TODO find better name for actionList and sensorList
 export const actionList = {
     "MoveRandom": moveActions.moveRandom,
     "MoveForward": moveActions.moveForward,
     "MoveX": moveActions.moveX,
     "MoveY": moveActions.moveY,
 };
+
+export const actionNames = [
+    // "MoveRandom", "MoveForward", 
+    "MoveX", "MoveY"
+];

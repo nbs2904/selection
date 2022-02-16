@@ -16,7 +16,7 @@ export class Sensor extends Neuron {
 
     constructor(id : string, bias : number, sensation? : Sensation, senses? : string[], activationFunction? : (input : number) => number, connections? : Connection[]) {
         // ? set sensor/input neuron bias equal to 0 by default 
-        super(id, bias, activationFunction);
+        super(id, 0, activationFunction);
         
         this.senses = senses;
         this.sensation = sensation;
@@ -31,10 +31,6 @@ export class Sensor extends Neuron {
         // ? send output to every connected neuron, using the activationFunction, bias, and the respective weight.
         this.connections.forEach((connection) => {
             connection.outputNeuron.input += this.activationFunction(this.input * connection.weight + this.bias);
-
-            if(connection.outputNeuron instanceof Action) {
-                connection.outputNeuron.signals[this.id].fired = true;
-            }
         });
     }
 }
@@ -44,3 +40,7 @@ export const sensorList = {
     "YPos": positionSensors.yPosSensor,
     "Age": ageSensors.ageSensor
 };
+
+export const sensorNames = [
+    "XPos", "YPos", "Age"
+];

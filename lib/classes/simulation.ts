@@ -1,5 +1,5 @@
 import { nanoid } from "nanoid";
-import { randomInteger } from "@utility/randomInteger";
+import { randomInteger } from "@utility/randomNumber";
 
 // * logger
 import { simulation as logger} from "@config/log4js";

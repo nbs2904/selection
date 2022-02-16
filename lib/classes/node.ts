@@ -10,20 +10,22 @@ import { Color } from "@classes/color";
 import { Sensation } from "@interfaces/sensation.interface";
 import { Genome } from "@interfaces/genome.interface";
 
+// TODO increase age after action has been fired
 export class Node {
     public id : string;
-    public lifespan = process.env.STEP_PER_GENERATION || 200;
-
-    public readonly sensation : Sensation;
+    public lifespan = +process.env.STEP_PER_GENERATION || 200;
+    public updateNodePosition : (node : Node, oldPosition : Position) => boolean;
+    
+    private sensation : Sensation;
     private genome : Genome;
-
-    private brain : Brain;
-
     private color : Color;
 
-    public updateNodePosition : (node : Node, oldPosition : Position) => boolean;
+    // TODO make private
+    public brain : Brain;
 
-    public constructor(id : string, position : Position, color : Color, genome? : Genome, updateNodePosition? : (node : Node, oldPosition : Position) => boolean) {
+
+
+    public constructor(id : string, position : Position, color : Color, genome? : Genome) {
         this.id = id;
         this.color = color;
 
@@ -34,8 +36,6 @@ export class Node {
         };
 
         this.genome = genome;
-
-        this.updateNodePosition = updateNodePosition;
 
         // ? initialise Brain
         this.brain = new Brain(this.genome, this.sensation, {
@@ -71,6 +71,10 @@ export class Node {
 
     public get getAge() : number {
         return this.sensation.age;
+    }
+
+    public get getSensation() : Sensation {
+        return this.sensation;
     }
     
     /**
