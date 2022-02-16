@@ -1,4 +1,4 @@
-import { Connection } from "@interfaces/connection.interface";
+import { streamlineGenome } from "@utility/optimiseGenome";
 import { sensorNames } from "@sensors/sensor";
 import { actionNames } from "@actions/action";
 
@@ -168,5 +168,5 @@ export function randomGenome() : Genome{
     });
     
 
-    return genome;
+    return streamlineGenome(genome);
 }
