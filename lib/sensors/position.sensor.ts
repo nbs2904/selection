@@ -12,7 +12,7 @@ import { Sensor } from "@sensors/sensor";
 import { normalise } from "@functions/normalise";
 
 
-const PXL_HEIGHT = process.env.PXL_HEIGH || 750;
+const PXL_HEIGHT = +(process.env.PXL_HEIGH || 750) as number;
 
 export function xPosSensor(bias : number, sensation : Sensation, connections? : Connection[]) : Sensor {
     const config : SensorConfig = {
@@ -20,7 +20,7 @@ export function xPosSensor(bias : number, sensation : Sensation, connections? : 
         bias: bias,
         sensation: sensation,
         senses: ["x"],
-        activationFunction: normalise(0, PXL_HEIGHT as number, true),
+        activationFunction: normalise(0, PXL_HEIGHT, true),
         connections: connections || []
     };
 
@@ -33,7 +33,7 @@ export function yPosSensor(bias : number, sensation : Sensation, connections? : 
         bias: bias,
         sensation: sensation,
         senses: ["y"],
-        activationFunction: normalise(0, PXL_HEIGHT as number, true),
+        activationFunction: normalise(0, PXL_HEIGHT, true),
         connections: connections || []
     };
 

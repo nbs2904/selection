@@ -1,5 +1,5 @@
-const CONNECTION_WEIGHT_RANGE = process.env.CONNECTION_WEIGHT_RANGE || 2;
-const BIAS_RANGE = process.env.BIAS_RANGE || 0;
+const CONNECTION_WEIGHT_RANGE = +(process.env.CONNECTION_WEIGHT_RANGE || 2) as number;
+const BIAS_RANGE = +(process.env.BIAS_RANGE || 0) as number;
 
 // TODO function might break, since one neuron can receive multiple inputs
 // TODO from different neurons with their respective weight
@@ -13,7 +13,7 @@ export function normalise(lowerBound : number, upperBound : number, weightBiasAd
     if(weightBiasAdapted) {
         // ? adapt boundaries according to global CONNECTION_WEIGHT_RANGE and BIAS_RANGE settings
         const maxAbsoluteBound = Math.max(Math.abs(lowerBound), Math.abs(upperBound));
-        upperBound = (maxAbsoluteBound * (CONNECTION_WEIGHT_RANGE as number) / 2) + (BIAS_RANGE as number / 2);
+        upperBound = (maxAbsoluteBound * (CONNECTION_WEIGHT_RANGE) / 2) + (BIAS_RANGE / 2);
         lowerBound = -upperBound;
     }
     
