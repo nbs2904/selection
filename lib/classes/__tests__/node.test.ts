@@ -85,14 +85,14 @@ beforeEach(() => {
             }
         }
     };
-    node = new Node("123", new Position(0, 1), new Color(100, 150, 200), genome, simulation.updateNodePosition);
+    node = new Node("123", new Position(0, 1), new Color(100, 150, 200), genome);
 
     simulation.spawnNode(node);
 });
 
 describe("Test Node Class Instantiation", () => {
     test("Initialize Node Instance", () => {
-        node = new Node("456", new Position(0, 0), new Color(200, 200, 200), genome, simulation.updateNodePosition);
+        node = new Node("456", new Position(0, 0), new Color(200, 200, 200), genome);
         
         expect(node.id).toBe("456");
         expect(node.sensation.age).toBe(0);
