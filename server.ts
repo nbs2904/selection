@@ -1,4 +1,3 @@
-import { randomInteger } from "@utility/randomInteger";
 require("dotenv").config({path: __dirname + "/.env"});
 const express = require("express");
 
@@ -15,17 +14,25 @@ const logger = require("@config/log4js").server;
 
 // * config
 const NODE_ENV = process.env.NODE_ENV;
-const PORT = process.env.PORT || 3000;
-const GRID_SIZE = process.env.GRID_SIZE || 50;
+const PORT = +(process.env.PORT || 3000) as number;
+const GRID_SIZE = +(process.env.GRID_SIZE || 50) as number;
 // const PXL_HEIGHT = process.env.PXL_HEIGHT || 750;
 // const FPS = process.env.FPS || 50;
 
 // * classes
 import { Simulation } from "@classes/simulation";
 import { Node } from "@classes/node";
+import { Position } from "@classes/position";
+import { Color } from "@classes/color";
 
 // * utility functions
+import { randomInteger } from "@utility/randomNumber";
 import { sleep } from "@utility/sleep";
+import { randomGenome } from "@utility/randomGenome";
+const fs = require("fs");
+
+// * interfaces
+import { Genome } from "@interfaces/genome.interface";
 
 logger.info("Environment:", NODE_ENV);
 
@@ -37,43 +44,29 @@ app.get("/", function (req : any, res : any) {
 io.on("connection", async (socket : typeof Socket) => {
     logger.info(`Socket "${socket.id}" connected`);
 
-    let simulation = new Simulation(GRID_SIZE as number);
+    
+    const genome = randomGenome();
 
-    const DUMMY_NODE_LIST_LENGTH = 500;
-    const dummyNodeList : Node[] = [];
+    fs.writeFileSync("./lib/graphs/genomes/genome.json", JSON.stringify(genome));
 
-    for (let i = 0; i < DUMMY_NODE_LIST_LENGTH; i++) {
-        simulation.spawnNode()
-            .then((node) => {
-                dummyNodeList.push(node);
-            })
-            .catch((error) => {
-                logger.error(error);
-            });      
-    }
+    const simulation = new Simulation(GRID_SIZE);
+    const node = new Node("hsbea", new Position(10, 10), new Color(0, 0, 0), genome);
 
-    let repitition = 0;
-    while(repitition < 7200) {
-        if(randomInteger(2)) {
-            if(randomInteger(2)) dummyNodeList[randomInteger(DUMMY_NODE_LIST_LENGTH)].moveX(1);
-            else dummyNodeList[randomInteger(DUMMY_NODE_LIST_LENGTH)].moveX(-1);
-        } else {
-            if(randomInteger(2)) dummyNodeList[randomInteger(DUMMY_NODE_LIST_LENGTH)].moveY(1);
-            else dummyNodeList[randomInteger(DUMMY_NODE_LIST_LENGTH)].moveY(-1);
-        }
+    await simulation.spawnNode(node);
+    socket.emit("updateNodeList", simulation.nodes);
+    await sleep(1000);
 
+    for (let i = 0; i < 100; i++) {
+        node.brain.compute();
         socket.emit("updateNodeList", simulation.nodes);
-        await sleep(1);
-        repitition++;
+        await sleep(1000);
     }
-
 
     socket.on("disconnect", () => {
-        simulation = undefined;
         logger.info(`Socket "${socket.id}" disconnected`);
     });
 });
 
-server.listen(PORT || 3000, function () {
+server.listen(PORT, function () {
     logger.info("App listening on Port " + PORT);
 });
