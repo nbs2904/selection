@@ -2,7 +2,7 @@ VERTEX_SIZE = 50
 EDGES_CURVED = True
 MARGIN = 64
 
-SENSOR_COLOR = "blue"
+SENSOR_COLOR = "lightblue"
 NEURON_COLOR = "grey"
 ACTION_COLOR = "red"
 
