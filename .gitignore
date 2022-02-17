@@ -1,5 +1,10 @@
+# folder
 .vscode
-.env
+env
 build
 node_modules
-env
+genomes
+
+# files
+.env
+*.pyc
