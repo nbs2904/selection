@@ -1,10 +1,8 @@
 import { Neuron } from "@classes/neuron";
-import * as moveActions from "@actions/move";
+import * as moveActions from "@actions/move.action";
 
 export class Action extends Neuron {
-    [x: string]: any;
     public input = 0;
-    // TODO check how node function can be bound to action neuron
     private actionFunction : (input : any) => any;
 
     constructor(id : string, bias : number, activationFunction : (input : number) => number, actionFunction : (input : any) => any) {
@@ -18,7 +16,6 @@ export class Action extends Neuron {
     }
     
     public fire() {
-        // TODO execute given function
         if(this.output < 0) {
             this.actionFunction(-1);
         } else {
@@ -30,13 +27,11 @@ export class Action extends Neuron {
 
 // TODO find better name for actionList and sensorList
 export const actionList = {
-    "MoveRandom": moveActions.moveRandom,
-    "MoveForward": moveActions.moveForward,
+    "MoveRnd": moveActions.moveRnd,
+    "MoveFwd": moveActions.moveFwd,
+    "MoveBwd": moveActions.moveBwd,
     "MoveX": moveActions.moveX,
     "MoveY": moveActions.moveY,
 };
 
-export const actionNames = [
-    // "MoveRandom", "MoveForward", 
-    "MoveX", "MoveY"
-];
+export const actionNames = [ "MoveRnd", "MoveFwd", "MoveBwd", "MoveX", "MoveY" ];
