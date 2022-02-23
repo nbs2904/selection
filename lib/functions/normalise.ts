@@ -1,10 +1,6 @@
 const CONNECTION_WEIGHT_RANGE = +(process.env.CONNECTION_WEIGHT_RANGE || 2) as number;
 const BIAS_RANGE = +(process.env.BIAS_RANGE || 0) as number;
 
-// TODO function might break, since one neuron can receive multiple inputs
-// TODO from different neurons with their respective weight
-// TODO therefore becoming bigger than the boundaries
-
 export function normalise(lowerBound : number, upperBound : number, weightBiasAdapted : boolean) {
     if(upperBound < lowerBound) {
         throw new Error("upper bound needs to be bigger than lower bound");
