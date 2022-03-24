@@ -11,7 +11,9 @@
             "@errors/*": ["lib/errors/*"],
             "@config/*": ["config/*"],
             "@functions/*": ["lib/functions/*"],
-            "@sensors/*": ["lib/sensors/*"]
+            "@sensors/*": ["lib/sensors/*"],
+            "@customTypes/*": ["lib/types/*"],
+            "@levels/*": ["lib/levels/*"]
         },
         "outDir": "./build",
         "sourceMap": true,
