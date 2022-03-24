@@ -4,6 +4,7 @@ env
 build
 node_modules
 genomes
+simulations
 
 # files
 .env
