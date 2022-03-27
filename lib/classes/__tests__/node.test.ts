@@ -1,3 +1,4 @@
+import { northHalf } from "@levels/halfGrid.level";
 import { Simulation } from "../simulation";
 import { Color } from "../color";
 import { Node } from "../node";
@@ -10,7 +11,7 @@ let genome : Genome;
 
 beforeEach(() => {
     // TODO Mock simulation class
-    simulation = new Simulation(5);
+    simulation = new Simulation(northHalf);
     genome = {
         sensors: {
             "XPos": {
@@ -85,14 +86,14 @@ beforeEach(() => {
             }
         }
     };
-    node = new Node("123", new Position(0, 1), new Color(100, 150, 200), genome);
+    node = new Node("123", genome, new Position(10, 1), new Color(100, 150, 200));
 
     simulation.spawnNode(node);
 });
 
 describe("Test Node Class Instantiation", () => {
     test("Initialize Node Instance", () => {
-        node = new Node("456", new Position(0, 0), new Color(200, 200, 200), genome);
+        node = new Node("456", genome, new Position(0, 0), new Color(200, 200, 200));
         
         expect(node.id).toBe("456");
         expect(node.getSensation.age).toBe(0);
@@ -105,7 +106,7 @@ describe("Test Node Class Instantiation", () => {
 
 describe("Test Node Get Functions", () => {
     test("Get Node Position",() => {
-        expect(node.x).toBe(0);
+        expect(node.x).toBe(10);
         expect(node.y).toBe(1);
 
         expect(typeof node.x).toBe("number");
