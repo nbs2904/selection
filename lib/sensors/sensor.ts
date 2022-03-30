@@ -1,4 +1,3 @@
-import { Action } from "@actions/action";
 import { Neuron } from "@classes/neuron";
 import { Connection } from "@interfaces/connection.interface";
 import { Sensation } from "@interfaces/sensation.interface";
@@ -41,6 +40,4 @@ export const sensorList = {
     "Age": ageSensors.ageSensor
 };
 
-export const sensorNames = [
-    "XPos", "YPos", "Age"
-];
+export const sensorNames = [ "XPos", "YPos", "Age" ];
