@@ -8,11 +8,11 @@ import { randomFloat, randomInteger } from "@utility/randomNumber";
 // * logger
 const logger = require("@config/log4js").utils;
 
-const MAX_NUMBER_INNER_NEURONS = +(process.env.MAX_NUMBER_INNER_NEURONS || 4) as number;
-const MIN_NUMBER_GENOME_SIZE = +(process.env.MIN_NUMBER_GENOME_SIZE || 6) as number;
+const MAX_NUMBER_INNER_NEURONS = +(process.env.MAX_NUMBER_INNER_NEURONS || 6) as number;
+const MIN_NUMBER_GENOME_SIZE = +(process.env.MIN_NUMBER_GENOME_SIZE || 4) as number;
 const MAX_NUMBER_GENOME_SIZE = +(process.env.MAX_NUMBER_GENOME_SIZE || 10) as number;
 
-const MAX_CONNECTIONS = +(process.env.MAX_CONNECTIONS || 4) as number;
+const MAX_CONNECTIONS = +(process.env.MAX_CONNECTIONS || 10) as number;
 const CONNECTION_WEIGHT_RANGE = +(process.env.CONNECTION_WEIGHT_RANGE || 8) as number;
 const BIAS_RANGE = +(process.env.BIAS_RANGE || 8) as number;
 
@@ -167,6 +167,5 @@ export function randomGenome() : Genome{
         genome.actions[name] = { bias: randomFloat(BIAS_RANGE/2, BIAS_RANGE/2 * (-1))};
     });
     
-
     return streamlineGenome(genome);
 }
