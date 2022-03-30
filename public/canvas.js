@@ -1,37 +1,49 @@
 /* eslint-disable */
-// TODO load env or init file which equals backend config
-
-let config = {
-    GRID_SIZE: 50,
-    PXL_HEIGHT: 750,
-    FPS: 60
-};
+let config = {};
+let level = [];
 let nodeList = [];
+
+socket.on("setConfig", (configParams) => {
+    config = configParams.config;
+    level = configParams.level;
+
+    setup();
+});
 
 socket.on("updateNodeList", (updateNodeList) => {
     nodeList = updateNodeList;
-})
+});
 
-// TODO socket on disconnect
 
 function setup(){
-    createCanvas(750, 750);
-    frameRate(60);
+    createCanvas(config.PXL_HEIGHT, config.PXL_HEIGHT);
+    frameRate(config.FPS);
 }
 
 function draw(){
     background(240);
-    fill(255, 0, 0);
     noStroke();
-    drawNodes(); 
+    drawLevel();
+    drawNodes();
 }
 
-// TODO increase efficiency by just redrawing nodes that changed position
 function drawNodes(){
     cellLength = config.PXL_HEIGHT/config.GRID_SIZE;
 
-    for(const [key, node] of Object.entries(nodeList)) {
+    for(const [, node] of Object.entries(nodeList)) {
         fill(node.color.r, node.color.g, node.color.b);
-        circle(node.position.x * cellLength + cellLength/2, node.position.y * cellLength + cellLength/2, 7);  
+        circle(node.sensation.x * cellLength + cellLength/2, node.sensation.y * cellLength + cellLength/2, cellLength);
+    }
+}
+
+function drawLevel() {
+    for(rectangle of level) {
+        const x = (rectangle[0] / config.GRID_SIZE) * config.PXL_HEIGHT;
+        const y = (rectangle[1] / config.GRID_SIZE) * config.PXL_HEIGHT;
+        const width = ((rectangle[2] - rectangle[0]) / config.GRID_SIZE) * config.PXL_HEIGHT;
+        const height = ((rectangle[3] - rectangle[1]) / config.GRID_SIZE) * config.PXL_HEIGHT;
+
+        fill(255, 0, 0, 100);
+        rect(x, y, width, height);
     }
 }

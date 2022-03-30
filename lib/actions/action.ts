@@ -3,9 +3,9 @@ import * as moveActions from "@actions/move.action";
 
 export class Action extends Neuron {
     public input = 0;
-    private actionFunction : (input : any) => any;
+    private actionFunction : (input? : number) => Promise<void>;
 
-    constructor(id : string, bias : number, activationFunction : (input : number) => number, actionFunction : (input : any) => any) {
+    constructor(id : string, bias : number, activationFunction : (input : number) => number, actionFunction : (input? : number) => Promise<void>) {
         super(id, bias, activationFunction);
 
         this.actionFunction = actionFunction;
@@ -25,7 +25,6 @@ export class Action extends Neuron {
 
 }
 
-// TODO find better name for actionList and sensorList
 export const actionList = {
     "MoveRnd": moveActions.moveRnd,
     "MoveFwd": moveActions.moveFwd,
@@ -34,4 +33,4 @@ export const actionList = {
     "MoveY": moveActions.moveY,
 };
 
-export const actionNames = [ "MoveRnd", "MoveFwd", "MoveBwd", "MoveX", "MoveY" ];
+export const actionNames = [ "MoveX", "MoveY", "MoveBwd", "MoveFwd", "MoveRnd" ];

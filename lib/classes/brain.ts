@@ -14,8 +14,7 @@ export class Brain {
 
     private innerNeuronsFireOrder : string[] = [];
 
-    // TODO specify actionFunctions type (either interface or something similar)
-    constructor(genome : Genome, sensation : Sensation, actionFunctions : any) {
+    constructor(genome : Genome, sensation : Sensation, actionFunctions : { [key : string] : () => void }) {
         this.innerNeuronsFireOrder = genome.fireOrder;
 
         // ? initialise actions

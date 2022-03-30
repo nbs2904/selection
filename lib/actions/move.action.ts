@@ -2,7 +2,7 @@ import { Action } from "@actions/action";
 import { tanh } from "@functions/tanh";
 import { ActionConfig } from "@interfaces/actionConfig.interface";
 
-export function moveFwd(bias : number, actionFunction : (input : any) => any){
+export function moveFwd(bias : number, actionFunction : () => Promise<void>){
     const config : ActionConfig = {
         id: "MoveFwd",
         bias: bias,
@@ -13,7 +13,7 @@ export function moveFwd(bias : number, actionFunction : (input : any) => any){
     return new Action(config.id, config.bias, config.activationFunction, config.actionFunction);
 }
 
-export function moveBwd(bias : number, actionFunction : (input : any) => any){
+export function moveBwd(bias : number, actionFunction : () => Promise<void>){
     const config : ActionConfig = {
         id: "MoveBwd",
         bias: bias,
@@ -24,7 +24,7 @@ export function moveBwd(bias : number, actionFunction : (input : any) => any){
     return new Action(config.id, config.bias, config.activationFunction, config.actionFunction);
 }
 
-export function moveRnd(bias : number, actionFunction : (input : any) => any) {
+export function moveRnd(bias : number, actionFunction : () => Promise<void>) {
     const config : ActionConfig = {
         id: "MoveRnd",
         bias: bias,
@@ -35,7 +35,7 @@ export function moveRnd(bias : number, actionFunction : (input : any) => any) {
     return new Action(config.id, config.bias, config.activationFunction, config.actionFunction);
 }
 
-export function moveX(bias : number, actionFunction : (input : any) => any) {
+export function moveX(bias : number, actionFunction : (input : number) => Promise<void>) {
     const config : ActionConfig = {
         id: "MoveX",
         bias: bias,
@@ -46,7 +46,7 @@ export function moveX(bias : number, actionFunction : (input : any) => any) {
     return new Action(config.id, config.bias, config.activationFunction, config.actionFunction);
 }
 
-export function moveY(bias : number, actionFunction : (input : any) => any) {
+export function moveY(bias : number, actionFunction : (input : number) => Promise<void>) {
     const config : ActionConfig = {
         id: "MoveY",
         bias: bias,
