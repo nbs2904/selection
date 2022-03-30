@@ -6,7 +6,7 @@ from lib.get_graph import get_graph
 from lib.plot_graph import plot_graph
 
 
-path = "./lib/genomes/src/"
+path = "./lib/simulations/20220325161239/"
 output_base = "./lib/genomes/images/"
 files = [file for file in os.listdir(path) if file.endswith(".json")]
 
