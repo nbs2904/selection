@@ -19,61 +19,46 @@ export class Brain {
         this.innerNeuronsFireOrder = genome.fireOrder;
 
         // ? initialise actions
-        for (const actionKey in genome.actions) {
-            if(genome.actions.hasOwnProperty(actionKey)) {
-                this.actions[actionKey] = actionList[actionKey](genome.actions[actionKey].bias, actionFunctions[actionKey]);
-            }
+        for (const [actionName] of Object.entries(genome.actions)) {
+            this.actions[actionName] = actionList[actionName](genome.actions[actionName].bias, actionFunctions[actionName]);
         }
 
         // ? initialise inner neurons without connections
-        for (const innerNeuronKey in genome.innerNeurons) {
-            if(genome.innerNeurons.hasOwnProperty(innerNeuronKey)) {
-                this.innerNeurons[innerNeuronKey] = new InnerNeuron(innerNeuronKey, genome.innerNeurons[innerNeuronKey].bias);
-            }
+        for (const [neuronName] of Object.entries(genome.innerNeurons)) {
+            this.innerNeurons[neuronName] = new InnerNeuron(neuronName, genome.innerNeurons[neuronName].bias);
         }
 
         // ? initialise sensors with connections
-        for (const sensorKey in genome.sensors) {
-            if(genome.sensors.hasOwnProperty(sensorKey)) {
-                const sensorConnections : Connection[] = [];
+        for (const [sensorName] of Object.entries(genome.sensors)) {
+            const sensorConnections : Connection[] = [];
                 
-                for (const connectionKey in genome.sensors[sensorKey].connections) {
-                    if(genome.sensors[sensorKey].connections.hasOwnProperty(connectionKey)) {
-
-                        sensorConnections.push({
-                            weight: genome.sensors[sensorKey].connections[connectionKey],
-                            outputNeuron: this.innerNeurons[connectionKey] || this.actions[connectionKey]
-                        });
-                    }
-                }
-
-                this.sensors[sensorKey] = sensorList[sensorKey](genome.sensors[sensorKey].bias, sensation, sensorConnections);
+            for (const [connection] of Object.entries(genome.sensors[sensorName].connections)) {
+                sensorConnections.push({
+                    weight: genome.sensors[sensorName].connections[connection],
+                    outputNeuron: this.innerNeurons[connection] || this.actions[connection]
+                });
             }
+
+            this.sensors[sensorName] = sensorList[sensorName](genome.sensors[sensorName].bias, sensation, sensorConnections);
         }
 
-        for (const innerNeuronKey in this.innerNeurons) {
-            if(this.innerNeurons.hasOwnProperty(innerNeuronKey)) {
-                const innerNeuronConnections = genome.innerNeurons[innerNeuronKey].connections;
+        for (const [neuronName] of Object.entries(this.innerNeurons)) {
+            const innerNeuronConnections = genome.innerNeurons[neuronName].connections;
                 
-                // ?  connect inner neurons
-                for (const connectionKey in innerNeuronConnections){
-                    if(innerNeuronConnections.hasOwnProperty(connectionKey)) {
-                        this.innerNeurons[innerNeuronKey].connections.push({
-                            weight: innerNeuronConnections[connectionKey],
-                            outputNeuron: this.innerNeurons[connectionKey] || this.actions[connectionKey]
-                        });
-                    }
-                }
+            // ?  connect inner neurons
+            for (const [connection] of Object.entries(innerNeuronConnections)){
+                this.innerNeurons[neuronName].connections.push({
+                    weight: innerNeuronConnections[connection],
+                    outputNeuron: this.innerNeurons[connection] || this.actions[connection]
+                });
             }
         }
 
     }
 
-    // TODO change every forin to of Object.entires loop
-
     public compute() {
         // ? fire sensors
-        for(const [sensorId, sensor] of Object.entries(this.sensors)) {
+        for(const [, sensor] of Object.entries(this.sensors)) {
             sensor.fire();
         }
 
