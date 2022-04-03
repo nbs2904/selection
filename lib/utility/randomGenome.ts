@@ -1,13 +1,20 @@
-import { streamlineGenome } from "@utility/optimiseGenome";
-import { sensorNames } from "@sensors/sensor";
+// * actions
 import { actionNames } from "@actions/action";
 
+// * sensors
+import { sensorNames } from "@sensors/sensor";
+
+// * interfaces
 import { Genome } from "@interfaces/genome.interface";
+
+// * utility
 import { randomFloat, randomInteger } from "@utility/randomNumber";
+import { streamlineGenome } from "@utility/optimiseGenome";
 
 // * logger
 const logger = require("@config/log4js").utils;
 
+// * config
 const MAX_NUMBER_INNER_NEURONS = +(process.env.MAX_NUMBER_INNER_NEURONS || 6) as number;
 const MIN_NUMBER_GENOME_SIZE = +(process.env.MIN_NUMBER_GENOME_SIZE || 4) as number;
 const MAX_NUMBER_GENOME_SIZE = +(process.env.MAX_NUMBER_GENOME_SIZE || 10) as number;
@@ -15,6 +22,8 @@ const MAX_NUMBER_GENOME_SIZE = +(process.env.MAX_NUMBER_GENOME_SIZE || 10) as nu
 const MAX_CONNECTIONS = +(process.env.MAX_CONNECTIONS || 10) as number;
 const CONNECTION_WEIGHT_RANGE = +(process.env.CONNECTION_WEIGHT_RANGE || 8) as number;
 const BIAS_RANGE = +(process.env.BIAS_RANGE || 8) as number;
+
+
 
 if(MIN_NUMBER_GENOME_SIZE > MAX_NUMBER_GENOME_SIZE) {
     logger.error("MIN_NUMBER_GENOME_SIZE must be smaller than MAX_NUMBER_GENOME_SIZE, please adjust the config file.");

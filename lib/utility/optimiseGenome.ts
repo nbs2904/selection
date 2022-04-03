@@ -1,12 +1,19 @@
-import { actionNames } from "@actions/action";
-import { sensorNames } from "@sensors/sensor";
 /* eslint-disable no-prototype-builtins */
+
+// * actions
+import { actionNames } from "@actions/action";
+
+// * sensots
+import { sensorNames } from "@sensors/sensor";
+
+// * classes
 import { Potential } from "@classes/potential";
+
+// * interfaces
 import { Genome } from "@interfaces/genome.interface";
+
+// * utility
 import { equals } from "@utility/equals";
-
-const logger = require("@config/log4js").utils;
-
 
 
 export function getFireOrder (genome : Genome) : string[]{
@@ -102,8 +109,6 @@ export function getFireOrder (genome : Genome) : string[]{
 }
 
 export function streamlineGenome(genome : Genome) : Genome {
-    const genome_safety_snapshot = JSON.parse(JSON.stringify(genome));
-
     let fireOrder : string[] = [];
     let changesMade = 1;
     const removedNeurons : string[] = [];

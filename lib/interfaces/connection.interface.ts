@@ -1,3 +1,4 @@
+// * classes
 import { InnerNeuron } from "@classes/neuron";
 import { Action } from "@actions/action";
 

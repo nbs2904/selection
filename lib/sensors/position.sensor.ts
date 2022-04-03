@@ -1,7 +1,5 @@
-import { Sensation } from "@interfaces/sensation.interface";
-// TODO sort imports in every file
-
 // * interfaces
+import { Sensation } from "@interfaces/sensation.interface";
 import { SensorConfig } from "@interfaces/sensorConfig.interface";
 import { Connection } from "@interfaces/connection.interface";
 
@@ -11,8 +9,9 @@ import { Sensor } from "@sensors/sensor";
 // * functions
 import { normalise } from "@functions/normalise";
 
-
+// * config
 const PXL_HEIGHT = +(process.env.PXL_HEIGH || 750) as number;
+
 
 export function xPosSensor(bias : number, sensation : Sensation, connections? : Connection[]) : Sensor {
     const config : SensorConfig = {

@@ -1,9 +1,12 @@
+// * interfaces
 import { Genome } from "@interfaces/genome.interface";
 
+// * config
 const MAX_NUMBER_INNER_NEURONS = +(process.env.MAX_NUMBER_INNER_NEURONS || 4) as number;
 const MIN_NUMBER_GENOME_SIZE =+(process.env.MIN_NUMBER_GENOME_SIZE || 6) as number;
 const MAX_NUMBER_GENOME_SIZE =+(process.env.MAX_NUMBER_GENOME_SIZE || 10) as number;
 const MAX_CONNECTIONS =+(process.env.MAX_CONNECTIONS || 4) as number;
+
 
 export function validateGenome(genome : Genome) : boolean {
     // ? check MAX_NUMBER_INNER_NEURONS

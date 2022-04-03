@@ -1,5 +1,7 @@
-
+// * logger
 const logger = require("@config/log4js").color;
+
+
 export class Color {
     public r : number;
     public g : number;

@@ -1,4 +1,6 @@
+// * classes
 import { Color } from "@classes/color";
+
 
 export class Cell {
     public occupied : boolean;

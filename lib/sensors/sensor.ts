@@ -1,11 +1,15 @@
+// * classes
 import { Neuron } from "@classes/neuron";
+
+// * interfaces
 import { Connection } from "@interfaces/connection.interface";
 import { Sensation } from "@interfaces/sensation.interface";
 
+// * sensors
 import * as positionSensors from "@sensors/position.sensor";
 import * as ageSensors from "@sensors/age.sensor";
 
-// TODO jsdoc entire class
+
 export class Sensor extends Neuron {
     private readonly sensation : Sensation;
     private readonly senses : string[];

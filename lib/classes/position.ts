@@ -1,4 +1,6 @@
+// * utility
 import { randomInteger } from "@utility/randomNumber";
+
 
 const GRID_SIZE = +(process.env.GRID_SIZE || 50) as number;
 export class Position {

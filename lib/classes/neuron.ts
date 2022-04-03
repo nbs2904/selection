@@ -1,10 +1,16 @@
+// * interfaces
 import { Connection } from "@interfaces/connection.interface";
 
+// * functions
 // TODO experiment with activationFunctions
 import { tanh } from "@functions/tanh";
+
+// * utility
 import { randomFloat } from "@utility/randomNumber";
 
+// * config
 const BIAS_RANGE = +(process.env.BIAS_RANGE || 50) as number;
+
 
 export abstract class Neuron {
     public readonly id : string;
@@ -15,8 +21,6 @@ export abstract class Neuron {
         this.id = id;
         this.bias = bias || randomFloat(BIAS_RANGE/2, BIAS_RANGE/2 * (-1));
         this.activationFunction = activationFunction || function (input :number) { return input; };
-
-        // TODO jsdoc every constructor
     }
 
     public abstract fire() : void;

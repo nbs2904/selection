@@ -1,3 +1,4 @@
+// * config
 const CONNECTION_WEIGHT_RANGE = +(process.env.CONNECTION_WEIGHT_RANGE || 2) as number;
 const BIAS_RANGE = +(process.env.BIAS_RANGE || 0) as number;
 

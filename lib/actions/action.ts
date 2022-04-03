@@ -1,6 +1,13 @@
+// * classes
 import { Neuron } from "@classes/neuron";
+
+// * actions
 import * as moveActions from "@actions/move.action";
 
+
+/**
+ * @class Action - Base class for actions 
+*/
 export class Action extends Neuron {
     public input = 0;
     private actionFunction : (input? : number) => Promise<void>;
@@ -22,7 +29,6 @@ export class Action extends Neuron {
             this.actionFunction(1);
         }
     }
-
 }
 
 export const actionList = {

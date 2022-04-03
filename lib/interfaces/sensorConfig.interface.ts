@@ -1,3 +1,4 @@
+// * interfaces
 import { Sensation } from "@interfaces/sensation.interface";
 import { Connection } from "@interfaces/connection.interface";
 

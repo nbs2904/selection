@@ -1,3 +1,4 @@
+// * types
 import { Level } from "@customTypes/level.type";
 
 const GRID_SIZE = +(process.env.GRID_SIZE || 50) as number;

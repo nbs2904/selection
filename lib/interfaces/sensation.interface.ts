@@ -1,3 +1,4 @@
+// * classes
 import { Position } from "@classes/position";
 
 export interface Sensation {

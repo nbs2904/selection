@@ -1,6 +1,12 @@
+// * actions
 import { Action } from "@actions/action";
+
+// * functions
 import { tanh } from "@functions/tanh";
+
+// * interfaces
 import { ActionConfig } from "@interfaces/actionConfig.interface";
+
 
 export function moveFwd(bias : number, actionFunction : () => Promise<void>){
     const config : ActionConfig = {

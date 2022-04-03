@@ -1,5 +1,8 @@
-import { Genome } from "@interfaces/genome.interface";
 import fs = require("fs");
+
+// * interfaces
+import { Genome } from "@interfaces/genome.interface";
+
 
 export function saveGenome(genome : Genome, fileName : string, path = "lib/genomes/src") {
     fs.mkdir(path, { recursive: true }, (err) => {

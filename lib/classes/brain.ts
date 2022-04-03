@@ -1,8 +1,16 @@
 /* eslint-disable no-prototype-builtins */
-import { Connection } from "@interfaces/connection.interface";
-import { Action, actionList } from "@actions/action";
+
+// * classes
 import { InnerNeuron } from "@classes/neuron";
+
+// * actions
+import { Action, actionList } from "@actions/action";
+
+// * sensors
 import { Sensor, sensorList } from "@sensors/sensor";
+
+// * interfaces
+import { Connection } from "@interfaces/connection.interface";
 import { Genome } from "@interfaces/genome.interface";
 import { Sensation } from "@interfaces/sensation.interface";
 
