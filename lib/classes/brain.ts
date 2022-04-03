@@ -15,6 +15,16 @@ import { Genome } from "@interfaces/genome.interface";
 import { Sensation } from "@interfaces/sensation.interface";
 
 
+/**
+ * Brain of a node
+ * @property {@link Genome} - structure determining the node's behaviour
+ * @property {@link Sensation} - any input a node can receive (position, age, etc)
+ * @property actionFunctions - map of action names to action functions
+ * @property {@link Sensor sensors} - map of sensors
+ * @property {@link InnerNeuron innerNeurons} - map of inner neurons
+ * @property {@link Action actions} - map of actions
+ * @property {string[]} innerNeuronsFireOrder - order in which inner neurons fire
+ */
 export class Brain {
     private sensors : { [key : string] : Sensor } = {};
     private innerNeurons : { [key : string] : InnerNeuron } = {};
@@ -63,6 +73,11 @@ export class Brain {
 
     }
 
+    /**
+     * Firstly, invokes all sensors.
+     * Then, invokes all inner neurons according to the genome's fire order.
+     * Finally, invokes the action with highest absolute input.
+     */
     public compute() {
         // ? fire sensors
         for(const [, sensor] of Object.entries(this.sensors)) {

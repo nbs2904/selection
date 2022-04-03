@@ -6,7 +6,13 @@ import * as moveActions from "@actions/move.action";
 
 
 /**
- * @class Action - Base class for actions 
+ * Actions function as the output neruons of a node's genome
+ * @extends {{@link Neuron}
+ * @property {string} id
+ * @property {number} bias ranges between -BIAS_RANGE and BIAS_RANGE (env file)
+ * @property {number} input - neurons can receive input from other neurons
+ * @property {(input : number) => number} activationFunction
+ * @property {(input? : number) => Promise<void>} actionFunction - bound function to node that will be called when action fires
 */
 export class Action extends Neuron {
     public input = 0;
@@ -17,11 +23,18 @@ export class Action extends Neuron {
 
         this.actionFunction = actionFunction;
     }
-
+    
+    /**
+     * @returns {number} input and bias that have been passed through the activation function
+    */
     public get output() : number {
         return this.activationFunction(this.input + this.bias);
     }
     
+    /**
+     *  invokes actionFunction, causing node to change state 
+     * 
+    */
     public fire() {
         if(this.output < 0) {
             this.actionFunction(-1);
@@ -31,6 +44,9 @@ export class Action extends Neuron {
     }
 }
 
+/**
+ * map of action names to actions
+ */
 export const actionList = {
     "MoveRnd": moveActions.moveRnd,
     "MoveFwd": moveActions.moveFwd,
