@@ -1,7 +1,12 @@
 // * logger
 const logger = require("@config/log4js").color;
 
-
+/**
+ * Color object
+ * @property {number} r - red component (0-255)
+ * @property {number} g - green component (0-255)
+ * @property {number} b - blue component (0-255)
+ */
 export class Color {
     public r : number;
     public g : number;

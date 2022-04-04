@@ -29,7 +29,6 @@ export class Brain {
     private sensors : { [key : string] : Sensor } = {};
     private innerNeurons : { [key : string] : InnerNeuron } = {};
     private actions : { [key : string] : Action } = {};
-
     private innerNeuronsFireOrder : string[] = [];
 
     constructor(genome : Genome, sensation : Sensation, actionFunctions : { [key : string] : () => void }) {

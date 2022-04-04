@@ -31,7 +31,18 @@ const CONNECTION_WEIGHT_RANGE = +(process.env.CONNECTION_WEIGHT_RANGE || 50) as 
 const BIAS_RANGE = +(process.env.BIAS_RANGE || 50) as number;
 const MAX_NUMBER_INNER_NEURONS = +(process.env.MAX_NUMBER_INNER_NEURONS || 4) as number;
 
+// TODO jede function die in constructor übergeben wird nur als "mehtod" wir in der jsdoc hier kennzeichnen
 
+/**
+ * Instances respresent an independent entity that can be spawned onto a grid.
+ * @property {string} id
+ * @property {number} lifespan - number of steps before the node dies
+ * @property {method} updateNodePosition - function is bound to the simulation and is called every step
+ * @property {@link Sensation} - list of sensations that the node is currently experiencing
+ * @property {@link Genome} - genome of the node
+ * @property {@link Brain} - brain of the node
+ * @property {@link Color} - Color of the node
+ */
 export class Node {
     public id : string;
     public lifespan = +process.env.STEP_PER_GENERATION || 200;
@@ -68,7 +79,7 @@ export class Node {
 
     /**
      * Getter function for x coordinate
-     * @returns - x coordinate
+     * @returns x coordinate
      */
 
     public get x() : number {
@@ -77,39 +88,51 @@ export class Node {
 
     /**
      * Getter function for y coordinate
-     * @returns - y coordinate
+     * @returns y coordinate
      */
     public get y() : number {
         return this.sensation.y;
     }
     
     /**
-     * Getter function to read color of node
+     * Getter function to receive color of node
      * @returns Color
      */
     public get getColor() : Color {
         return this.color;
     }
 
+    /**
+     * Getter function for age of node
+     * @returns age
+     */
     public get getAge() : number {
         return this.sensation.age;
     }
 
+    /**
+     * Getter function of {@link Sensation} object of node
+     * @returns Sensation
+     */
     public get getSensation() : Sensation {
         return this.sensation;
     }
 
+    /**
+     * Invokes brain.compute() and increases age of node by one
+     */
     public act() {
         this.brain.compute();
         this.sensation.age++;
     }
     
-    /**
-     * 
-     * @param direction gives direction to move towards
-     */
+    
     // TODO Test cases:
     // TODO cause error
+    /**
+     * moves node along x axis by one step
+     * @param {number} direction - can be either 1 or -1
+     */
     public async moveX(direction : number) {
         if(direction != 1 && direction != -1) {
             logger.error("Input of function moveX must be either 1 or -1.");
@@ -124,20 +147,15 @@ export class Node {
 
             // ? update lastDirection
             this.sensation.lastDirection = new Position(direction, 0);
-
-            // logger.info("One step closer to freedom");
-        } 
-        // else {
-        //     logger.warn("Cannot move");
-        // }
+        }
     }
     
-    /**
-     * 
-     * @param direction gives direction to move towards
-     */
     // TODO Test cases:
-    // TODO cause error
+    // TODO cause error    
+    /**
+     * moves node along y axis by one step
+     * @param {number} direction - can be either 1 or -1
+     */
     public async moveY(direction : number) {
         if(direction != 1 && direction != -1) {
             logger.error("Input of function moveY must be either 1 or -1.");
@@ -152,14 +170,12 @@ export class Node {
 
             // ? update lastDirection
             this.sensation.lastDirection = new Position(0, direction);
-
-            // logger.info("One step closer to freedom");
-        } 
-        // else {
-        //     logger.warn("Cannot move");
-        // }
+        }
     }
 
+    /**
+     * moves node in the direction it moved during the last step
+     */
     public async moveFwd() {
         if(this.sensation.lastDirection.x && this.sensation.lastDirection.y) {
             throw new Error(`lastDirection must only point in one direction: { x: ${this.sensation.lastDirection.x}, y: ${this.sensation.lastDirection.y} }`);
@@ -170,13 +186,12 @@ export class Node {
         if(this.updateNodePosition(this, newPosition)) {
             this.sensation.x = newPosition.x;
             this.sensation.y = newPosition.y;
-            // logger.info("One step closer to freedom");
-        } 
-        // else {
-        //     logger.warn("Cannot move");
-        // }
+        }
     }
 
+    /**
+     * moves node in the opposite direction it moved during the last step
+     */
     public async moveBwd() {
         if(this.sensation.lastDirection.x && this.sensation.lastDirection.y) {
             throw new Error(`lastDirection must only point in one direction: { x: ${this.sensation.lastDirection.x}, y: ${this.sensation.lastDirection.y} }`);
@@ -187,13 +202,12 @@ export class Node {
         if(this.updateNodePosition(this, newPosition)) {
             this.sensation.x = newPosition.x;
             this.sensation.y = newPosition.y;
-            // logger.info("One step closer to freedom");
-        } 
-        // else {
-        //     logger.warn("Cannot move");
-        // }
+        }
     }
 
+    /**
+     * moves node in a random direction
+     */
     public async moveRnd() {
         const axis = randomInteger(1);
         let direction = randomInteger(1);
@@ -222,14 +236,16 @@ export class Node {
 
             // ? update lastDirection
             this.sensation.lastDirection = new Position(xDirection, yDirection);
-
-            // logger.info("One step closer to freedom");
-        } 
-        // else {
-        //     logger.warn("Cannot move");
-        // }
+        }
     }
 
+    /**
+     * Copies genome when a new offspring is spawned. 
+     * The MUTATE_PROBABILITY (env file) determines how likley a mutation will occur during every step.
+     * @returns object:
+     * { genome: {@link Genome},
+     * hasMutated: {boolean} }
+     */
     public copyGenome() : { genome : Genome, hasMutated : boolean } {
         // TODO add another connection by chance
 
@@ -358,6 +374,11 @@ export class Node {
     
     }
 
+    /**
+     * Generates an offspring.
+     * @param {method} cellOccupied - Method is bound to a simulation instance, to check whether a cell is already occupied before spawning the offspring onto the grid.
+     * @returns {Node} the offspring
+     */
     public reproduce(cellOccupied : (position : Position) => boolean) : Node {
         const id = nanoid(10);
         const { genome: genomeCopy, hasMutated: hasMutated } = this.copyGenome();
@@ -389,6 +410,10 @@ export class Node {
         return new Node(id, genomeCopy, position, color);
     }
 
+    /**
+     * Stores the genome of the node as a JSON file.
+     * @param {string} simulationId - Genome is stored in a folder with the name of the simulation Id.
+     */
     public storeGenome(simulationId : string) {
         saveGenome(this.genome, this.id, `lib/simulations/${simulationId}`);
     }
