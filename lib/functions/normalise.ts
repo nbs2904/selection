@@ -2,6 +2,13 @@
 const CONNECTION_WEIGHT_RANGE = +(process.env.CONNECTION_WEIGHT_RANGE || 2) as number;
 const BIAS_RANGE = +(process.env.BIAS_RANGE || 0) as number;
 
+/**
+ * normalises given input to be between -1 and 1
+ * @param lowerBound - lower bound of the range
+ * @param upperBound - upper bound of the range
+ * @param {boolean} weightBiasAdapted - whether to adapt the range to the weight/bias of neurons
+ * @returns function that normalises given input to be between -1 and 1
+ */
 export function normalise(lowerBound : number, upperBound : number, weightBiasAdapted : boolean) {
     if(upperBound < lowerBound) {
         throw new Error("upper bound needs to be bigger than lower bound");

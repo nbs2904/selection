@@ -1,3 +1,4 @@
+import { Level } from "./../types/level.type";
 import { randomGenome } from "@utility/randomGenome";
 import { nanoid } from "nanoid";
 
@@ -16,7 +17,6 @@ import { Position } from "@classes/position";
 import { NodeList } from "@interfaces/nodeList.interface";
 import { sleep } from "@utility/sleep";
 import { Socket } from "socket.io";
-import { Level } from "@customTypes/level.type";
 
 // * config
 const MAX_GENERATION = +(process.env.MAX_GENERATION || 500) as number;
@@ -25,7 +25,15 @@ const FPS = +(process.env.FPS || 60) as number;
 const GRID_SIZE = +(process.env.GRID_SIZE || 50) as number;
 const POPULATION = +(process.env.POPULATION || 100) as number;
 
-
+/**
+ * Simulation class serves as a playing field for neurons.
+ * @property {@link NodeList} nodes - Map of all nodes in the simulation. The respective key is the node's id.
+ * @property {@link Cell Cell[][]} grid - 2D array of cells.
+ * @property {number} currentGeneration - Current generation of the simulation. Number of steps in one generation is defined in as STEPS_PER_GENERATION (env).
+ * @property {number} currentStep - Current step of a generation. It increases by one after every living node has taken one step.
+ * @property {number} livingNodesCount - Number of living nodes in the simulation.
+ * @property {@link Level} - Defines a specific area of the grid. At the end of each generation each node outside of that area dies.
+ */
 export class Simulation {
     public nodes : NodeList = {};
     public grid : Cell[][] = [];
@@ -51,15 +59,19 @@ export class Simulation {
     }
 
     // * function Overloading ---------------------------------------
+    /**
+     * @param x - x coordinate of the cell
+     * @param y - y coordinate of the cell
+     * @returns {boolean} whether cell is occupied
+     */
     public cellOccupied(x : number, y : number) : boolean;
+
+    /**
+     * @param position - position of the node
+     * @returns {boolean} whether cell is occupied
+     */
     public cellOccupied(position : Position) : boolean;
     
-    /**
-     * Checks if cell is already occupied
-     * @param xOrPosition first paramter is either x : number or position : Position
-     * @param y second parameter is optional
-     * @returns boolean
-     */
     // TODO Test cases:
     // TODO cell occupied
     // TODO node off-grid
@@ -87,8 +99,8 @@ export class Simulation {
     /**
      * removes node from the cell it was before and updates new cell
      * @param node - contains the new position to update new cell
-     * @param oldPosition - contains old position to reset old cell
-     * @throws {CellOccupied} - if new postition is already occupied grid won't be updated
+     * @param newPosition - contains new position node shall be moved to
+     * @returns {boolean} whether position of node was successfully updated
      */
     public updateNodePosition(node : Node, newPosition : Position) : boolean {
         if(this.cellOccupied(newPosition)) {
@@ -103,7 +115,8 @@ export class Simulation {
 
     /**
      * spawns a new node onto the grid
-     * @returns new node
+     * @param node to be spawned, if parameter is not provided a new node will be generated
+     * @returns spawned node
      */
     public spawnNode(node? : Node) : Node {
         if (this.livingNodesCount === GRID_SIZE * GRID_SIZE) {
@@ -149,6 +162,10 @@ export class Simulation {
 
     }
 
+    /**
+     * Invokes each node's step function and updates the grid.
+     * @param socket - socket to emit data to
+     */
     public step(socket : Socket) {
         logger.info(`Generation: ${this.currentGeneration}, Step: ${this.currentStep}, Nodes: ${this.livingNodesCount}`);
         for (const [, node] of Object.entries(this.nodes)) {
@@ -159,6 +176,10 @@ export class Simulation {
         this.currentStep++;
     }
 
+    /**
+     * Simulates entire generation by invoking each node's step function times STEPS_PER_GENERATION.
+     * @param socket - socket to emit data to
+     */
     public async generation(socket : Socket) {
         const sleepInterval = Math.ceil(1 / FPS * 1000);
         for (let step = 0; step < STEPS_PER_GENERATION; step++) {
@@ -170,6 +191,10 @@ export class Simulation {
         this.currentStep = 0;
     }
 
+    /**
+     * Starts simulation
+     * @param socket - socket to emit data to
+     */
     public async run(socket : Socket) {
         // ? fill population with random Nodes until maximum is reached
         while (POPULATION > this.livingNodesCount) {
@@ -223,6 +248,10 @@ export class Simulation {
         this.storeGenomes();
     }
 
+    /**
+     * @param node - node to be checked
+     * @returns boolean whether node is inside the grid's boundaries
+     */
     private nodeInsideBoundaries(node : Node) : boolean {
         for (const square of this.level) {
             if(square[0] <= node.x && node.x <= square[2] && square[1] <= node.y && node.y <= square[3]){
@@ -233,6 +262,9 @@ export class Simulation {
         return false;
     }
 
+    /**
+     * stores genome of every surviving node
+     */
     public storeGenomes() {
         try {
             const simulationId = new Date().toISOString().replace(/T|\..+|:|-/g, "");
