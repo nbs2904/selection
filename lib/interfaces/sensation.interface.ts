@@ -2,9 +2,12 @@
 import { Position } from "@classes/position";
 
 export interface Sensation {
+    /** x coordinate of node */
     x? : number;
+    /** y coordinate of node */
     y? : number;
+    /** age of node */
     age? : number;
-    /** Position class is used as a vector.*/
+    /** last direction node moved (class Position used as a vector)*/
     lastDirection? : Position
 }
