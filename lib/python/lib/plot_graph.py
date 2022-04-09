@@ -3,6 +3,10 @@ from config.config import *
 
 
 def plot_graph(graph, output):
+    '''
+        @param graph: graph object
+        @param output: output file
+    '''
     if len(graph.vs) < 6:
         bbox = (400, 400)
         layout = 'fruchterman_reingold'

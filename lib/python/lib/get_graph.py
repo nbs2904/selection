@@ -5,6 +5,11 @@ print(config)
 
 
 def get_graph(genome):
+    '''
+        Generates a graph based on given genom
+        @param genome: genome in json format
+        @return: graph object
+    '''
     graph = Graph(directed=True)
 
     # ? add sensors
