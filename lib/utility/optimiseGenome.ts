@@ -15,7 +15,11 @@ import { Genome } from "@interfaces/genome.interface";
 // * utility
 import { equals } from "@utility/equals";
 
-
+/**
+ * Determines fire order of a genome's inner neurons.
+ * @param  genome {@link Genome} to optimise 
+ * @returns {string[]} array of neuron ids in fire order
+ */
 export function getFireOrder (genome : Genome) : string[]{
     const potentials : {
         [key : string] : Potential
@@ -108,6 +112,14 @@ export function getFireOrder (genome : Genome) : string[]{
     return fireOrder;
 }
 
+/**
+ * Removes unnecessary neurons or connections from a genome. Based on following factors:
+ * - neurons with no incoming connections
+ * - neurons with no outgoing connections
+ * - whether the following neuron of one neuron or sensor has already been fired.
+ * @param genome {@link Genome} to streamline
+ * @returns optmised {@link Genome}	
+ */
 export function streamlineGenome(genome : Genome) : Genome {
     let fireOrder : string[] = [];
     let changesMade = 1;
@@ -241,6 +253,11 @@ export function streamlineGenome(genome : Genome) : Genome {
 // ? sort by:
 // ?    - neuron potential, the neuron with the highest potential will fire next
 // ?    - if multiple neurons have the same potential the one with the most connections will fire next
+/**
+ * Sorting algorithm used to determine fire order of inner neurons. Neurons are sorted by following criteria:
+ * 1. Neuron with the highest potential will fire first
+ * 2. If multiple neurons have the same potential the one with the most connections will fire first
+ */
 function sortFunction(firstNeuron : { id: string, potential: Potential }, secondNeuron : { id: string, potential: Potential }) {
     if(firstNeuron.potential.potential !== secondNeuron.potential.potential) {
         return secondNeuron.potential.potential - firstNeuron.potential.potential;
