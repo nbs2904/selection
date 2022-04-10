@@ -1,11 +1,16 @@
+import { actionNames } from "./../actions/action";
+import { sensorNames } from "./../sensors/sensor";
 // * interfaces
 import { Config } from "@interfaces/config.interface";
 
 // * logger
 const logger = require("@config/log4js").utility;
 
-
-export function validateConfig(config : Config) {
+/**
+ * @param config {@link Config} to validate
+ * @returns boolean whether config is valid
+ */
+export function validateConfig(config : Config) : boolean {
     try {
         if (!("PORT" in config)) throw new Error("PORT seems to be missing in your configuration. Please refer to the .env file in your root directory.");
         if (!("PXL_HEIGHT" in config)) throw new Error("PXL_HEIGHT seems to be missing in your configuration. Please refer to the .env file in your root directory.");
@@ -37,6 +42,11 @@ export function validateConfig(config : Config) {
         if (!Number(config.MAX_CONNECTIONS)) throw new Error("MAX_CONNECTIONS must be a number.");
         if (!Number(config.CONNECTION_WEIGHT_RANGE)) throw new Error("CONNECTION_WEIGHT_RANGE must be a number.");
         if (!Number(config.BIAS_RANGE)) throw new Error("BIAS_RANGE must be a number.");
+
+        if(config.MIN_NUMBER_GENOME_SIZE > config.MAX_NUMBER_GENOME_SIZE) throw new Error("MIN_NUMBER_GENOME_SIZE must be smaller than MAX_NUMBER_GENOME_SIZE.");
+        if(config.MAX_NUMBER_INNER_NEURONS > +config.MIN_NUMBER_GENOME_SIZE - 2) throw Error("MAX_NUMBER_INNER_NEURONS must be smaller than MIN_NUMBER_GENOME_SIZE by at least 2.");
+        if(+config.MAX_NUMBER_INNER_NEURONS + sensorNames.length + actionNames.length < config.MIN_NUMBER_GENOME_SIZE) throw Error("MIN_NUMBER_GENOME_SIZE is too big to generate a valid genome.");
+        if(config.MIN_NUMBER_GENOME_SIZE < 2) throw Error("MIN_NUMBER_GENOME_SIZE must be at least 2.");
 
         return true;
         

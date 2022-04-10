@@ -250,9 +250,6 @@ export function streamlineGenome(genome : Genome) : Genome {
 }
 
 
-// ? sort by:
-// ?    - neuron potential, the neuron with the highest potential will fire next
-// ?    - if multiple neurons have the same potential the one with the most connections will fire next
 /**
  * Sorting algorithm used to determine fire order of inner neurons. Neurons are sorted by following criteria:
  * 1. Neuron with the highest potential will fire first

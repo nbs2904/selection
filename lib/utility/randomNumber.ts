@@ -1,8 +1,8 @@
 /**
- * 
- * @param max upper boundary which is included
- * @param min lower boundary which is included (0 if omitted)
- * @returns pseudo random integer between given boundaries
+ * Generates pseudo-random number between min and max (inclusive)
+ * @param max included
+ * @param min included (0 if omitted)
+ * @returns integer
  */
 export function randomInteger(max : number, min? : number) {
     max++;
@@ -10,6 +10,12 @@ export function randomInteger(max : number, min? : number) {
     return Math.floor(Math.random() * (max - min) + min);
 }
 
+/**
+ * Generates pseudo-random number between min and max (inclusive)
+ * @param max included
+ * @param min included (0 if omitted)
+ * @returns float
+ */
 export function randomFloat(max : number, min? : number) {
     min = min || 0;
 

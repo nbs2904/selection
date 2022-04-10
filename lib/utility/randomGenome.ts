@@ -23,22 +23,10 @@ const MAX_CONNECTIONS = +(process.env.MAX_CONNECTIONS || 10) as number;
 const CONNECTION_WEIGHT_RANGE = +(process.env.CONNECTION_WEIGHT_RANGE || 8) as number;
 const BIAS_RANGE = +(process.env.BIAS_RANGE || 8) as number;
 
-
-
-if(MIN_NUMBER_GENOME_SIZE > MAX_NUMBER_GENOME_SIZE) {
-    logger.error("MIN_NUMBER_GENOME_SIZE must be smaller than MAX_NUMBER_GENOME_SIZE, please adjust the config file.");
-    throw new Error("Invalid Config");
-} else if(MAX_NUMBER_INNER_NEURONS > MIN_NUMBER_GENOME_SIZE - 2) {
-    logger.error("MAX_NUMBER_INNER_NEURONS must be smaller than MIN_NUMBER_GENOME_SIZE by at least two, please adjust the config file.");
-    throw new Error("Invalid Config");
-} else if(MAX_NUMBER_INNER_NEURONS + sensorNames.length + actionNames.length < MIN_NUMBER_GENOME_SIZE) {
-    logger.error("MIN_NUMBER_GENOME_SIZE is too big to generate a valid genome. Please either decrease the minial length of a genome or consider increasing the number of inner neurons.");
-    throw new Error("Invalid Config");
-} else if(MIN_NUMBER_GENOME_SIZE < 2) {
-    logger.error("MIN_NUMBER_GENOME_SIZE must be bigger than 1, please adjust the config file.");
-    throw new Error("Invalid Config");
-}
-
+/**
+ * Generates a random genome according to config file in the root directory. (.env)
+ * @returns {{{@link Genome
+ */
 export function randomGenome() : Genome{
     const genome : Genome = {
         sensors: {},
