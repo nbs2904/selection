@@ -91,7 +91,7 @@ beforeEach(() => {
     simulation.spawnNode(node);
 });
 
-describe("Test Node Class Instantiation", () => {
+describe("Classes - Node: Instantiation", () => {
     test("Initialize Node Instance", () => {
         node = new Node("456", genome, new Position(0, 0), new Color(200, 200, 200));
         
@@ -104,7 +104,7 @@ describe("Test Node Class Instantiation", () => {
 
 });
 
-describe("Test Node Get Functions", () => {
+describe("Classes - Node: Getter Functions", () => {
     test("Get Node Position",() => {
         expect(node.x).toBe(10);
         expect(node.y).toBe(1);
@@ -121,7 +121,7 @@ describe("Test Node Get Functions", () => {
     });
 });
 
-describe("Test Node Action Functions", () => {
+describe("Classes - Node: Action Functions", () => {
     test.todo("Move Node in x-direction");
     test.todo("Move Node in y-direction");
 });

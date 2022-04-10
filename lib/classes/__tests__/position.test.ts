@@ -1,6 +1,6 @@
 import { Position } from "../position";
 
-describe("Test Position Class", () => {
+describe("Classes - Position", () => {
     test("Initialize Position Instance", () => {
         const position = new Position(10, 20);
 

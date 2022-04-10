@@ -1,6 +1,6 @@
 import { Color } from "../color";
 
-describe("Test Color Class", () => {
+describe("Classes - Color", () => {
     test("Initialize Color Instance", () => {
         const color = new Color(1, 2, 3);
 
