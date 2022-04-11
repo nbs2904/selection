@@ -1,10 +1,11 @@
-import { actionNames } from "./../actions/action";
-import { sensorNames } from "./../sensors/sensor";
 // * interfaces
 import { Config } from "@interfaces/config.interface";
 
 // * logger
-const logger = require("@config/log4js").utility;
+const logger = require("@config/log4js").utils;
+
+import { actionNames } from "./../actions/action";
+import { sensorNames } from "./../sensors/sensor";
 
 /**
  * @param config {@link Config} to validate

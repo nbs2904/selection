@@ -11,8 +11,6 @@ import { Genome } from "@interfaces/genome.interface";
 import { randomFloat, randomInteger } from "@utility/randomNumber";
 import { streamlineGenome } from "@utility/optimiseGenome";
 
-// * logger
-const logger = require("@config/log4js").utils;
 
 // * config
 const MAX_NUMBER_INNER_NEURONS = +(process.env.MAX_NUMBER_INNER_NEURONS || 6) as number;
