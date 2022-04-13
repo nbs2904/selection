@@ -199,11 +199,11 @@ export function streamlineGenome(genome : Genome) : Genome {
                 // ? if action does not exist, remove connection
                 delete genome.sensors[sensorId].connections[connectingNeuronId];
             }
+        }
             
-            // ? if sensor has no connections left an invalid one has been removed, delete the sensor
-            if(Object.keys(genome.sensors[sensorId].connections).length === 0) {
-                delete genome.sensors[sensorId];
-            }
+        // ? if sensor has no connections left after invalid ones has been removed, delete the sensor
+        if(Object.keys(genome.sensors[sensorId].connections).length === 0) {
+            delete genome.sensors[sensorId];
         }
     }
 
@@ -255,10 +255,40 @@ export function streamlineGenome(genome : Genome) : Genome {
  * 1. Neuron with the highest potential will fire first
  * 2. If multiple neurons have the same potential the one with the most connections will fire first
  */
-function sortFunction(firstNeuron : { id: string, potential: Potential }, secondNeuron : { id: string, potential: Potential }) {
+export function sortFunction(firstNeuron : { id: string, potential: Potential }, secondNeuron : { id: string, potential: Potential }) {
     if(firstNeuron.potential.potential !== secondNeuron.potential.potential) {
         return secondNeuron.potential.potential - firstNeuron.potential.potential;
     }
 
     return secondNeuron.potential.connections - firstNeuron.potential.connections;
 }
+const genome = {
+    sensors: {
+        "XPos": {
+            bias: 1.679,
+            connections: {
+                "MoveBwd": 0.3669,
+                "Neuron 1": 1.5729,
+            }
+        },
+        "Age": {
+            bias: -1.9818,
+            connections: {}
+        }
+    },
+    innerNeurons: {
+        "Neuron 1": {
+            bias: -1.7146,
+            connections: {
+                "MoveBwd": -2.4429,
+            }
+        }
+    },
+    actions: {
+        "MoveBwd": {
+            bias: 1.4586,
+        }
+    },
+};
+
+streamlineGenome(genome);
