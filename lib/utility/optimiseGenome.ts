@@ -262,33 +262,3 @@ export function sortFunction(firstNeuron : { id: string, potential: Potential },
 
     return secondNeuron.potential.connections - firstNeuron.potential.connections;
 }
-const genome = {
-    sensors: {
-        "XPos": {
-            bias: 1.679,
-            connections: {
-                "MoveBwd": 0.3669,
-                "Neuron 1": 1.5729,
-            }
-        },
-        "Age": {
-            bias: -1.9818,
-            connections: {}
-        }
-    },
-    innerNeurons: {
-        "Neuron 1": {
-            bias: -1.7146,
-            connections: {
-                "MoveBwd": -2.4429,
-            }
-        }
-    },
-    actions: {
-        "MoveBwd": {
-            bias: 1.4586,
-        }
-    },
-};
-
-streamlineGenome(genome);

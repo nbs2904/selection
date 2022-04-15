@@ -30,8 +30,16 @@ describe("Classes - Cell", () => {
         testCell.update(false, new Color(4, 5, 6));
 
         expect(testCell.occupied).toBe(false);
-    });
+        expect(testCell.color.r).toBe(4);
+        expect(testCell.color.g).toBe(5);
+        expect(testCell.color.b).toBe(6);
 
+        testCell.update(true);
+
+        expect(testCell.occupied).toBe(true);
+        expect(testCell.color).toBeUndefined();
+    });
+    
     test("Reset Cell", () => {
         const testCell = new Cell(true, new Color(1, 2, 3));
 

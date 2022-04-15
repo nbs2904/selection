@@ -9,10 +9,10 @@ export class Potential {
     public signalsTotal : number;
     public connections : number;
 
-    constructor() {
-        this.signalsReceived = 0;
-        this.signalsTotal = 0;
-        this.connections = 0;
+    constructor(signalsReceived = 0, signalsTotal = 0, connections = 0) {
+        this.signalsReceived = signalsReceived;
+        this.signalsTotal = signalsTotal;
+        this.connections = connections;
     }
 
     /**
