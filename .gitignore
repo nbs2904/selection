@@ -1,5 +1,6 @@
 # folder
 .vscode
+coverage
 env
 build
 node_modules
