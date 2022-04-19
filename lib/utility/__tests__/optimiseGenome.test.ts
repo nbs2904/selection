@@ -2,6 +2,7 @@
 import { Potential } from "@classes/potential";
 import { Genome } from "@interfaces/genome.interface";
 
+
 // * utilities
 import { getFireOrder, streamlineGenome, sortFunction } from "@utility/optimiseGenome";
 
@@ -29,8 +30,7 @@ describe("Utility - getFireOrder", () => {
                 YPos: {
                     bias: 1.0448,
                     connections: {
-                        "Neuron 1": 0.5395,
-                        MoveBwd: 2.1868,
+                        "Neuron 1": 0.5395
                     },
                 },
             },
@@ -45,9 +45,16 @@ describe("Utility - getFireOrder", () => {
                 "Neuron 1": {
                     bias: -1.7146,
                     connections: {
+                        "Neuron 2": -0.9078,
                         MoveBwd: -2.4429,
                     },
                 },
+                "Neuron 2": {
+                    bias: -1.9078,
+                    connections: {
+                        "MoveBwd": -1.7146,
+                    }
+                }
             },
             actions: {
                 MoveBwd: {
@@ -57,7 +64,7 @@ describe("Utility - getFireOrder", () => {
         };
 
         expect(getFireOrder(genome)).toEqual(
-            ["Neuron 0", "Neuron 1"]
+            ["Neuron 0", "Neuron 1", "Neuron 2"]
         );
     });
 });
@@ -240,9 +247,158 @@ describe("Utility - streamlineGenome", () => {
         expect(streamlinedGenome.innerNeurons["Neuron 2"]).toBeUndefined();
         expect(streamlinedGenome.actions["MoveX"]).toBeUndefined();
     });
+
+    test("Remove sensor which does not exist", () => {
+        const genome : Genome = {
+            sensors: {
+                "Age": {
+                    bias: 0,
+                    connections: {
+                        "Neuron 1": 1.02,
+                        "Neuron 2": 1.02,
+                    }
+                },
+                "foo": {
+                    bias: 1,
+                    connections: {
+                        "Neuron 1": 1.02,
+                        "Neuron 2": 1.02,
+                    }
+                }
+            },
+            innerNeurons: {
+                "Neuron 1": {
+                    bias: 2.01,
+                    connections: {
+                        "MoveY": 1.02,
+                    }
+                },
+                "Neuron 2": {
+                    bias: 2.01,
+                    connections: {
+                        "MoveY": 1.02,
+                    }
+                }
+            },
+            actions: {
+                "MoveY": {
+                    bias: 3.98
+                }
+            }
+        };
+
+        const streamlinedGenome : Genome = streamlineGenome(genome);
+
+        expect(streamlinedGenome.sensors["foo"]).toBeUndefined();
+    });
+
+    test("Remove action which does not exist", () => {        
+        const genome : Genome = {
+            sensors: {
+                "Age": {
+                    bias: 0,
+                    connections: {
+                        "Neuron 1": 1.02,
+                        "Neuron 2": 1.02,
+                    }
+                }
+            },
+            innerNeurons: {
+                "Neuron 1": {
+                    bias: 2.01,
+                    connections: {
+                        "MoveY": 1.02,
+                    }
+                },
+                "Neuron 2": {
+                    bias: 2.01,
+                    connections: {
+                        "MoveY": 1.02,
+                    }
+                }
+            },
+            actions: {
+                "MoveY": {
+                    bias: 3.98
+                },
+                "foo": {
+                    bias: 1.02
+                }
+            }
+        };
+
+        const streamlinedGenome : Genome = streamlineGenome(genome);
+
+        expect(streamlinedGenome.actions["foo"]).toBeUndefined();
+    });
+
+    test("Remove connection from sensor that is not included in genome", () => {       
+        const genome : Genome = {
+            sensors: {
+                "Age": {
+                    bias: 0,
+                    connections: {
+                        "Neuron 1": 1.02,
+                        "MoveX": 1.02,
+                    }
+                }
+            },
+            innerNeurons: {
+                "Neuron 1": {
+                    bias: 2.01,
+                    connections: {
+                        "MoveY": 1.02,
+                    }
+                }
+            },
+            actions: {
+                "MoveY": {
+                    bias: 3.98
+                }
+            }
+        };
+
+        const streamlinedGenome = streamlineGenome(genome);
+
+        expect(streamlinedGenome.sensors["Age"].connections["MoveX"]).toBeUndefined();
+
+    });
+    
+
+    test("Remove connection from neuron that is not included in genome", () => {       
+        const genome : Genome = {
+            sensors: {
+                "Age": {
+                    bias: 0,
+                    connections: {
+                        "Neuron 1": 1.02
+                    }
+                }
+            },
+            innerNeurons: {
+                "Neuron 1": {
+                    bias: 2.01,
+                    connections: {
+                        "MoveY": 1.02,
+                        "MoveX": 1.02,
+                        "XPos": 1.02,
+                    }
+                }
+            },
+            actions: {
+                "MoveY": {
+                    bias: 3.98
+                }
+            }
+        };
+
+        const streamlinedGenome = streamlineGenome(genome);
+
+        expect(streamlinedGenome.innerNeurons["Neuron 1"].connections["MoveX"]).toBeUndefined();
+        expect(streamlinedGenome.innerNeurons["Neuron 1"].connections["XPos"]).toBeUndefined();
+    });
 });
 
-// TODO test sortFunction()
 describe("Utility - sortFunction", () => {
     test("Sort Neurons according to their potential", () => {
         const testArray = [

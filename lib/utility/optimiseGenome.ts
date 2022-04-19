@@ -79,6 +79,7 @@ export function getFireOrder (genome : Genome) : string[]{
         // ? update potentials
         for(const [connectingNeuronId] of Object.entries(genome.innerNeurons[unfiredNeurons[0].id].connections)) {
             if(!sensorNames.includes(connectingNeuronId) && !actionNames.includes(connectingNeuronId) && !fireOrder.includes(connectingNeuronId)) {
+                potentials[connectingNeuronId].signalsTotal++;
                 potentials[connectingNeuronId].signalsReceived++;                        
             }
         }
@@ -89,8 +90,14 @@ export function getFireOrder (genome : Genome) : string[]{
         // ? "fire" every neuron whose potential is 1
         for (let index = 0; index < unfiredNeurons.length; index++) {
             const neuron = unfiredNeurons[index];
-    
+            
+            console.log(neuron);
+            
+            console.log(neuron.potential);
+            
             if(neuron.potential.potential === 1) {
+                console.log("reached" + " " + neuron.id);
+                
                 fireOrder.push(neuron.id);
                 unfiredNeurons.splice(index, 1);
                 index--;
@@ -111,6 +118,55 @@ export function getFireOrder (genome : Genome) : string[]{
 
     return fireOrder;
 }
+
+const genome : Genome = {
+    sensors: {
+        XPos: {
+            bias: 1.679,
+            connections: {
+                MoveBwd: 0.3669,
+                "Neuron 1": 1.5729,
+                "Neuron 0": -0.8679,
+            },
+        },
+        Age: {
+            bias: -1.9818,
+            connections: {
+                "Neuron 0": -1.1456,
+                "Neuron 1": 3.6202,
+                MoveBwd: 0.5349,
+            },
+        },
+        YPos: {
+            bias: 1.0448,
+            connections: {
+                "Neuron 1": 0.5395
+            },
+        },
+    },
+    innerNeurons: {
+        "Neuron 0": {
+            bias: -2.661,
+            connections: {
+                "Neuron 1": 2.0169,
+                MoveBwd: 2.9584,
+            },
+        },
+        "Neuron 1": {
+            bias: -1.7146,
+            connections: {
+                MoveBwd: -2.4429,
+            },
+        }
+    },
+    actions: {
+        MoveBwd: {
+            bias: 1.4586,
+        },
+    }
+};
+
+const test = getFireOrder(genome);
 
 /**
  * Removes unnecessary neurons or connections from a genome. Based on following factors:
@@ -201,8 +257,8 @@ export function streamlineGenome(genome : Genome) : Genome {
             }
         }
             
-        // ? if sensor has no connections left after invalid ones has been removed, delete the sensor
-        if(Object.keys(genome.sensors[sensorId].connections).length === 0) {
+        // ? if sensor has no connections left after invalid ones has been removed or sensor does not exist in sensorNames, delete the sensor
+        if(Object.keys(genome.sensors[sensorId].connections).length === 0 || !(sensorNames.includes(sensorId))) {
             delete genome.sensors[sensorId];
         }
     }
@@ -216,7 +272,8 @@ export function streamlineGenome(genome : Genome) : Genome {
         // ? count neuron connections to action
         connectionToActionCount += Object.entries(genome.innerNeurons).filter(([, neuron]) => {if (actionId in neuron.connections) return true;}).length;
 
-        if (connectionToActionCount === 0) {
+        // ? if no connections to action or action does not exist in actionNames, delete action
+        if (connectionToActionCount === 0 || !(actionNames.includes(actionId))) {
             delete genome.actions[actionId];
         }
     }
@@ -224,24 +281,24 @@ export function streamlineGenome(genome : Genome) : Genome {
     
     // ? check if connections are valid
     // ? every sensor
-    for (const [, sensor] of Object.entries(genome.sensors)) {
-        for (const [connectionName] of Object.entries(sensor.connections)) {
-            if (!(connectionName in genome.innerNeurons || connectionName in genome.actions)) {
-                throw new Error("Connection is invalid");
+    // for (const [, sensor] of Object.entries(genome.sensors)) {
+    //     for (const [connectionName] of Object.entries(sensor.connections)) {
+    //         if (!(connectionName in genome.innerNeurons || connectionName in genome.actions)) {
+    //             throw new Error("Connection is invalid");
                 
-            }
-        }
-    }
+    //         }
+    //     }
+    // }
 
     // ? every neuron
-    for (const [, neuron] of Object.entries(genome.innerNeurons)) {
-        for (const [connectionName] of Object.entries(neuron.connections)) {
-            if (!(connectionName in genome.innerNeurons || connectionName in genome.actions)) {
-                throw new Error("Connection is invalid");
+    // for (const [, neuron] of Object.entries(genome.innerNeurons)) {
+    //     for (const [connectionName] of Object.entries(neuron.connections)) {
+    //         if (!(connectionName in genome.innerNeurons || connectionName in genome.actions)) {
+    //             throw new Error("Connection is invalid");
                 
-            }
-        }
-    }
+    //         }
+    //     }
+    // }
 
     // ? update fireOrder for inner Neurons
     genome.fireOrder = getFireOrder(genome);
