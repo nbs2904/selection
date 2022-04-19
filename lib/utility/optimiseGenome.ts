@@ -91,13 +91,7 @@ export function getFireOrder (genome : Genome) : string[]{
         for (let index = 0; index < unfiredNeurons.length; index++) {
             const neuron = unfiredNeurons[index];
             
-            console.log(neuron);
-            
-            console.log(neuron.potential);
-            
             if(neuron.potential.potential === 1) {
-                console.log("reached" + " " + neuron.id);
-                
                 fireOrder.push(neuron.id);
                 unfiredNeurons.splice(index, 1);
                 index--;
