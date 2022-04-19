@@ -2,7 +2,7 @@ import { Genome } from "@interfaces/genome.interface";
 import { validateGenome } from "@utility/validateGenome";
 
 
-
+// TODO set up test environment variables
 describe("Utility - validateGenome", () => {
     test("Too many inner neurons", () => {
         const genome : Genome = {

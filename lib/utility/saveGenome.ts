@@ -10,9 +10,6 @@ import { Genome } from "@interfaces/genome.interface";
  * @param path where file shall be saved
  */
 export function saveGenome(genome : Genome, fileName : string, path = "lib/genomes/src") {
-    fs.mkdir(path, { recursive: true }, (err) => {
-        console.log(err);        
-    });
-
+    fs.mkdirSync(path, { recursive: true });
     fs.writeFileSync(`${path}/${fileName}.json`, JSON.stringify(genome));
 }
