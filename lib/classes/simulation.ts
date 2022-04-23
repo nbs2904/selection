@@ -5,8 +5,6 @@ import { nanoid } from "nanoid";
 // * logger
 const logger = require("@config/log4js").simulation;
 
-// * errors
-import { CellOccupied } from "@errors/cell.error";
 
 // * classes
 import { Cell } from "@classes/cell";
@@ -130,7 +128,7 @@ export class Simulation {
         if (node) {
             if(this.cellOccupied(node.x, node.y)) {
                 logger.warn("Cell already occupied.");
-                throw new CellOccupied(`Cell at (${node.x}, ${node.y}) occupied.`);
+                throw new Error(`Cell at (${node.x}, ${node.y}) occupied.`);
             } else {
                 node.updateNodePosition = this.updateNodePosition.bind(this);
                 this.grid[node.x][node.y].update(true, node.getColor);
