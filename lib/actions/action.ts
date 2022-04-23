@@ -33,7 +33,6 @@ export class Action extends Neuron {
     
     /**
      *  invokes actionFunction, causing node to change state 
-     * 
     */
     public fire() {
         if(this.output < 0) {
