@@ -1,6 +1,7 @@
 // * config
-const CONNECTION_WEIGHT_RANGE = +(process.env.CONNECTION_WEIGHT_RANGE || 2) as number;
-const BIAS_RANGE = +(process.env.BIAS_RANGE || 0) as number;
+const CONNECTION_WEIGHT_RANGE = +(process.env.CONNECTION_WEIGHT_RANGE || 4) as number;
+const BIAS_RANGE = +(process.env.BIAS_RANGE || 4) as number;
+
 
 /**
  * normalises given input to be between -1 and 1
@@ -9,7 +10,7 @@ const BIAS_RANGE = +(process.env.BIAS_RANGE || 0) as number;
  * @param {boolean} weightBiasAdapted - whether to adapt the range to the weight/bias of neurons
  * @returns function that normalises given input to be between -1 and 1
  */
-export function normalise(lowerBound : number, upperBound : number, weightBiasAdapted : boolean) {
+export function normalise(lowerBound : number, upperBound : number, weightBiasAdapted = false) {
     if(upperBound < lowerBound) {
         throw new Error("upper bound needs to be bigger than lower bound");
     }
@@ -26,6 +27,9 @@ export function normalise(lowerBound : number, upperBound : number, weightBiasAd
             throw new Error("Input value is out of given boundary.");
         }
 
-        return (input - lowerBound)/(upperBound - lowerBound);
+        const range = upperBound - lowerBound;
+        const middle = lowerBound + (range / 2);
+        
+        return (input - middle) / (range / 2);
     };
 }
