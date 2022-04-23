@@ -9,7 +9,7 @@ import { tanh } from "@functions/tanh";
 import { randomFloat } from "@utility/randomNumber";
 
 // * config
-const BIAS_RANGE = +(process.env.BIAS_RANGE || 50) as number;
+const BIAS_RANGE = +(process.env.BIAS_RANGE || 4) as number;
 
 /**
  * Base Neuron Class
@@ -24,7 +24,7 @@ export abstract class Neuron {
 
     constructor(id : string, bias : number, activationFunction : (input : number) => number) {
         this.id = id;
-        this.bias = bias || randomFloat(BIAS_RANGE/2, BIAS_RANGE/2 * (-1));
+        this.bias = bias === undefined ? randomFloat(BIAS_RANGE/2, BIAS_RANGE/2 * (-1)) : bias;
         this.activationFunction = activationFunction || function (input :number) { return input; };
     }
 
@@ -45,7 +45,7 @@ export class InnerNeuron extends Neuron {
     public connections : Connection[];
     public input : number;
 
-    constructor(id : string, bias : number, connections? : Connection[]) {
+    constructor(id : string, bias? : number, connections? : Connection[]) {
         super(id, bias, tanh);
 
         this.input = 0;
