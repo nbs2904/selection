@@ -11,7 +11,6 @@ import { normalise } from "@functions/normalise";
 
 // * config
 const PXL_HEIGHT = +(process.env.PXL_HEIGH || 750) as number;
-console.log(PXL_HEIGHT);
 
 
 export function xPosSensor(bias : number, sensation : Sensation, connections? : Connection[]) : Sensor {
