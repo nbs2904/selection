@@ -24,7 +24,7 @@ export function normalise(lowerBound : number, upperBound : number, weightBiasAd
     
     return (input : number) => {
         if(input < lowerBound || upperBound < input) {
-            throw new Error("Input value is out of given boundary.");
+            throw new Error(`Input value is out of given boundary. Input: ${input}, Boundaries: [${lowerBound}, ${upperBound}]`);
         }
 
         const range = upperBound - lowerBound;
