@@ -24,12 +24,12 @@ export abstract class Neuron {
 
     constructor(id : string, bias : number, activationFunction : (input : number) => number) {
         this.id = id;
-        this.bias = bias === undefined ? randomFloat(BIAS_RANGE/2, BIAS_RANGE/2 * (-1)) : bias;
-        this.activationFunction = activationFunction || function (input :number) { return input; };
+        this.bias = bias;
+        this.activationFunction = activationFunction;
     }
 
     /**
-     * Abstract class to be invoked by child classes
+     * Abstract method to be invoked by child classes
      */
     public abstract fire() : void;
 }
