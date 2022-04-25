@@ -12,7 +12,7 @@ import { Action } from "@actions/action";
 import { Genome } from "@interfaces/genome.interface";
 
 // * mocks
-import { moveXMock } from "./../../classes/__mocks__/node.mock";
+import { moveXMock } from "@classes/__mocks__/node.mock";
 
 
 describe("Actions - Base Class", () => {
