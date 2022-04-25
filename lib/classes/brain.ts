@@ -98,10 +98,14 @@ export class Brain {
                 highestAbsOutputAction = currentAction.output;
                 highestAbsOutputActionId = currentActionId;
             }
-            currentAction.input = 0;
         }
 
         // ? fire action with highest absolute output
         this.actions[highestAbsOutputActionId].fire();
+
+        // ? reset all actions
+        for (const [, action] of Object.entries(this.actions)) {
+            action.input = 0;
+        }
     }
 }
