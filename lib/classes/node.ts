@@ -46,7 +46,7 @@ const MAX_NUMBER_INNER_NEURONS = +(process.env.MAX_NUMBER_INNER_NEURONS || 4) as
 export class Node {
     public id : string;
     public lifespan = +process.env.STEP_PER_GENERATION || 200;
-    public updateNodePosition : (node : Node, oldPosition : Position) => boolean;
+    public updateNodePosition : (node : Node, newPosition : Position) => boolean;
     
     private sensation : Sensation;
     private genome : Genome;
