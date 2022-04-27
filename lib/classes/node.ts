@@ -26,7 +26,7 @@ const logger = require("@config/log4js").node;
 
 // * config
 const GRID_SIZE = +(process.env.GRID_SIZE || 50) as number;
-const MUTATE_PROBABILITY = +(process.env.MUTATE_PROBABILITY || 0.001) as number;
+const MUTATE_PROBABILITY = +(process.env.MUTATE_PROBABILITY || 0.1) as number;
 const CONNECTION_WEIGHT_RANGE = +(process.env.CONNECTION_WEIGHT_RANGE || 50) as number;
 const BIAS_RANGE = +(process.env.BIAS_RANGE || 50) as number;
 const MAX_NUMBER_INNER_NEURONS = +(process.env.MAX_NUMBER_INNER_NEURONS || 4) as number;
