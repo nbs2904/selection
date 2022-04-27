@@ -13,9 +13,11 @@ let node : Node;
 let genome : Genome;
 let spy : jest.SpyInstance;
 
+
 beforeEach(() => {
     // TODO Mock simulation class
     genome = {
+        fireOrder: [ "Neuron 2", "Neuron 1", "Neuron 3", "Neuron 4", "Neuron 5" ],
         sensors: {
             "XPos": {
                 bias: 1,
@@ -97,6 +99,12 @@ beforeEach(() => {
         this.sensation.lastDirection = new Position(x, y);
     };
 
+    // ? add test function to manipulate sensation.x and sensation.y properties
+    node["updateCoordinates"] = function (x : number, y : number) {
+        this.sensation.x = x;
+        this.sensation.y = y;
+    };
+
     spy = jest.spyOn(node, "updateNodePosition").mockReturnValue(true);
 });
 
@@ -118,7 +126,6 @@ describe("Classes - Node: Getter Functions", () => {
         expect(node.y).toBe(1);
 
         expect(typeof node.x).toBe("number");
-        expect(typeof node.y).toBe("number");
     });
 
     test("Get Node Color", () => {
@@ -225,13 +232,57 @@ describe("Classes - Node: Action Functions", () => {
         expect(spy).toHaveBeenCalledTimes(2);
     });
     
-    test.todo("moveRnd");
+    test("moveRnd", () => {
+        for (let i = 0; i < 10; i++) {
+            node.moveRnd();
+            expect(node.x + node.y === 12 || node.x + node.y === 10).toBeTruthy();
+            expect(spy).toHaveBeenCalledTimes(1);
+
+            node["updateCoordinates"](10, 1);
+            spy.mockClear();
+        }
+    });
 });
 
 describe("Classes - Node: Other functions", () => {
-    test.todo("act");
-    test.todo("copyGenome");
-    test.todo("reproduce");
+    test("act", () => {
+        node.act();
+
+        expect(node.getAge).toBe(1);
+        expect(node.getSensation.age).toBe(1);
+    });
+
+    test("copyGenome", () => {
+        for (let i = 0; i < 100; i++) {
+            const { genome: genomeCopy, hasMutated } = node.copyGenome();
+            if (hasMutated) expect(genomeCopy).not.toBe(genome); 
+            else expect(genomeCopy).toBe(genome);
+        }
+    });
+
+    test("reproduce", () => {
+        const cellOccupiedMock = jest.fn().mockImplementation((position : Position) => false);
+        cellOccupiedMock.mockImplementationOnce((position : Position) => true);
+
+        const copyGenomeMock = jest.spyOn(node, "copyGenome").mockReturnValue({ genome: genome, hasMutated: false });
+        copyGenomeMock.mockReturnValueOnce({ genome: genome, hasMutated: true });
+
+        const newNode : Node = node.reproduce(cellOccupiedMock);        
+
+        expect(cellOccupiedMock).toHaveBeenCalledTimes(2);
+        expect(copyGenomeMock).toHaveBeenCalledTimes(1);
+        expect(newNode).toBeInstanceOf(Node);
+        expect(newNode.getColor).toBeInstanceOf(Color);
+
+        
+        cellOccupiedMock.mockClear();
+        copyGenomeMock.mockClear();
+
+        node.reproduce(cellOccupiedMock);
+        expect(cellOccupiedMock).toHaveBeenCalledTimes(1);
+        expect(copyGenomeMock).toHaveBeenCalledTimes(1);
+    });
+
     test.todo("storeGenome");
 });
 
