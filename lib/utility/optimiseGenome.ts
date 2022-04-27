@@ -113,55 +113,6 @@ export function getFireOrder (genome : Genome) : string[]{
     return fireOrder;
 }
 
-const genome : Genome = {
-    sensors: {
-        XPos: {
-            bias: 1.679,
-            connections: {
-                MoveBwd: 0.3669,
-                "Neuron 1": 1.5729,
-                "Neuron 0": -0.8679,
-            },
-        },
-        Age: {
-            bias: -1.9818,
-            connections: {
-                "Neuron 0": -1.1456,
-                "Neuron 1": 3.6202,
-                MoveBwd: 0.5349,
-            },
-        },
-        YPos: {
-            bias: 1.0448,
-            connections: {
-                "Neuron 1": 0.5395
-            },
-        },
-    },
-    innerNeurons: {
-        "Neuron 0": {
-            bias: -2.661,
-            connections: {
-                "Neuron 1": 2.0169,
-                MoveBwd: 2.9584,
-            },
-        },
-        "Neuron 1": {
-            bias: -1.7146,
-            connections: {
-                MoveBwd: -2.4429,
-            },
-        }
-    },
-    actions: {
-        MoveBwd: {
-            bias: 1.4586,
-        },
-    }
-};
-
-const test = getFireOrder(genome);
-
 /**
  * Removes unnecessary neurons or connections from a genome. Based on following factors:
  * - neurons with no incoming connections
