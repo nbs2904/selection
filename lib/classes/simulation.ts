@@ -76,7 +76,7 @@ export class Simulation {
     // TODO each with coordinates and position
 
     // TODO assess if function should not throw error instead of returning true
-    public cellOccupied(xOrPosition : any, y? : number) : boolean {
+    public cellOccupied(xOrPosition : number | Position, y? : number) : boolean {
         if(typeof xOrPosition === "number") {
             if(xOrPosition < 0 || xOrPosition >= GRID_SIZE || y < 0 || y >= GRID_SIZE) {
                 return true;
