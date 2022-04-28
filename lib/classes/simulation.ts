@@ -117,7 +117,7 @@ export class Simulation {
      * @returns spawned node
      */
     public spawnNode(node? : Node) : Node {
-        if (this.livingNodesCount === GRID_SIZE * GRID_SIZE) {
+        if (this.livingNodesCount >= GRID_SIZE * GRID_SIZE) {
             logger.warn("Grid seems to be overflowing.");
             throw Error("Grid is full");
         } else if (POPULATION < this.livingNodesCount) {
