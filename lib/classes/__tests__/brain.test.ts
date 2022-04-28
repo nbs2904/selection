@@ -6,7 +6,7 @@ import { Sensation } from "@interfaces/sensation.interface";
 import { Genome } from "@interfaces/genome.interface";
 
 // * mocks
-import { moveXMock } from "@classes/__mocks__/node.mock";
+import { moveXMock } from "@classes/__mocks__/node";
 
 
 
