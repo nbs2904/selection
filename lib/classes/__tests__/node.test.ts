@@ -7,7 +7,10 @@ import { Position } from "@classes/position";
 import { Genome } from "@interfaces/genome.interface";
 
 // * mocks
-import { updateNodePositionMock } from "@classes/__mocks__/simulation.mock";
+import { updateNodePositionMock } from "@classes/__mocks__/simulation";
+jest.mock("@utility/saveGenome");
+
+const saveGenome = require("@utility/saveGenome").saveGenome;
 
 let node : Node;
 let genome : Genome;
@@ -283,6 +286,9 @@ describe("Classes - Node: Other functions", () => {
         expect(copyGenomeMock).toHaveBeenCalledTimes(1);
     });
 
-    test.todo("storeGenome");
+    test("storeGenome", () => {
+        node.storeGenome("testId");
+        expect(saveGenome).toHaveBeenCalledTimes(1);
+    });
 });
 
