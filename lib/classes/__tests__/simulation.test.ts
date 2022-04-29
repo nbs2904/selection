@@ -86,5 +86,12 @@ describe("Classes - Simulation", () => {
         expect(simulation.livingNodesCount).toBe(1);
     });
 
-    test.todo("spawnNode()");
+    test("spawnNode()", () => {
+        const node = simulation.spawnNode();
+
+        expect(cellOccupiedSpy).toHaveBeenCalledTimes(1);
+        expect(updateSpy).toHaveBeenCalledTimes(1);
+        expect(simulation.livingNodesCount).toBe(1);
+        expect(node).toBeInstanceOf(Node);
+    });
 });
