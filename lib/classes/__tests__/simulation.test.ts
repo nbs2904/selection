@@ -87,11 +87,35 @@ describe("Classes - Simulation", () => {
     });
 
     test("spawnNode()", () => {
+        cellOccupiedSpy.mockReturnValueOnce(true);
+
         const node = simulation.spawnNode();
 
-        expect(cellOccupiedSpy).toHaveBeenCalledTimes(1);
+        expect(cellOccupiedSpy).toHaveBeenCalledTimes(2);
         expect(updateSpy).toHaveBeenCalledTimes(1);
         expect(simulation.livingNodesCount).toBe(1);
         expect(node).toBeInstanceOf(Node);
     });
+
+    test.todo("step()");
+
+    test.todo("generation()");
+
+    test.todo("run()");
+
+    test("nodeInsideBoundaries()", () => {
+        simulation["callPrivateFunction"] = function (node : Node) {
+            return this.nodeInsideBoundaries(node);
+        };
+
+        const nodeInsideBoundaries = new Node("nodeInside", undefined, new Position(0, 0));
+        const nodeOutsideBoundaries = new Node("nodeOutside", undefined, new Position(0, 51));
+
+        expect(simulation["callPrivateFunction"](nodeOutsideBoundaries)).toBe(false);
+        expect(simulation["callPrivateFunction"](nodeInsideBoundaries)).toBe(true);
+
+
+    });
+
+    test.todo("storeGenomes()");
 });
