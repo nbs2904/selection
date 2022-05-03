@@ -18,7 +18,7 @@ import { Socket } from "socket.io";
 
 // * config
 const MAX_GENERATION = +(process.env.MAX_GENERATION || 500) as number;
-const STEPS_PER_GENERATION = +(process.env.STEPS_PER_GENERATION || 500) as number;
+const STEPS_PER_GENERATION = +(process.env.STEPS_PER_GENERATION || 200) as number;
 const FPS = +(process.env.FPS || 60) as number;
 const GRID_SIZE = +(process.env.GRID_SIZE || 50) as number;
 const POPULATION = +(process.env.POPULATION || 100) as number;
