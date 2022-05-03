@@ -7,10 +7,16 @@ import { Simulation } from "@classes/simulation";
 // * levels
 import { northHalf } from "@levels/halfGrid.level";
 
+// * utility
+const sleepModule = require("@utility/sleep");
+
 // * mocks
 let cellOccupiedSpy : jest.SpyInstance;
 const resetSpy = jest.spyOn(Cell.prototype, "reset");
 const updateSpy = jest.spyOn(Cell.prototype, "update");
+
+jest.mock("socket.io");
+import { Socket } from "socket.io";
 
 let simulation : Simulation;
 
@@ -97,9 +103,46 @@ describe("Classes - Simulation", () => {
         expect(node).toBeInstanceOf(Node);
     });
 
-    test.todo("step()");
+    test("step()", () => {
+        const mockSocket : Socket = new Socket(undefined, undefined, undefined);
+        mockSocket["emit"] = jest.fn();
 
-    test.todo("generation()");
+        const node : Node = new Node("testNode");
+
+        simulation.nodes["testNode"] = node;
+        simulation.livingNodesCount++;
+
+        const actSpy = jest.spyOn(node, "act").mockImplementation(() => {return;});
+
+        simulation.step(mockSocket);
+
+        expect(actSpy).toHaveBeenCalledTimes(1);
+        expect(simulation.currentStep).toBe(1);
+
+        expect(mockSocket["emit"]).toHaveBeenCalledTimes(1);
+        expect(mockSocket["emit"]).toHaveBeenCalledWith("updateNodeList", { "testNode": node });
+    });
+
+    test("generation()", async () => {
+        const mockSocket : Socket = new Socket(undefined, undefined, undefined);
+
+        const stepSpy = jest.spyOn(simulation, "step").mockImplementation(() => {return;});
+        const sleepSpy = jest.spyOn(sleepModule, "sleep").mockImplementation(() => {return;});
+
+        
+        const node : Node = new Node("testNode");
+        
+        simulation.nodes["testNode"] = node;
+        simulation.livingNodesCount++;
+        
+        await simulation.generation(mockSocket);
+
+        expect(stepSpy).toHaveBeenCalledTimes(200);
+        expect(sleepSpy).toHaveBeenCalledTimes(200);
+
+        expect(simulation.currentGeneration).toBe(1);
+        expect(simulation.currentStep).toBe(0);
+    });
 
     test.todo("run()");
 
