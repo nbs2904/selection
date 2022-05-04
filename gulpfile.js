@@ -25,6 +25,7 @@ gulp.task("compile", () => {
 
 gulp.task("resolve-alias", run("npx tscpaths -p tsconfig.json -s . -o ./build"));
 
+// TODO update config files
 gulp.task("copy-config", () => {
     return gulp.src([ "index.html", ".env", "nodemon.json", "./config*/**/*", "./public*/**/*" ])
         .pipe(gulp.dest("build"));
