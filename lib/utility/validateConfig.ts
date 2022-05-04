@@ -44,9 +44,9 @@ export function validateConfig(config : Config) : boolean {
         if (!Number(config.CONNECTION_WEIGHT_RANGE)) throw new Error("CONNECTION_WEIGHT_RANGE must be a number.");
         if (!Number(config.BIAS_RANGE)) throw new Error("BIAS_RANGE must be a number.");
 
-        if(config.MIN_NUMBER_GENOME_SIZE < 2) throw Error("MIN_NUMBER_GENOME_SIZE must be at least 2.");
-        if(config.MIN_NUMBER_GENOME_SIZE > config.MAX_NUMBER_GENOME_SIZE) throw new Error("MIN_NUMBER_GENOME_SIZE must be smaller than MAX_NUMBER_GENOME_SIZE.");
-        if(config.MAX_NUMBER_INNER_NEURONS > +config.MIN_NUMBER_GENOME_SIZE - 2) throw Error("MAX_NUMBER_INNER_NEURONS must be smaller than MIN_NUMBER_GENOME_SIZE by at least 2.");
+        if(+config.MIN_NUMBER_GENOME_SIZE < 2) throw Error("MIN_NUMBER_GENOME_SIZE must be at least 2.");
+        if(+config.MIN_NUMBER_GENOME_SIZE > +config.MAX_NUMBER_GENOME_SIZE) throw new Error("MIN_NUMBER_GENOME_SIZE must be smaller than MAX_NUMBER_GENOME_SIZE.");
+        if(+config.MAX_NUMBER_INNER_NEURONS > +config.MIN_NUMBER_GENOME_SIZE - 2) throw Error("MAX_NUMBER_INNER_NEURONS must be smaller than MIN_NUMBER_GENOME_SIZE by at least 2.");
         if(+config.MAX_NUMBER_INNER_NEURONS + sensorNames.length + actionNames.length < config.MIN_NUMBER_GENOME_SIZE) throw Error("MIN_NUMBER_GENOME_SIZE is too big to generate a valid genome.");
 
         return true;
