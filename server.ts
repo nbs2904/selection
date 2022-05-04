@@ -4,7 +4,7 @@
 import { validateConfig } from "@utility/validateConfig";
 
 // * config
-const config : Config = require("dotenv").config({path: __dirname + "/.env"}).parsed;
+const config : Config = require("dotenv").config({path: __dirname + "/config/env/.env"}).parsed;
 if(!validateConfig(config)) process.exit(1);
 const NODE_ENV = process.env.NODE_ENV;
 const PORT = +(process.env.PORT || 3000) as number;
