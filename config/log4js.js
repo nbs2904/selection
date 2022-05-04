@@ -1,8 +1,12 @@
 const log4js = require("log4js");
-require("dotenv").config({path: ".env"});
+
+// TODO move file into folder config/log4js
+// TODO move other config files into folder config
 
 const NODE_ENV = process.env.NODE_ENV || "dev";
-const LOG_LEVEL = NODE_ENV === "prod" ? "WARN" : "DEBUG"; 
+let LOG_LEVEL = "DEBUG";
+if (NODE_ENV === "prod") LOG_LEVEL = "ERROR";
+else if (NODE_ENV === "test") LOG_LEVEL = "OFF";
 
 log4js.configure({
     appenders: {
