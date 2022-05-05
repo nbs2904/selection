@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "jest--config=./config/jest/jest.config.js --verbose ",
+    "test": "npx jest --config=./config/jest/jest.config.js --verbose",
     "test:debug": "set NODE_ENV=dev && jest --config=./config/jest/jest.config.js --verbose",
     "dev": "set NODE_ENV=dev && nodemon server.ts",
     "start": "cd ./build && node server.js",
