@@ -18,7 +18,7 @@ const connectingNeuron : InnerNeuron = new InnerNeuron("connectingNeuron", 0, []
 
 describe("Sensors - Position Sensors", () => {
     test("xPosSensor", () => {
-        const xPosSensorInstance = xPosSensor(0, sensation, [{ weight: 1, outputNeuron: connectingNeuron }]);
+        const xPosSensorInstance = xPosSensor(0, sensation, [ { weight: 1, outputNeuron: connectingNeuron } ]);
 
         xPosSensorInstance.fire();
 
@@ -28,7 +28,7 @@ describe("Sensors - Position Sensors", () => {
     });
 
     test("yPosSensor", () => {
-        const yPosSensorInstance = yPosSensor(0, sensation, [{ weight: 1, outputNeuron: connectingNeuron }]);
+        const yPosSensorInstance = yPosSensor(0, sensation, [ { weight: 1, outputNeuron: connectingNeuron } ]);
 
         yPosSensorInstance.fire();
 

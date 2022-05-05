@@ -36,7 +36,7 @@ app.get("/", function (req : any, res : any) {
 });
 
 io.on("connection", async (socket : typeof Socket) => {
-    logger.info(`Socket "${socket.id}" connected`);
+    logger.info(`Socket "${ socket.id }" connected`);
 
     socket.emit("setConfig", {config, level: upperLeft});    
 
@@ -46,7 +46,7 @@ io.on("connection", async (socket : typeof Socket) => {
     
     
     socket.on("disconnect", () => {
-        logger.info(`Socket "${socket.id}" disconnected`);
+        logger.info(`Socket "${ socket.id }" disconnected`);
         process.exit(0);
     });
 

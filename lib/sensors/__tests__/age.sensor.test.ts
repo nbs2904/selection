@@ -16,7 +16,7 @@ const connectingNeuron : InnerNeuron = new InnerNeuron("connectingNeuron", 0, []
 
 describe("Sensors - Age Sensor", () => {
     test("ageSensor", () => {
-        const ageSensorInstance = ageSensor(0, sensation, [{ weight: 1, outputNeuron: connectingNeuron }]);
+        const ageSensorInstance = ageSensor(0, sensation, [ { weight: 1, outputNeuron: connectingNeuron } ]);
 
         ageSensorInstance.fire();
 

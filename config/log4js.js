@@ -20,35 +20,35 @@ log4js.configure({
     },
     categories: {
         default: {
-            appenders: ["out"],
+            appenders: [ "out" ],
             level: LOG_LEVEL
         },
         server: {
-            appenders: ["out"],
+            appenders: [ "out" ],
             level: LOG_LEVEL
         },
         simulation: {
-            appenders: ["out"],
+            appenders: [ "out" ],
             level: LOG_LEVEL
         },
         cell: {
-            appenders: ["out"],
+            appenders: [ "out" ],
             level: LOG_LEVEL
         },
         color: {
-            appenders: ["out"],
+            appenders: [ "out" ],
             level: LOG_LEVEL
         },
         genome: {
-            appenders: ["out"],
+            appenders: [ "out" ],
             level: LOG_LEVEL
         },
         node: {
-            appenders: ["out"],
+            appenders: [ "out" ],
             level: LOG_LEVEL
         },
         utils: {
-            appenders: ["out"],
+            appenders: [ "out" ],
             level: LOG_LEVEL
         }
     }

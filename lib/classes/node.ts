@@ -54,7 +54,7 @@ export class Node {
 
     private brain : Brain;
 
-    public constructor(id : string, genome? : Genome, position? : Position, color? : Color) {
+    public constructor (id : string, genome? : Genome, position? : Position, color? : Color) {
         this.id = id;
         this.color = color || new Color(randomInteger(255), randomInteger(255), randomInteger(255));
 
@@ -82,7 +82,7 @@ export class Node {
      * @returns x coordinate
      */
 
-    public get x() : number {
+    public get x () : number {
         return this.sensation.x;
     }
 
@@ -90,7 +90,7 @@ export class Node {
      * Getter function for y coordinate
      * @returns y coordinate
      */
-    public get y() : number {
+    public get y () : number {
         return this.sensation.y;
     }
     
@@ -98,7 +98,7 @@ export class Node {
      * Getter function to receive color of node
      * @returns Color
      */
-    public get getColor() : Color {
+    public get getColor () : Color {
         return this.color;
     }
 
@@ -106,7 +106,7 @@ export class Node {
      * Getter function for age of node
      * @returns age
      */
-    public get getAge() : number {
+    public get getAge () : number {
         return this.sensation.age;
     }
 
@@ -114,14 +114,14 @@ export class Node {
      * Getter function of {@link Sensation} object of node
      * @returns Sensation
      */
-    public get getSensation() : Sensation {
+    public get getSensation () : Sensation {
         return this.sensation;
     }
 
     /**
      * Invokes brain.compute() and increases age of node by one
      */
-    public act() {
+    public act () {
         this.brain.compute();
         this.sensation.age++;
     }
@@ -133,7 +133,7 @@ export class Node {
      * moves node along x axis by one step
      * @param {number} direction - can be either 1 or -1
      */
-    public async moveX(direction : number) {
+    public async moveX (direction : number) {
         if(direction != 1 && direction != -1) {
             logger.error("Input of function moveX must be either 1 or -1.");
             throw new Error("Input of function moveX must be either 1 or -1.");
@@ -156,7 +156,7 @@ export class Node {
      * moves node along y axis by one step
      * @param {number} direction - can be either 1 or -1
      */
-    public async moveY(direction : number) {
+    public async moveY (direction : number) {
         if(direction != 1 && direction != -1) {
             logger.error("Input of function moveY must be either 1 or -1.");
             throw new Error("Input of function moveY must be either 1 or -1.");
@@ -176,9 +176,9 @@ export class Node {
     /**
      * moves node in the direction it moved during the last step
      */
-    public async moveFwd() {
+    public async moveFwd () {
         if(this.sensation.lastDirection.x && this.sensation.lastDirection.y) {
-            throw new Error(`lastDirection must only point in one direction: { x: ${this.sensation.lastDirection.x}, y: ${this.sensation.lastDirection.y} }`);
+            throw new Error(`lastDirection must only point in one direction: { x: ${ this.sensation.lastDirection.x }, y: ${ this.sensation.lastDirection.y } }`);
         }
 
         const newPosition = new Position(this.x + this.sensation.lastDirection.x, this.y + this.sensation.lastDirection.y);
@@ -192,9 +192,9 @@ export class Node {
     /**
      * moves node in the opposite direction it moved during the last step
      */
-    public async moveBwd() {
+    public async moveBwd () {
         if(this.sensation.lastDirection.x && this.sensation.lastDirection.y) {
-            throw new Error(`lastDirection must only point in one direction: { x: ${this.sensation.lastDirection.x}, y: ${this.sensation.lastDirection.y} }`);
+            throw new Error(`lastDirection must only point in one direction: { x: ${ this.sensation.lastDirection.x }, y: ${ this.sensation.lastDirection.y } }`);
         }
 
         const newPosition = new Position(this.x - this.sensation.lastDirection.x, this.y - this.sensation.lastDirection.y);
@@ -208,7 +208,7 @@ export class Node {
     /**
      * moves node in a random direction
      */
-    public async moveRnd() {
+    public async moveRnd () {
         const axis = randomInteger(1);
         let direction = randomInteger(1);
 
@@ -246,7 +246,7 @@ export class Node {
      * { genome: {@link Genome},
      * hasMutated: {boolean} }
      */
-    public copyGenome() : { genome : Genome, hasMutated : boolean } {
+    public copyGenome () : { genome : Genome, hasMutated : boolean } {
         // TODO add another connection by chance
 
         let genomeCopy : Genome = {
@@ -256,7 +256,7 @@ export class Node {
         };
 
         // ? copy sensors
-        for (const [sensorName, sensor] of Object.entries(this.genome.sensors)) {
+        for (const [ sensorName, sensor ] of Object.entries(this.genome.sensors)) {
             const sensorNameCopy = randomInteger(1 / MUTATE_PROBABILITY) ? sensorName : sensorNames[randomInteger(sensorNames.length - 1, 0)];
 
             if(genomeCopy.sensors[sensorNameCopy] === undefined) {
@@ -265,14 +265,14 @@ export class Node {
 
             genomeCopy.sensors[sensorNameCopy].bias = randomInteger(1 / MUTATE_PROBABILITY) ? sensor.bias : randomFloat(BIAS_RANGE/2, BIAS_RANGE/2 * (-1));
 
-            for (const [connectionName, weight] of Object.entries(this.genome.sensors[sensorName].connections)) {
+            for (const [ connectionName, weight ] of Object.entries(this.genome.sensors[sensorName].connections)) {
                 let connectionNameCopy : string;
 
                 if(randomInteger(1 / MUTATE_PROBABILITY)) {
                     connectionNameCopy = connectionName;
                 } else {
                     if(randomInteger(1) === 0) {
-                        connectionNameCopy = `Neuron ${randomInteger(MAX_NUMBER_INNER_NEURONS - 1, 0)}`;
+                        connectionNameCopy = `Neuron ${ randomInteger(MAX_NUMBER_INNER_NEURONS - 1, 0) }`;
                     } else {
                         connectionNameCopy = actionNames[randomInteger(actionNames.length - 1, 0)];
                     }
@@ -283,8 +283,8 @@ export class Node {
         }
 
         // ? copy inner neurons
-        for (const [neuronName, neuron] of Object.entries(this.genome.innerNeurons)) {
-            const neuronNameCopy = randomInteger(1 / MUTATE_PROBABILITY) ? neuronName : `Neuron ${randomInteger(MAX_NUMBER_INNER_NEURONS - 1, 0)}`;
+        for (const [ neuronName, neuron ] of Object.entries(this.genome.innerNeurons)) {
+            const neuronNameCopy = randomInteger(1 / MUTATE_PROBABILITY) ? neuronName : `Neuron ${ randomInteger(MAX_NUMBER_INNER_NEURONS - 1, 0) }`;
 
             if(genomeCopy.innerNeurons[neuronNameCopy] === undefined) {
                 genomeCopy.innerNeurons[neuronNameCopy] = {bias: 0, connections: {}};
@@ -292,14 +292,14 @@ export class Node {
 
             genomeCopy.innerNeurons[neuronNameCopy].bias = randomInteger(1 / MUTATE_PROBABILITY) ? neuron.bias : randomFloat(BIAS_RANGE/2, BIAS_RANGE/2 * (-1));
 
-            for (const [connectionName, weight] of Object.entries(this.genome.innerNeurons[neuronName].connections)) {
+            for (const [ connectionName, weight ] of Object.entries(this.genome.innerNeurons[neuronName].connections)) {
                 let connectionNameCopy : string;
 
                 if(randomInteger(1 / MUTATE_PROBABILITY)) {
                     connectionNameCopy = connectionName;
                 } else {
                     if(randomInteger(1) === 0) {
-                        connectionNameCopy = `Neuron ${randomInteger(MAX_NUMBER_INNER_NEURONS - 1, 0)}`;
+                        connectionNameCopy = `Neuron ${ randomInteger(MAX_NUMBER_INNER_NEURONS - 1, 0) }`;
                     } else {
                         connectionNameCopy = actionNames[randomInteger(actionNames.length - 1, 0)];
                     }
@@ -310,7 +310,7 @@ export class Node {
         }
 
         // ? copy actions
-        for (const [actionName, action] of Object.entries(this.genome.actions)) {
+        for (const [ actionName, action ] of Object.entries(this.genome.actions)) {
             const actionNameCopy = randomInteger(1 / MUTATE_PROBABILITY) ? actionName : actionNames[randomInteger(actionNames.length - 1, 0)];
 
             if (genomeCopy.actions[actionNameCopy] === undefined) {
@@ -325,8 +325,8 @@ export class Node {
         // ? check for connections to neurons/actions that do not exist yet and add them respectively
 
         // ? check connections of sensors
-        for (const [, sensor] of Object.entries(this.genome.sensors)) {
-            for (const [connection] of Object.entries(sensor.connections)) {
+        for (const [ , sensor ] of Object.entries(this.genome.sensors)) {
+            for (const [ connection ] of Object.entries(sensor.connections)) {
                 if(!Object.keys(this.genome.innerNeurons).includes(connection) && !Object.keys(this.genome.actions).includes(connection)) {
                     if(actionNames.includes(connection)) {
                         this.genome.actions[connection] = {
@@ -343,8 +343,8 @@ export class Node {
         }
 
         // ? check connections of inner neurons
-        for (const [, neuron] of Object.entries(this.genome.innerNeurons)) {
-            for (const [connection] of Object.entries(neuron.connections)) {
+        for (const [ , neuron ] of Object.entries(this.genome.innerNeurons)) {
+            for (const [ connection ] of Object.entries(neuron.connections)) {
                 if(!Object.keys(this.genome.innerNeurons).includes(connection) && !Object.keys(this.genome.actions).includes(connection)) {
                     if(actionNames.includes(connection)) {
                         this.genome.actions[connection] = {
@@ -379,7 +379,7 @@ export class Node {
      * @param {method} cellOccupied - Method is bound to a simulation instance, to check whether a cell is already occupied before spawning the offspring onto the grid.
      * @returns {Node} the offspring
      */
-    public reproduce(cellOccupied : (position : Position) => boolean) : Node {
+    public reproduce (cellOccupied : (position : Position) => boolean) : Node {
         const id = nanoid(10);
         const { genome: genomeCopy, hasMutated: hasMutated } = this.copyGenome();
 
@@ -392,7 +392,7 @@ export class Node {
         const color = this.getColor;
 
         if (hasMutated) {
-            logger.info(`Genome of Node #${this.id} has mutated.`);
+            logger.info(`Genome of Node #${ this.id } has mutated.`);
 
             // ? selection primary color randomly
             const primaryColor = randomInteger(2);
@@ -414,7 +414,7 @@ export class Node {
      * Stores the genome of the node as a JSON file.
      * @param {string} simulationId - Genome is stored in a folder with the name of the simulation Id.
      */
-    public storeGenome(simulationId : string) {
-        saveGenome(this.genome, this.id, `lib/simulations/${simulationId}`);
+    public storeGenome (simulationId : string) {
+        saveGenome(this.genome, this.id, `lib/simulations/${ simulationId }`);
     }
 }

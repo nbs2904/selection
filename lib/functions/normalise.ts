@@ -10,7 +10,7 @@ const BIAS_RANGE = +(process.env.BIAS_RANGE || 4) as number;
  * @param {boolean} weightBiasAdapted - whether to adapt the range to the weight/bias of neurons
  * @returns function that normalises given input to be between -1 and 1
  */
-export function normalise(lowerBound : number, upperBound : number, weightBiasAdapted = false) {
+export function normalise (lowerBound : number, upperBound : number, weightBiasAdapted = false) {
     if(upperBound < lowerBound) {
         throw new Error("upper bound needs to be bigger than lower bound");
     }
@@ -24,7 +24,7 @@ export function normalise(lowerBound : number, upperBound : number, weightBiasAd
     
     return (input : number) => {
         if(input < lowerBound || upperBound < input) {
-            throw new Error(`Input value is out of given boundary. Input: ${input}, Boundaries: [${lowerBound}, ${upperBound}]`);
+            throw new Error(`Input value is out of given boundary. Input: ${ input }, Boundaries: [${ lowerBound }, ${ upperBound }]`);
         }
 
         const range = upperBound - lowerBound;

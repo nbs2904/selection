@@ -13,12 +13,12 @@ import { normalise } from "@functions/normalise";
 const PXL_HEIGHT = +(process.env.PXL_HEIGH || 750) as number;
 
 
-export function xPosSensor(bias : number, sensation : Sensation, connections? : Connection[]) : Sensor {
+export function xPosSensor (bias : number, sensation : Sensation, connections? : Connection[]) : Sensor {
     const config : SensorConfig = {
         id: "XPos",
         bias: bias,
         sensation: sensation,
-        senses: ["x"],
+        senses: [ "x" ],
         activationFunction: normalise(0, PXL_HEIGHT, true),
         connections: connections || []
     };
@@ -26,12 +26,12 @@ export function xPosSensor(bias : number, sensation : Sensation, connections? : 
     return new Sensor(config.id, config.bias, config.sensation, config.senses, config.activationFunction, config.connections);
 }
 
-export function yPosSensor(bias : number, sensation : Sensation, connections? : Connection[]) : Sensor {
+export function yPosSensor (bias : number, sensation : Sensation, connections? : Connection[]) : Sensor {
     const config : SensorConfig = {
         id: "YPos",
         bias: bias,
         sensation: sensation,
-        senses: ["y"],
+        senses: [ "y" ],
         activationFunction: normalise(0, PXL_HEIGHT, true),
         connections: connections || []
     };

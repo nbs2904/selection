@@ -26,12 +26,12 @@ export function getFireOrder (genome : Genome) : string[]{
     } = {};
 
     // ? get signalsMissing count and connection count for every inner neuron
-    for(const [neuronId, neuron] of Object.entries(genome.innerNeurons)) {
+    for(const [ neuronId, neuron ] of Object.entries(genome.innerNeurons)) {
         if(!(neuronId in potentials)) {
             potentials[neuronId] = new Potential();
         }
 
-        for(const [connectingNeuronId] of Object.entries(neuron.connections)) {
+        for(const [ connectingNeuronId ] of Object.entries(neuron.connections)) {
             if(!sensorNames.includes(connectingNeuronId) && !actionNames.includes(connectingNeuronId)) {
                 potentials[neuronId].connections++;
             }
@@ -40,8 +40,8 @@ export function getFireOrder (genome : Genome) : string[]{
 
     // ? count signals incoming from sensors
     // ? also increase signalsReceived for the sorting algorithm later
-    for(const [, sensor] of Object.entries(genome.sensors)) {
-        for(const [connectingNeuronId] of Object.entries(sensor.connections)) {
+    for(const [ , sensor ] of Object.entries(genome.sensors)) {
+        for(const [ connectingNeuronId ] of Object.entries(sensor.connections)) {
             if(!sensorNames.includes(connectingNeuronId) && !actionNames.includes(connectingNeuronId)) {
                 // ? if neuron the sensor is connected to does not exists, skip. It will be removed later in streamlineGenome()
                 if(connectingNeuronId in potentials) {
@@ -77,7 +77,7 @@ export function getFireOrder (genome : Genome) : string[]{
         fireOrder.push(unfiredNeurons[0].id);
 
         // ? update potentials
-        for(const [connectingNeuronId] of Object.entries(genome.innerNeurons[unfiredNeurons[0].id].connections)) {
+        for(const [ connectingNeuronId ] of Object.entries(genome.innerNeurons[unfiredNeurons[0].id].connections)) {
             if(!sensorNames.includes(connectingNeuronId) && !actionNames.includes(connectingNeuronId) && !fireOrder.includes(connectingNeuronId)) {
                 potentials[connectingNeuronId].signalsTotal++;
                 potentials[connectingNeuronId].signalsReceived++;                        
@@ -97,7 +97,7 @@ export function getFireOrder (genome : Genome) : string[]{
                 index--;
     
                 // ? update potentials
-                for(const [connectingNeuronId] of Object.entries(genome.innerNeurons[neuron.id].connections)) {
+                for(const [ connectingNeuronId ] of Object.entries(genome.innerNeurons[neuron.id].connections)) {
                     if(!sensorNames.includes(connectingNeuronId) && !actionNames.includes(connectingNeuronId) && !fireOrder.includes(connectingNeuronId)) {
                         potentials[connectingNeuronId].signalsReceived++;                        
                     }
@@ -121,7 +121,7 @@ export function getFireOrder (genome : Genome) : string[]{
  * @param genome {@link Genome} to streamline
  * @returns optmised {@link Genome}	
  */
-export function streamlineGenome(genome : Genome) : Genome {
+export function streamlineGenome (genome : Genome) : Genome {
     let fireOrder : string[] = [];
     let changesMade = 1;
     const removedNeurons : string[] = [];
@@ -130,8 +130,8 @@ export function streamlineGenome(genome : Genome) : Genome {
     while(changesMade !== 0) {
         changesMade = 0;
 
-        for(const [neuronId, neuron] of Object.entries(genome.innerNeurons)) {
-            for(const [connectingNeuronId] of Object.entries(neuron.connections)) {                
+        for(const [ neuronId, neuron ] of Object.entries(genome.innerNeurons)) {
+            for(const [ connectingNeuronId ] of Object.entries(neuron.connections)) {                
                 // ? check if connection is an inner Neuron
                 if(!sensorNames.includes(connectingNeuronId) && !actionNames.includes(connectingNeuronId)) {
                     // ? delete connection if connectingNeuron has already been removed
@@ -189,10 +189,10 @@ export function streamlineGenome(genome : Genome) : Genome {
     }
 
     // ? remove sensors that might have become useless since inner neurons could have been removed
-    for(const [sensorId, sensor] of Object.entries(genome.sensors)) {
+    for(const [ sensorId, sensor ] of Object.entries(genome.sensors)) {
         const sensorConnections = sensor.connections;
 
-        for(const [connectingNeuronId] of Object.entries(sensorConnections)) {
+        for(const [ connectingNeuronId ] of Object.entries(sensorConnections)) {
             if(!sensorNames.includes(connectingNeuronId) && !actionNames.includes(connectingNeuronId) && !(connectingNeuronId in genome.innerNeurons)) {
                 delete genome.sensors[sensorId].connections[connectingNeuronId];
 
@@ -209,13 +209,13 @@ export function streamlineGenome(genome : Genome) : Genome {
     }
 
     // ? remove actions that have no connections to it, rendering them useless
-    for(const [actionId] of Object.entries(genome.actions)) {
+    for(const [ actionId ] of Object.entries(genome.actions)) {
         let connectionToActionCount = 0;
         // ? count sensor connections to action
-        connectionToActionCount += Object.entries(genome.sensors).filter(([, sensor]) => {if (actionId in sensor.connections) return true;}).length;
+        connectionToActionCount += Object.entries(genome.sensors).filter(([ , sensor ]) => {if (actionId in sensor.connections) return true;}).length;
 
         // ? count neuron connections to action
-        connectionToActionCount += Object.entries(genome.innerNeurons).filter(([, neuron]) => {if (actionId in neuron.connections) return true;}).length;
+        connectionToActionCount += Object.entries(genome.innerNeurons).filter(([ , neuron ]) => {if (actionId in neuron.connections) return true;}).length;
 
         // ? if no connections to action or action does not exist in actionNames, delete action
         if (connectionToActionCount === 0 || !(actionNames.includes(actionId))) {
@@ -257,7 +257,7 @@ export function streamlineGenome(genome : Genome) : Genome {
  * 1. Neuron with the highest potential will fire first
  * 2. If multiple neurons have the same potential the one with the most connections will fire first
  */
-export function sortFunction(firstNeuron : { id: string, potential: Potential }, secondNeuron : { id: string, potential: Potential }) {
+export function sortFunction (firstNeuron : { id: string, potential: Potential }, secondNeuron : { id: string, potential: Potential }) {
     if(firstNeuron.potential.potential !== secondNeuron.potential.potential) {
         return secondNeuron.potential.potential - firstNeuron.potential.potential;
     }

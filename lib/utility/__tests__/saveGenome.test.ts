@@ -38,15 +38,15 @@ const genome : Genome = {
 describe("Utility - saveGenome", () => {
     test("Save test genome with path", () => {
         saveGenome(genome, fileName, path);
-        expect(fs.existsSync(`${path}/${fileName}.json`)).toBe(true);
+        expect(fs.existsSync(`${ path }/${ fileName }.json`)).toBe(true);
 
-        fs.unlinkSync(`${path}/${fileName}.json`);
+        fs.unlinkSync(`${ path }/${ fileName }.json`);
     });
 
     test("Save genome without path", () => {
         saveGenome(genome, fileName);
-        expect(fs.existsSync(`${path}/${fileName}.json`)).toBe(true);
+        expect(fs.existsSync(`${ path }/${ fileName }.json`)).toBe(true);
 
-        fs.unlinkSync(`${path}/${fileName}.json`);
+        fs.unlinkSync(`${ path }/${ fileName }.json`);
     });
 });

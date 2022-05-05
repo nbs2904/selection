@@ -4,7 +4,7 @@ const ts = require("gulp-typescript");
 const eslint = require("gulp-eslint");
 
 gulp.task("lint", () => {
-    return gulp.src(["**/*.js", "**/*.ts", "!**/node_modules/**", "!**/p5/**"])
+    return gulp.src([ "**/*.js", "**/*.ts", "!**/node_modules/**", "!**/p5/**" ])
         .pipe(eslint({ configFile: "./.eslintrc.json", fix: true }))
         .pipe(eslint.format())
         .pipe(gulp.dest(file => file.base))
@@ -18,7 +18,7 @@ gulp.task("test", run("npm test", {
 gulp.task("compile", () => {
     let tsProject = ts.createProject("tsconfig.json");
 
-    return gulp.src(["**/*.ts", "!**/node_modules/**", "!**/__tests__/**"])
+    return gulp.src([ "**/*.ts", "!**/node_modules/**", "!**/__tests__/**" ])
         .pipe(tsProject())
         .pipe(gulp.dest("build"));
 });
@@ -32,7 +32,7 @@ gulp.task("copy-config", () => {
 });
 
 gulp.task("lint-build", () => {
-    return gulp.src(["build/**/*.js", "!**/p5/**"])
+    return gulp.src([ "build/**/*.js", "!**/p5/**" ])
         .pipe(eslint({ configFile: "./.eslintrc.json", fix: true }))
         .pipe(eslint.format())
         .pipe(gulp.dest(file => file.base))

@@ -13,7 +13,7 @@ import { moveXMock } from "@classes/__mocks__/node";
 describe("Classes - Brain", () => {
     test("compute()", () => {
         const genome : Genome = {
-            fireOrder: ["Neuron 1"],
+            fireOrder: [ "Neuron 1" ],
             sensors: {
                 "XPos": {
                     bias: 0,

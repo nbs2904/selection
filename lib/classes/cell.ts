@@ -10,7 +10,7 @@ export class Cell {
     public occupied : boolean;
     public color : Color | undefined;
 
-    public constructor(occupied? : boolean, color? : Color) {
+    public constructor (occupied? : boolean, color? : Color) {
         this.occupied = occupied || false;
         this.color = color || undefined;
     }
@@ -20,7 +20,7 @@ export class Cell {
      * @param occupied {boolean} - whether this cell is occupied by a node
      * @param color {@link Color} - color of the node that currently occupies this cell
      */
-    public update(occupied : boolean, color? : Color) {
+    public update (occupied : boolean, color? : Color) {
         this.occupied = occupied;
         this.color = color || undefined;
     }
@@ -30,7 +30,7 @@ export class Cell {
      *  - occupied is set to false
      *  - color is set to undefined
      */
-    public reset() {
+    public reset () {
         this.occupied = false;
         this.color = undefined;
     }

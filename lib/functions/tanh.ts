@@ -1,3 +1,3 @@
-export function tanh(input : number) : number {
+export function tanh (input : number) : number {
     return Math.tanh(input);
 }

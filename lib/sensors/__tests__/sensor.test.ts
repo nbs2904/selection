@@ -22,7 +22,7 @@ describe("Sensors - Base Class", () => {
         };
 
         const connectingNeuron : InnerNeuron = new InnerNeuron("connectingNeuron", 0, []);
-        const sensor : Sensor = new Sensor("testSensor", 0, sensation, ["x", "y"], ReLU, [{ weight: 1, outputNeuron: connectingNeuron }]);
+        const sensor : Sensor = new Sensor("testSensor", 0, sensation, [ "x", "y" ], ReLU, [ { weight: 1, outputNeuron: connectingNeuron } ]);
 
         sensor.fire();
 

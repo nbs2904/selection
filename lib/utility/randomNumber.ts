@@ -5,7 +5,7 @@
  * @throws {RangeError} if min > max
  * @returns integer
  */
-export function randomInteger(max : number, min? : number) : number {
+export function randomInteger (max : number, min? : number) : number {
     if(max < min) throw new Error("max must be greater than or equal to min");
 
     max++;
@@ -20,7 +20,7 @@ export function randomInteger(max : number, min? : number) : number {
  * @throws {RangeError} if min > max
  * @returns float
  */
-export function randomFloat(max : number, min? : number) : number {
+export function randomFloat (max : number, min? : number) : number {
     if(max < min) throw new Error("max must be greater than or equal to min");
 
     min = min || 0;

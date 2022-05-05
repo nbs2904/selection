@@ -15,7 +15,7 @@ const MAX_CONNECTIONS =+(process.env.MAX_CONNECTIONS || 4) as number;
  * @param genome {@link Genome} to validate
  * @returns boolean whether genome is valid 
  */
-export function validateGenome(genome : Genome) : boolean {
+export function validateGenome (genome : Genome) : boolean {
     // ? check MAX_NUMBER_INNER_NEURONS
     if(Object.entries(genome.innerNeurons).length > MAX_NUMBER_INNER_NEURONS) {
         logger.warn("Too many inner neurons");
@@ -32,7 +32,7 @@ export function validateGenome(genome : Genome) : boolean {
 
     // ? MAX_CONNECTIONS
     // ? check every sensor
-    for (const [, sensor] of Object.entries(genome.sensors)) {
+    for (const [ , sensor ] of Object.entries(genome.sensors)) {
         if(Object.entries(sensor.connections).length > MAX_CONNECTIONS) {
             logger.warn("Sensor has too many connections");
             return false;
@@ -40,7 +40,7 @@ export function validateGenome(genome : Genome) : boolean {
     }
 
     // ? check every neuron
-    for (const [, neuron] of Object.entries(genome.innerNeurons)) {
+    for (const [ , neuron ] of Object.entries(genome.innerNeurons)) {
         if(Object.entries(neuron.connections).length > MAX_CONNECTIONS) {
             logger.warn("Neuron has too many connections");
             return false;

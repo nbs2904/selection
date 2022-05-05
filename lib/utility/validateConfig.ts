@@ -11,7 +11,7 @@ import { sensorNames } from "./../sensors/sensor";
  * @param config {@link Config} to validate
  * @returns boolean whether config is valid
  */
-export function validateConfig(config : Config) : boolean {
+export function validateConfig (config : Config) : boolean {
     try {
         if (!("PORT" in config)) throw new Error("PORT seems to be missing in your configuration. Please refer to the .env file in your root directory.");
         if (!("PXL_HEIGHT" in config)) throw new Error("PXL_HEIGHT seems to be missing in your configuration. Please refer to the .env file in your root directory.");

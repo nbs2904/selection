@@ -26,7 +26,7 @@ const BIAS_RANGE = +(process.env.BIAS_RANGE || 8) as number;
  * Generates a random genome according to config file in the root directory. (.env)
  * @returns {{{@link Genome
  */
-export function randomGenome() : Genome{
+export function randomGenome () : Genome{
     let genome : Genome = {
         sensors: {},
         innerNeurons: {},
@@ -68,7 +68,7 @@ export function randomGenome() : Genome{
                 }
             } else if(type === 1) {
                 if(innerNeurons.length < MAX_NUMBER_INNER_NEURONS) {
-                    innerNeurons.push(`Neuron ${innerNeurons.length}`);
+                    innerNeurons.push(`Neuron ${ innerNeurons.length }`);
                     currentGenomeLength++;
                 }
     

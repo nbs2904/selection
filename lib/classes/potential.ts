@@ -9,7 +9,7 @@ export class Potential {
     public signalsTotal : number;
     public connections : number;
 
-    constructor(signalsReceived = 0, signalsTotal = 0, connections = 0) {
+    constructor (signalsReceived = 0, signalsTotal = 0, connections = 0) {
         this.signalsReceived = signalsReceived;
         this.signalsTotal = signalsTotal;
         this.connections = connections;
@@ -18,7 +18,7 @@ export class Potential {
     /**
      * @returns {number} - The potential of the neuron.
      */
-    public get potential() : number {
+    public get potential () : number {
         return this.signalsReceived / this.signalsTotal;
     }
 }

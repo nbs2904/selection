@@ -9,7 +9,7 @@ import { Genome } from "@interfaces/genome.interface";
  * @param fileName Name of JSON file that will be created
  * @param path where file shall be saved
  */
-export function saveGenome(genome : Genome, fileName : string, path = "lib/genomes/src") {
+export function saveGenome (genome : Genome, fileName : string, path = "lib/genomes/src") {
     fs.mkdirSync(path, { recursive: true });
-    fs.writeFileSync(`${path}/${fileName}.json`, JSON.stringify(genome));
+    fs.writeFileSync(`${ path }/${ fileName }.json`, JSON.stringify(genome));
 }

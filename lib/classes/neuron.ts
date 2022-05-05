@@ -22,7 +22,7 @@ export abstract class Neuron {
     protected bias : number;
     protected activationFunction : (input : number) => number;
 
-    constructor(id : string, bias : number, activationFunction : (input : number) => number) {
+    constructor (id : string, bias : number, activationFunction : (input : number) => number) {
         this.id = id;
         this.bias = bias;
         this.activationFunction = activationFunction;
@@ -45,7 +45,7 @@ export class InnerNeuron extends Neuron {
     public connections : Connection[];
     public input : number;
 
-    constructor(id : string, bias? : number, connections? : Connection[]) {
+    constructor (id : string, bias? : number, connections? : Connection[]) {
         super(id, bias, tanh);
 
         this.input = 0;
@@ -55,7 +55,7 @@ export class InnerNeuron extends Neuron {
     /**
      * Increases input of every connecting neuron, using the own activationFunction, own input, weight, and bias. 
      */
-    public fire() {
+    public fire () {
         this.connections.forEach(connection => {
             connection.outputNeuron.input += this.activationFunction(this.input * connection.weight + this.bias);
         });

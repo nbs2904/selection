@@ -64,7 +64,7 @@ describe("Utility - getFireOrder", () => {
         };
 
         expect(getFireOrder(genome)).toEqual(
-            ["Neuron 0", "Neuron 1", "Neuron 2"]
+            [ "Neuron 0", "Neuron 1", "Neuron 2" ]
         );
     });
 });

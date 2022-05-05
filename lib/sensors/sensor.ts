@@ -27,7 +27,7 @@ export class Sensor extends Neuron {
 
     private input : number;
 
-    constructor(id : string, bias : number, sensation? : Sensation, senses? : string[], activationFunction? : (input : number) => number, connections? : Connection[]) {
+    constructor (id : string, bias : number, sensation? : Sensation, senses? : string[], activationFunction? : (input : number) => number, connections? : Connection[]) {
         // ? set sensor/input neuron bias equal to 0 by default 
         super(id, 0, activationFunction);
         
@@ -39,7 +39,7 @@ export class Sensor extends Neuron {
     /**
      * Increases input of every connecting neuron, using the own activationFunction, own input, weight, and bias. 
      */
-    public fire() {
+    public fire () {
         this.input = this.senses
             .map(sense => this.sensation[sense])
             .reduce((sum, current) => sum + current);

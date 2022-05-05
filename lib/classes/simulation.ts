@@ -40,7 +40,7 @@ export class Simulation {
     public livingNodesCount = 0;
     public level : Level;
 
-    constructor(level : Level) {
+    constructor (level : Level) {
         this.level = level;
         let tempArray : Cell[] = [];
 
@@ -76,7 +76,7 @@ export class Simulation {
     // TODO each with coordinates and position
 
     // TODO assess if function should not throw error instead of returning true
-    public cellOccupied(xOrPosition : number | Position, y? : number) : boolean {
+    public cellOccupied (xOrPosition : number | Position, y? : number) : boolean {
         if(typeof xOrPosition === "number") {
             if(xOrPosition < 0 || xOrPosition >= GRID_SIZE || y < 0 || y >= GRID_SIZE) {
                 return true;
@@ -100,7 +100,7 @@ export class Simulation {
      * @param newPosition - contains new position node shall be moved to
      * @returns {boolean} whether position of node was successfully updated
      */
-    public updateNodePosition(node : Node, newPosition : Position) : boolean {
+    public updateNodePosition (node : Node, newPosition : Position) : boolean {
         if(this.cellOccupied(newPosition)) {
             return false;
         }
@@ -116,7 +116,7 @@ export class Simulation {
      * @param node to be spawned, if parameter is not provided a new node will be generated
      * @returns spawned node
      */
-    public spawnNode(node? : Node) : Node {
+    public spawnNode (node? : Node) : Node {
         if (this.livingNodesCount >= GRID_SIZE * GRID_SIZE) {
             logger.warn("Grid seems to be overflowing.");
             throw Error("Grid is full");
@@ -128,7 +128,7 @@ export class Simulation {
         if (node) {
             if(this.cellOccupied(node.x, node.y)) {
                 logger.warn("Cell already occupied.");
-                throw new Error(`Cell at (${node.x}, ${node.y}) occupied.`);
+                throw new Error(`Cell at (${ node.x }, ${ node.y }) occupied.`);
             } else {
                 node.updateNodePosition = this.updateNodePosition.bind(this);
                 this.grid[node.x][node.y].update(true, node.getColor);
@@ -164,9 +164,9 @@ export class Simulation {
      * Invokes each node's step function and updates the grid.
      * @param socket - socket to emit data to
      */
-    public step(socket : Socket) {
-        logger.info(`Generation: ${this.currentGeneration}, Step: ${this.currentStep}, Nodes: ${this.livingNodesCount}`);
-        for (const [, node] of Object.entries(this.nodes)) {
+    public step (socket : Socket) {
+        logger.info(`Generation: ${ this.currentGeneration }, Step: ${ this.currentStep }, Nodes: ${ this.livingNodesCount }`);
+        for (const [ , node ] of Object.entries(this.nodes)) {
             node.act();
         }
         socket.emit("updateNodeList", this.nodes);
@@ -178,7 +178,7 @@ export class Simulation {
      * Simulates entire generation by invoking each node's step function times STEPS_PER_GENERATION.
      * @param socket - socket to emit data to
      */
-    public async generation(socket : Socket) {
+    public async generation (socket : Socket) {
         const sleepInterval = Math.ceil(1 / FPS * 1000);
         for (let step = 0; step < STEPS_PER_GENERATION; step++) {
             this.step(socket);
@@ -193,7 +193,7 @@ export class Simulation {
      * Starts simulation
      * @param socket - socket to emit data to
      */
-    public async run(socket : Socket) {
+    public async run (socket : Socket) {
         // ? fill population with random Nodes until maximum is reached
         while (POPULATION > this.livingNodesCount) {
             try {
@@ -208,7 +208,7 @@ export class Simulation {
             const offsprings : Node[] = [];
             await this.generation(socket);
 
-            for (const [,node] of Object.entries(this.nodes)) {
+            for (const [ ,node ] of Object.entries(this.nodes)) {
                 this.grid[node.x][node.y].reset();
                 
                 if(this.nodeInsideBoundaries(node)) {
@@ -250,7 +250,7 @@ export class Simulation {
      * @param node - node to be checked
      * @returns boolean whether node is inside the grid's boundaries
      */
-    private nodeInsideBoundaries(node : Node) : boolean {
+    private nodeInsideBoundaries (node : Node) : boolean {
         for (const square of this.level) {
             if(square[0] <= node.x && node.x <= square[2] && square[1] <= node.y && node.y <= square[3]){
                 return true;
@@ -263,11 +263,11 @@ export class Simulation {
     /**
      * stores genome of every surviving node
      */
-    public storeGenomes() {
+    public storeGenomes () {
         try {
             const simulationId = new Date().toISOString().replace(/T|\..+|:|-/g, "");
     
-            for (const [, node] of Object.entries(this.nodes)) {
+            for (const [ , node ] of Object.entries(this.nodes)) {
                 node.storeGenome(simulationId);
             }
 
