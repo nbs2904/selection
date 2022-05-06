@@ -4,20 +4,20 @@
         "baseUrl": ".",
         "target": "es5",
         "paths": {
-            "@actions/*": ["lib/actions/*"],
-            "@classes/*": ["lib/classes/*"],
-            "@interfaces/*": ["lib/interfaces/*"],
-            "@utility/*": ["lib/utility/*"],
-            "@errors/*": ["lib/errors/*"],
-            "@config/*": ["config/*"],
-            "@functions/*": ["lib/functions/*"],
-            "@sensors/*": ["lib/sensors/*"],
-            "@customTypes/*": ["lib/types/*"],
-            "@levels/*": ["lib/levels/*"]
+            "@actions/*": [ "lib/actions/*" ],
+            "@classes/*": [ "lib/classes/*" ],
+            "@interfaces/*": [ "lib/interfaces/*" ],
+            "@utility/*": [ "lib/utility/*" ],
+            "@errors/*": [ "lib/errors/*" ],
+            "@config/*": [ "config/*" ],
+            "@functions/*": [ "lib/functions/*" ],
+            "@sensors/*": [ "lib/sensors/*" ],
+            "@customTypes/*": [ "lib/types/*" ],
+            "@levels/*": [ "lib/levels/*" ]
         },
         "outDir": "./build",
         "sourceMap": true,
         "alwaysStrict": true
     },
     "exclude": [ "node_modules" ]
-}
+};
