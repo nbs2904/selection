@@ -6,6 +6,7 @@
   "scripts": {
     "test": "jest --config=./config/jest/jest.config.js --verbose",
     "test:debug": "set NODE_ENV=dev && jest --config=./config/jest/jest.config.js --verbose",
+    "test:coverage": "jest --config=./config/jest/jest.config.js --coverage",
     "dev": "set NODE_ENV=dev && nodemon --config config/nodemon/nodemon.json",
     "start": "cd ./build && node server.js",
     "lint": "eslint --fix . --ext .js,.ts",
