@@ -115,12 +115,12 @@ export function randomGenome () : Genome{
                 }
     
                 if(type !== -1) {
-                    connections[connectionName] = randomFloat(CONNECTION_WEIGHT_RANGE/2, CONNECTION_WEIGHT_RANGE/2 * (-1));
+                    connections[connectionName] = randomFloat(CONNECTION_WEIGHT_RANGE / 2, CONNECTION_WEIGHT_RANGE / 2 * (-1));
                 }
             }
     
             genome.sensors[name] = {
-                bias: randomFloat(BIAS_RANGE/2, BIAS_RANGE/2 * (-1)),
+                bias: randomFloat(BIAS_RANGE / 2, BIAS_RANGE / 2 * (-1)),
                 connections: connections
             };
         });
@@ -154,19 +154,19 @@ export function randomGenome () : Genome{
                 }
     
                 if(type !== -1) {
-                    connections[connectionName] = randomFloat(CONNECTION_WEIGHT_RANGE/2, CONNECTION_WEIGHT_RANGE/2 * (-1));
+                    connections[connectionName] = randomFloat(CONNECTION_WEIGHT_RANGE / 2, CONNECTION_WEIGHT_RANGE / 2 * (-1));
                 }
             }
     
             genome.innerNeurons[name] = {
-                bias: randomFloat(BIAS_RANGE/2, BIAS_RANGE/2 * (-1)),
+                bias: randomFloat(BIAS_RANGE / 2, BIAS_RANGE / 2 * (-1)),
                 connections: connections
             };
         });
     
         // ? add actions
         actions.forEach((name) => {
-            genome.actions[name] = { bias: randomFloat(BIAS_RANGE/2, BIAS_RANGE/2 * (-1))};
+            genome.actions[name] = { bias: randomFloat(BIAS_RANGE / 2, BIAS_RANGE / 2 * (-1))};
         });
         
         genome = streamlineGenome(genome);

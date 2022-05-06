@@ -263,7 +263,7 @@ export class Node {
                 genomeCopy.sensors[sensorNameCopy] = {bias: 0, connections: {}};
             }
 
-            genomeCopy.sensors[sensorNameCopy].bias = randomInteger(1 / MUTATE_PROBABILITY) ? sensor.bias : randomFloat(BIAS_RANGE/2, BIAS_RANGE/2 * (-1));
+            genomeCopy.sensors[sensorNameCopy].bias = randomInteger(1 / MUTATE_PROBABILITY) ? sensor.bias : randomFloat(BIAS_RANGE / 2, BIAS_RANGE / 2 * (-1));
 
             for (const [ connectionName, weight ] of Object.entries(this.genome.sensors[sensorName].connections)) {
                 let connectionNameCopy : string;
@@ -278,7 +278,7 @@ export class Node {
                     }
                 }
                 
-                genomeCopy.sensors[sensorNameCopy].connections[connectionNameCopy] = randomInteger(1 / MUTATE_PROBABILITY) ? weight : randomFloat(CONNECTION_WEIGHT_RANGE/2, CONNECTION_WEIGHT_RANGE/2 * (-1));
+                genomeCopy.sensors[sensorNameCopy].connections[connectionNameCopy] = randomInteger(1 / MUTATE_PROBABILITY) ? weight : randomFloat(CONNECTION_WEIGHT_RANGE / 2, CONNECTION_WEIGHT_RANGE / 2 * (-1));
             }
         }
 
@@ -290,7 +290,7 @@ export class Node {
                 genomeCopy.innerNeurons[neuronNameCopy] = {bias: 0, connections: {}};
             }
 
-            genomeCopy.innerNeurons[neuronNameCopy].bias = randomInteger(1 / MUTATE_PROBABILITY) ? neuron.bias : randomFloat(BIAS_RANGE/2, BIAS_RANGE/2 * (-1));
+            genomeCopy.innerNeurons[neuronNameCopy].bias = randomInteger(1 / MUTATE_PROBABILITY) ? neuron.bias : randomFloat(BIAS_RANGE / 2, BIAS_RANGE / 2 * (-1));
 
             for (const [ connectionName, weight ] of Object.entries(this.genome.innerNeurons[neuronName].connections)) {
                 let connectionNameCopy : string;
@@ -305,7 +305,7 @@ export class Node {
                     }
                 }
                 
-                genomeCopy.innerNeurons[neuronNameCopy].connections[connectionNameCopy] = randomInteger(1 / MUTATE_PROBABILITY) ? weight : randomFloat(CONNECTION_WEIGHT_RANGE/2, CONNECTION_WEIGHT_RANGE/2 * (-1));
+                genomeCopy.innerNeurons[neuronNameCopy].connections[connectionNameCopy] = randomInteger(1 / MUTATE_PROBABILITY) ? weight : randomFloat(CONNECTION_WEIGHT_RANGE / 2, CONNECTION_WEIGHT_RANGE / 2 * (-1));
             }
         }
 
@@ -317,7 +317,7 @@ export class Node {
                 genomeCopy.actions[actionNameCopy] = {bias: 0};
             }
 
-            genomeCopy.actions[actionNameCopy].bias = randomInteger(1 / MUTATE_PROBABILITY) ? action.bias : randomFloat(BIAS_RANGE/2, BIAS_RANGE/2 * (-1));
+            genomeCopy.actions[actionNameCopy].bias = randomInteger(1 / MUTATE_PROBABILITY) ? action.bias : randomFloat(BIAS_RANGE / 2, BIAS_RANGE / 2 * (-1));
         }
 
         
@@ -330,11 +330,11 @@ export class Node {
                 if(!Object.keys(this.genome.innerNeurons).includes(connection) && !Object.keys(this.genome.actions).includes(connection)) {
                     if(actionNames.includes(connection)) {
                         this.genome.actions[connection] = {
-                            bias: randomFloat(CONNECTION_WEIGHT_RANGE/2, CONNECTION_WEIGHT_RANGE/2 * (-1))
+                            bias: randomFloat(CONNECTION_WEIGHT_RANGE / 2, CONNECTION_WEIGHT_RANGE / 2 * (-1))
                         };
                     } else {
                         this.genome.innerNeurons[connection] = {
-                            bias: randomFloat(CONNECTION_WEIGHT_RANGE/2, CONNECTION_WEIGHT_RANGE/2 * (-1)),
+                            bias: randomFloat(CONNECTION_WEIGHT_RANGE / 2, CONNECTION_WEIGHT_RANGE / 2 * (-1)),
                             connections: {}
                         };
                     }
@@ -348,11 +348,11 @@ export class Node {
                 if(!Object.keys(this.genome.innerNeurons).includes(connection) && !Object.keys(this.genome.actions).includes(connection)) {
                     if(actionNames.includes(connection)) {
                         this.genome.actions[connection] = {
-                            bias: randomFloat(CONNECTION_WEIGHT_RANGE/2, CONNECTION_WEIGHT_RANGE/2 * (-1))
+                            bias: randomFloat(CONNECTION_WEIGHT_RANGE / 2, CONNECTION_WEIGHT_RANGE / 2 * (-1))
                         };
                     } else {
                         this.genome.innerNeurons[connection] = {
-                            bias: randomFloat(CONNECTION_WEIGHT_RANGE/2, CONNECTION_WEIGHT_RANGE/2 * (-1)),
+                            bias: randomFloat(CONNECTION_WEIGHT_RANGE / 2, CONNECTION_WEIGHT_RANGE / 2 * (-1)),
                             connections: {}
                         };
                     }                

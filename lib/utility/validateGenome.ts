@@ -6,9 +6,9 @@ const logger = require("@config/logs/log4js").utils;
 
 // * config
 const MAX_NUMBER_INNER_NEURONS = +(process.env.MAX_NUMBER_INNER_NEURONS || 4) as number;
-const MIN_NUMBER_GENOME_SIZE =+(process.env.MIN_NUMBER_GENOME_SIZE || 6) as number;
-const MAX_NUMBER_GENOME_SIZE =+(process.env.MAX_NUMBER_GENOME_SIZE || 10) as number;
-const MAX_CONNECTIONS =+(process.env.MAX_CONNECTIONS || 4) as number;
+const MIN_NUMBER_GENOME_SIZE = +(process.env.MIN_NUMBER_GENOME_SIZE || 6) as number;
+const MAX_NUMBER_GENOME_SIZE = +(process.env.MAX_NUMBER_GENOME_SIZE || 10) as number;
+const MAX_CONNECTIONS = +(process.env.MAX_CONNECTIONS || 4) as number;
 
 /**
  * Checks if genome is valid based on config file in root directory (.env)
