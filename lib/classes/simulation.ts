@@ -3,7 +3,7 @@ import { randomGenome } from "@utility/randomGenome";
 import { nanoid } from "nanoid";
 
 // * logger
-const logger = require("@config/log4js").simulation;
+const logger = require("@config/logs/log4js").simulation;
 
 
 // * classes

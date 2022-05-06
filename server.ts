@@ -17,7 +17,7 @@ import { Config } from "@interfaces/config.interface";
 import { upperLeft } from "./lib/levels/corner.level";
 
 // * logger
-const logger = require("@config/log4js").server;
+const logger = require("@config/logs/log4js").server;
 
 const express = require("express");
 const app = express();

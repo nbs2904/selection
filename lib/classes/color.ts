@@ -1,5 +1,5 @@
 // * logger
-const logger = require("@config/log4js").color;
+const logger = require("@config/logs/log4js").color;
 
 /**
  * Color object

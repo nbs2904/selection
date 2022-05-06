@@ -22,7 +22,7 @@ import { nanoid } from "nanoid";
 import { saveGenome } from "@utility/saveGenome";
 
 // * logger
-const logger = require("@config/log4js").node;
+const logger = require("@config/logs/log4js").node;
 
 // * config
 const GRID_SIZE = +(process.env.GRID_SIZE || 50) as number;

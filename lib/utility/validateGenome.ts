@@ -2,7 +2,7 @@
 import { Genome } from "@interfaces/genome.interface";
 
 // * logger
-const logger = require("@config/log4js").utils;
+const logger = require("@config/logs/log4js").utils;
 
 // * config
 const MAX_NUMBER_INNER_NEURONS = +(process.env.MAX_NUMBER_INNER_NEURONS || 4) as number;

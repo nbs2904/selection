@@ -2,7 +2,7 @@
 import { Config } from "@interfaces/config.interface";
 
 // * logger
-const logger = require("@config/log4js").utils;
+const logger = require("@config/logs/log4js").utils;
 
 import { actionNames } from "./../actions/action";
 import { sensorNames } from "./../sensors/sensor";
