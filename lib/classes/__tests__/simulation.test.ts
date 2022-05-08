@@ -144,10 +144,47 @@ describe("Classes - Simulation", () => {
         expect(simulation.currentStep).toBe(0);
     });
 
-    test.todo("run()");
+    test("run()", async () => {
+        const mockSocket : Socket = new Socket(undefined, undefined, undefined);
+
+        const node : Node = new Node("testNode");
+        simulation.nodes["testNode"] = node;
+        simulation.livingNodesCount++;
+
+        const spawnNodeSpy = jest.spyOn(simulation, "spawnNode").mockImplementation(() => {
+            throw new Error();
+        }).mockImplementationOnce(function (){
+            this.livingNodesCount = 100;
+            return node;
+        }).mockImplementationOnce(() => {
+            throw new Error();
+        });
+
+        const generationSpy = jest.spyOn(simulation, "generation").mockImplementation(async () => {return;});
+
+
+        simulation["callPrivateFunction"] = function (node : Node) {
+            this.nodeInsideBoundaries = jest.fn().mockReturnValue(false).mockReturnValueOnce(true);
+            return this.nodeInsideBoundaries;
+        };
+
+        const reproduceSpy = jest.spyOn(Node.prototype, "reproduce").mockImplementation(() => {return new Node("test");});
+        const nodeInsideBoundariesSpy = simulation["callPrivateFunction"](node);
+        const storeGenomesSpy = jest.spyOn(simulation, "storeGenomes").mockImplementation(() => {return;});
+
+        await simulation.run(mockSocket);
+
+        expect(resetSpy).toHaveBeenCalledTimes(1);
+        expect(updateSpy).toHaveBeenCalledTimes(2);
+        expect(reproduceSpy).toHaveBeenCalledTimes(1);
+        expect(nodeInsideBoundariesSpy).toHaveBeenCalledTimes(1);
+        expect(spawnNodeSpy).toHaveBeenCalledTimes(2);
+        expect(generationSpy).toHaveBeenCalledTimes(2);
+        expect(storeGenomesSpy).toHaveBeenCalledTimes(1);
+    });
 
     test("nodeInsideBoundaries()", () => {
-        simulation["callPrivateFunction"] = function (node : Node) {
+        simulation["callPrivateFunction"] = function (node : Node) : boolean {
             return this.nodeInsideBoundaries(node);
         };
 
@@ -156,9 +193,21 @@ describe("Classes - Simulation", () => {
 
         expect(simulation["callPrivateFunction"](nodeOutsideBoundaries)).toBe(false);
         expect(simulation["callPrivateFunction"](nodeInsideBoundaries)).toBe(true);
-
-
     });
 
-    test.todo("storeGenomes()");
+    test("storeGenomes()", () => {
+        const node : Node = new Node("testNode");
+
+        simulation.nodes["testNode"] = node;
+        simulation.livingNodesCount++;
+
+
+        const storeGenomesSpy = jest.spyOn(node, "storeGenome").mockImplementation(() => {return;}).mockImplementationOnce(() => {throw new Error("Unit test Error");});
+
+        simulation.storeGenomes();
+        simulation.storeGenomes();
+
+        expect(storeGenomesSpy).toHaveBeenCalledTimes(2);
+
+    });
 });
