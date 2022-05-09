@@ -2,6 +2,7 @@
 .vscode
 coverage
 env
+!config/env
 build
 node_modules
 genomes
