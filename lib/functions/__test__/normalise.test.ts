@@ -24,12 +24,12 @@ describe("Functions - normalise", () => {
     test("Weight and Bias adapted", () => {
         const returnFunction = normalise(0, 50, true);
 
-        expect(returnFunction(-102)).toBe(-1);
+        expect(returnFunction(-204)).toBe(-1);
         expect(returnFunction(0)).toBe(0);
-        expect(returnFunction(102)).toBe(1);
+        expect(returnFunction(204)).toBe(1);
 
-        expect(() => returnFunction(-103)).toThrow();
-        expect(() => returnFunction(103)).toThrow();
+        expect(() => returnFunction(-205)).toThrow();
+        expect(() => returnFunction(205)).toThrow();
     });
 
     test("Lower bound bigger than upper bound", () => {

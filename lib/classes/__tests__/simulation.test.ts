@@ -66,10 +66,7 @@ describe("Classes - Simulation", () => {
         expect(cellOccupiedSpy).toHaveBeenCalledTimes(2);
     });
 
-    test("spawnNode() - throws", () => {
-        process.env.POPULATION = "400";
-        process.env.GRID = "50";
-        
+    test("spawnNode() - throws", () => {        
         simulation.livingNodesCount = 10000;
         expect(() => simulation.spawnNode()).toThrow();
 

@@ -15,7 +15,7 @@ describe("Classes - Position", () => {
         const position = new Position();
 
         expect(position.x).toBeGreaterThanOrEqual(0);
-        expect(position.y).toBeLessThanOrEqual(50);
+        expect(position.y).toBeLessThanOrEqual(100);
 
         expect(typeof position.x).toBe("number");
         expect(typeof position.y).toBe("number");
