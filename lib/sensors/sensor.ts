@@ -27,13 +27,13 @@ export class Sensor extends Neuron {
 
     private input : number;
 
-    constructor (id : string, bias : number, sensation? : Sensation, senses? : string[], activationFunction? : (input : number) => number, connections? : Connection[]) {
+    constructor (id : string, bias : number, sensation? : Sensation, senses? : string[], activationFunction? : (input : number) => number, connections : Connection[] = []) {
         // ? set sensor/input neuron bias equal to 0 by default 
         super(id, 0, activationFunction);
         
         this.senses = senses;
         this.sensation = sensation;
-        this.connections = connections || [];
+        this.connections = connections;
     }
 
     /**

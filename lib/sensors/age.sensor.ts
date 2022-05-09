@@ -13,14 +13,14 @@ import { normalise } from "@functions/normalise";
 const STEPS_PER_GENERATION = +(process.env.STEPS_PER_GENERATION || 100) as number;
 
 
-export function ageSensor (bias : number, sensation : Sensation, connections? : Connection[]) : Sensor {
+export function ageSensor (bias : number, sensation : Sensation, connections : Connection[] = []) : Sensor {
     const config : SensorConfig = {
         id: "Age",
         bias: bias,
         sensation: sensation,
         senses: [ "age" ],
         activationFunction: normalise(0, STEPS_PER_GENERATION, true),
-        connections: connections || []
+        connections: connections
     };
 
     return new Sensor(config.id, config.bias, config.sensation, config.senses, config.activationFunction, config.connections);
