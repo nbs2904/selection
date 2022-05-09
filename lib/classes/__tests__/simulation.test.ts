@@ -46,6 +46,9 @@ describe("Classes - Simulation", () => {
         simulation.grid[0][0].occupied = true;
         expect(simulation.cellOccupied(0, 0)).toBe(true);
         expect(simulation.cellOccupied(new Position(0, 0))).toBe(true);
+
+        expect(simulation.cellOccupied(-1, -1)).toBe(true);
+        expect(simulation.cellOccupied(new Position(-1, -1))).toBe(true);
     });
 
     test("updateNodePosition()", () => {        
@@ -151,13 +154,12 @@ describe("Classes - Simulation", () => {
         simulation.nodes["testNode"] = node;
         simulation.livingNodesCount++;
 
-        const spawnNodeSpy = jest.spyOn(simulation, "spawnNode").mockImplementation(() => {
-            throw new Error();
-        }).mockImplementationOnce(function (){
-            this.livingNodesCount = 100;
-            return node;
-        }).mockImplementationOnce(() => {
-            throw new Error();
+        const spawnNodeSpy = jest.spyOn(simulation, "spawnNode").mockImplementation(function () {
+            if(this.livingNodesCount === 1){ 
+                this.livingNodesCount = 100;
+                throw new Error();
+            }
+            else return node;
         });
 
         const generationSpy = jest.spyOn(simulation, "generation").mockImplementation(async () => {return;});
@@ -168,7 +170,10 @@ describe("Classes - Simulation", () => {
             return this.nodeInsideBoundaries;
         };
 
-        const reproduceSpy = jest.spyOn(Node.prototype, "reproduce").mockImplementation(() => {return new Node("test");});
+        const reproduceSpy = jest.spyOn(Node.prototype, "reproduce").mockImplementation(() => {
+            spawnNodeSpy.mockImplementationOnce(() => {throw new Error();});
+            return new Node("test");
+        });
         const nodeInsideBoundariesSpy = simulation["callPrivateFunction"](node);
         const storeGenomesSpy = jest.spyOn(simulation, "storeGenomes").mockImplementation(() => {return;});
 
