@@ -9,4 +9,5 @@ module.exports = {
     testEnvironment: "node",
     moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: "<rootDir>" }),
     setupFiles: [ "./config/jest/jest.setup.js" ],
+    coveragePathIgnorePatterns: [ "./config" ]
 };
