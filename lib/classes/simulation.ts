@@ -70,12 +70,7 @@ export class Simulation {
      */
     public cellOccupied(position : Position) : boolean;
     
-    // TODO Test cases:
-    // TODO cell occupied
-    // TODO node off-grid
-    // TODO each with coordinates and position
 
-    // TODO assess if function should not throw error instead of returning true
     public cellOccupied (xOrPosition : number | Position, y? : number) : boolean {
         if(typeof xOrPosition === "number") {
             if(xOrPosition < 0 || xOrPosition >= GRID_SIZE || y < 0 || y >= GRID_SIZE) {

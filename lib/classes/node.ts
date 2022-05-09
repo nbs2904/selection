@@ -127,8 +127,6 @@ export class Node {
     }
     
     
-    // TODO Test cases:
-    // TODO cause error
     /**
      * moves node along x axis by one step
      * @param {number} direction - can be either 1 or -1
@@ -149,9 +147,7 @@ export class Node {
             this.sensation.lastDirection = new Position(direction, 0);
         }
     }
-    
-    // TODO Test cases:
-    // TODO cause error    
+       
     /**
      * moves node along y axis by one step
      * @param {number} direction - can be either 1 or -1
