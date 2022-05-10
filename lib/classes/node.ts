@@ -31,7 +31,6 @@ const CONNECTION_WEIGHT_RANGE = +(process.env.CONNECTION_WEIGHT_RANGE || 50) as 
 const BIAS_RANGE = +(process.env.BIAS_RANGE || 50) as number;
 const MAX_NUMBER_INNER_NEURONS = +(process.env.MAX_NUMBER_INNER_NEURONS || 4) as number;
 
-// TODO jede function die in constructor übergeben wird nur als "mehtod" wir in der jsdoc hier kennzeichnen
 
 /**
  * Instances respresent an independent entity that can be spawned onto a grid.

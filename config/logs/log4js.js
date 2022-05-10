@@ -1,8 +1,5 @@
 const log4js = require("log4js");
 
-// TODO move file into folder config/log4js
-// TODO move other config files into folder config
-
 const NODE_ENV = process.env.NODE_ENV || "dev";
 let LOG_LEVEL = "DEBUG";
 if (NODE_ENV === "prod") LOG_LEVEL = "ERROR";

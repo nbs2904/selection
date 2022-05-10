@@ -69,7 +69,6 @@ describe("Utility - getFireOrder", () => {
     });
 });
 
-// TODO check every delete statement
 describe("Utility - streamlineGenome", () => {
     test("Remove sensor with no connections", () => {
         const genome : Genome = {

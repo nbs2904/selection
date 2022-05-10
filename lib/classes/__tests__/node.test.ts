@@ -18,7 +18,6 @@ let spy : jest.SpyInstance;
 
 
 beforeEach(() => {
-    // TODO Mock simulation class
     genome = {
         fireOrder: [ "Neuron 2", "Neuron 1", "Neuron 3", "Neuron 4", "Neuron 5" ],
         sensors: {

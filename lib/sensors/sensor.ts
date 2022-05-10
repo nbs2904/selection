@@ -46,6 +46,7 @@ export class Sensor extends Neuron {
         
         // ? send output to every connected neuron, using the activationFunction, bias, and the respective weight.
         this.connections.forEach((connection) => {
+            // TODO debug normalise input which is out of bound
             connection.outputNeuron.input += this.activationFunction(this.input * connection.weight + this.bias);
         });
     }
