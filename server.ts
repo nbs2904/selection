@@ -1,5 +1,3 @@
-// TODO jsdoc every class, constructor, function, interface, enum, etc.
-
 // * utility
 import { validateConfig } from "@utility/validateConfig";
 
@@ -42,7 +40,7 @@ io.on("connection", async (socket : typeof Socket) => {
 
 
     const simulation = new Simulation(upperLeft);
-    simulation.run(socket);
+    await simulation.run(socket);
     
     
     socket.on("disconnect", () => {
