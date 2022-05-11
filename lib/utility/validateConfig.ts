@@ -4,8 +4,10 @@ import { Config } from "@interfaces/config.interface";
 // * logger
 const logger = require("@config/logs/log4js").utils;
 
-import { actionNames } from "./../actions/action";
-import { sensorNames } from "./../sensors/sensor";
+
+// TODO import names from independent file
+const actionNames = [ "MoveX", "MoveY", "MoveBwd", "MoveFwd", "MoveRnd" ];
+const sensorNames = [ "XPos", "YPos", "Age" ];
 
 /**
  * @param config {@link Config} to validate

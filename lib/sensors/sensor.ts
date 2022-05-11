@@ -61,4 +61,5 @@ export const sensorList = {
     "Age": ageSensors.ageSensor
 };
 
+// TODO move array to independent file
 export const sensorNames = [ "XPos", "YPos", "Age" ];

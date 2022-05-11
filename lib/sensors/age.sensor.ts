@@ -10,7 +10,7 @@ import { Sensation } from "@interfaces/sensation.interface";
 import { normalise } from "@functions/normalise";
 
 // * config
-const STEPS_PER_GENERATION = +(process.env.STEPS_PER_GENERATION || 100) as number;
+const STEPS_PER_GENERATION = +(process.env.STEPS_PER_GENERATION) as number;
 
 
 export function ageSensor (bias : number, sensation : Sensation, connections : Connection[] = []) : Sensor {
