@@ -29,6 +29,7 @@
     "@typescript-eslint/eslint-plugin": "^5.8.0",
     "@typescript-eslint/parser": "^5.8.0",
     "eslint": "^8.5.0",
+    "eslint-plugin-tsdoc": "^0.2.16",
     "gulp": "^4.0.2",
     "gulp-eslint": "^6.0.0",
     "gulp-run-command": "^0.0.10",

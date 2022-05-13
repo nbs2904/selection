@@ -12,7 +12,7 @@
         "ecmaVersion": 12,
         "es2021": true
     },
-    "plugins": [ "@typescript-eslint" ],
+    "plugins": [ "@typescript-eslint", "eslint-plugin-tsdoc" ],
     "rules": {
         "indent": [ "error", 4 ],
         "linebreak-style": [ "error", "windows" ],
@@ -25,6 +25,7 @@
         "template-curly-spacing": ["error", "always"],
         "no-console": "warn",
         "array-bracket-spacing": ["error", "always"],
-        "space-infix-ops": ["error"]
+        "space-infix-ops": ["error"],
+        "tsdoc/syntax": ["warn", "tsdoc" ]
     }
 }
