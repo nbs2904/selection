@@ -259,8 +259,6 @@ export class Node {
         }
     }
 
-    // TODO update every (env file) reference with link
-
     /**
      * @public
      * Copies genome when a new offspring is spawned. 

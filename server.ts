@@ -17,7 +17,7 @@ import { upperLeft } from "./lib/levels/corner.level";
 // * logger
 const logger = require("@config/logs/log4js").server;
 
-const express = require("express");
+import  express = require("express");
 const app = express();
 const http = require("http");
 const server = http.createServer(app);
@@ -29,7 +29,7 @@ app.use(express.static("public"));
 logger.info("Environment:", NODE_ENV);
 
 
-app.get("/", function (req : any, res : any) {
+app.get("/", function (req : express.req, res : express.res) {
     res.sendFile(__dirname + "/index.html");
 });
 

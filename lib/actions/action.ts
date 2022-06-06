@@ -4,10 +4,9 @@ import { Neuron } from "@classes/neuron";
 // * actions
 import * as moveActions from "@actions/move.action";
 
-// TODO fix links
 /**
  * Actions function as the output neurons of a node's genome
- * @extends [Neuron]()
+ * @extends [Neuron](../classes/neuron.ts)
 */
 
 export class Action extends Neuron {

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 // * classes
 import { Color } from "@classes/color";
 import { Node } from "@classes/node";

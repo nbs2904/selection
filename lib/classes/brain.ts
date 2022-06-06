@@ -14,17 +14,16 @@ import { Connection } from "@interfaces/connection.interface";
 import { Genome } from "@interfaces/genome.interface";
 import { Sensation } from "@interfaces/sensation.interface";
 
-// TODO update tsdoc links
 /**
  * Brain of a node.
  * Determines which Neuron fires in what order and invokes action function to change the node's state.
  */
 export class Brain {
-    /** @private map of the Brain's [Sensor]() */
+    /** @private map of the Brain's [Sensor](../sensors/sensor.ts) */
     private sensors : { [key : string] : Sensor } = {};
-    /** @private map of the Brain's [InnerNeuron]() */
+    /** @private map of the Brain's [InnerNeuron](./neuron.ts) */
     private innerNeurons : { [key : string] : InnerNeuron } = {};
-    /** @private map of the Brain's [Action]() */
+    /** @private map of the Brain's [Action](../actions/action.ts) */
     private actions : { [key : string] : Action } = {};
     /** @private order in which inner neurons fire */
     private innerNeuronsFireOrder : string[] = [];

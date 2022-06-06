@@ -1,8 +1,6 @@
 // * logger
 const logger = require("@config/logs/log4js").color;
 
-// TODO check for tsdoc number min max notation
-
 /**
  * Color Class
  * - Color components must be between 0 and 255

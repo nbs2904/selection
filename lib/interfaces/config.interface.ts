@@ -25,8 +25,8 @@ export interface Config {
     MAX_NUMBER_GENOME_SIZE: string | number,
     /** Max number of connections a sensor or inner neuron can create */
     MAX_CONNECTIONS: string | number,
-    /** Connection weight range: from -(CONNECTION_WEIGHT_RANGE/2) to (CONNECTION_WEIGHT_RANGE/2) */
+    /** Connection weight range: from -([CONNECTION_WEIGHT_RANGE](../../config/env/.env)/2) to ([CONNECTION_WEIGHT_RANGE](../../config/env/.env)/2) */
     CONNECTION_WEIGHT_RANGE: string | number,
-    /** Neuron bias range: from -(BIAS_RANGE/2) to (BIAS_RANGE/2) */
+    /** Neuron bias range: from -([BIAS_RANGE](../../config/env/.env)/2) to ([BIAS_RANGE](../../config/env/.env)/2) */
     BIAS_RANGE: string | number
 }

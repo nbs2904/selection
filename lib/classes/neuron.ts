@@ -3,7 +3,6 @@ import { Connection } from "@interfaces/connection.interface";
 
 // * functions
 // TODO experiment with activationFunctions
-// TODO fix links
 import { tanh } from "@functions/tanh";
 
 

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 // * interfaces
 import { Genome } from "@interfaces/genome.interface";
 

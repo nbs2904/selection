@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * Async timeout function
  * @param ms - milliseconds to sleep

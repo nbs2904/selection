@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 // * classes
 import { Node } from "@classes/node";
 import { Position } from "@classes/position";
