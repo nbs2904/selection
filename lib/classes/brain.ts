@@ -14,23 +14,27 @@ import { Connection } from "@interfaces/connection.interface";
 import { Genome } from "@interfaces/genome.interface";
 import { Sensation } from "@interfaces/sensation.interface";
 
-
+// TODO update tsdoc links
 /**
- * Brain of a node
- * @property {@link Genome} - structure determining the node's behaviour
- * @property {@link Sensation} - any input a node can receive (position, age, etc)
- * @property actionFunctions - map of action names to action functions
- * @property {@link Sensor sensors} - map of sensors
- * @property {@link InnerNeuron innerNeurons} - map of inner neurons
- * @property {@link Action actions} - map of actions
- * @property {string[]} innerNeuronsFireOrder - order in which inner neurons fire
+ * Brain of a node.
+ * Determines which Neuron fires in what order and invokes action function to change the node's state.
  */
 export class Brain {
+    /** @private map of the Brain's [Sensor]() */
     private sensors : { [key : string] : Sensor } = {};
+    /** @private map of the Brain's [InnerNeuron]() */
     private innerNeurons : { [key : string] : InnerNeuron } = {};
+    /** @private map of the Brain's [Action]() */
     private actions : { [key : string] : Action } = {};
+    /** @private order in which inner neurons fire */
     private innerNeuronsFireOrder : string[] = [];
 
+    /**
+     * @constructor
+     * @param genome - Genome of Node, used to generate a working Brain
+     * @param sensation - Sensation which is bound to Node to get access to current states
+     * @param actionFunctions - Function of Node that shall be called upon firing determined Action Neuron
+     */
     constructor (genome : Genome, sensation : Sensation, actionFunctions : { [key : string] : () => void }) {
         this.innerNeuronsFireOrder = genome.fireOrder;
 

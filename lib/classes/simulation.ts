@@ -25,21 +25,30 @@ const POPULATION = +(process.env.POPULATION || 100) as number;
 
 /**
  * Simulation class serves as a playing field for neurons.
- * @property {@link NodeList} nodes - Map of all nodes in the simulation. The respective key is the node's id.
- * @property {@link Cell Cell[][]} grid - 2D array of cells.
- * @property {number} currentGeneration - Current generation of the simulation. Number of steps in one generation is defined in as STEPS_PER_GENERATION (env).
- * @property {number} currentStep - Current step of a generation. It increases by one after every living node has taken one step.
- * @property {number} livingNodesCount - Number of living nodes in the simulation.
- * @property {@link Level} - Defines a specific area of the grid. At the end of each generation each node outside of that area dies.
  */
 export class Simulation {
+    /** @public Map of all [Nodes](./node.ts) in the simulation. The respective key is the Node's id. */
     public nodes : NodeList = {};
+
+    /** @public 2D array of [Cells](./cell.ts) */
     public grid : Cell[][] = [];
+    
+    /** @public generation counter */
     public currentGeneration = 0;
+    
+    /** @public step counter */
     public currentStep = 0;
+    
+    /** @public counter of currently living Nodes */
     public livingNodesCount = 0;
+    
+    /** @public Defines a specific area of the grid. At the end of each generation each node outside of that area dies. */
     public level : Level;
 
+    /**
+     * @constructor
+     * @param level - Defines a specific area of the grid. At the end of each generation each node outside of that area dies.
+     */
     constructor (level : Level) {
         this.level = level;
         let tempArray : Cell[] = [];
@@ -58,15 +67,17 @@ export class Simulation {
 
     // * function Overloading ---------------------------------------
     /**
-     * @param x - x coordinate of the cell
-     * @param y - y coordinate of the cell
-     * @returns {boolean} whether cell is occupied
+     * @public
+     * @param x - x coordinate of the [Cell](./cell.ts)
+     * @param y - y coordinate of the [Cell](./cell.ts)
+     * @returns whether [Cell](./cell.ts) is occupied
      */
     public cellOccupied(x : number, y : number) : boolean;
 
     /**
-     * @param position - position of the node
-     * @returns {boolean} whether cell is occupied
+     * @public
+     * @param position - [Position](./position.ts) of the node
+     * @returns whether [Cell](./cell.ts) is occupied
      */
     public cellOccupied(position : Position) : boolean;
     
@@ -90,10 +101,11 @@ export class Simulation {
 
 
     /**
-     * removes node from the cell it was before and updates new cell
-     * @param node - contains the new position to update new cell
-     * @param newPosition - contains new position node shall be moved to
-     * @returns {boolean} whether position of node was successfully updated
+     * @public
+     * Removes node from the [Cell](./cell.ts) it was before and updates new [Cell](./cell.ts)
+     * @param node - old [Position](./position.ts) of [Node](./node.ts) is reset
+     * @param newPosition - contains new [Position](./position.ts), [Node](./node.ts) shall be moved to
+     * @returns whether [Position](./position.ts) of node was successfully updated
      */
     public updateNodePosition (node : Node, newPosition : Position) : boolean {
         if(this.cellOccupied(newPosition)) {
@@ -107,9 +119,10 @@ export class Simulation {
     }
 
     /**
-     * spawns a new node onto the grid
-     * @param node to be spawned, if parameter is not provided a new node will be generated
-     * @returns spawned node
+     * @public
+     * spawns a new [Node](./node.ts) onto the grid
+     * @param node - to be spawned, if parameter is not provided a new [Node](./node.ts) will be generated
+     * @returns spawned [Node](./node.ts)
      */
     public spawnNode (node? : Node) : Node {
         if (this.livingNodesCount >= GRID_SIZE * GRID_SIZE) {
@@ -156,7 +169,8 @@ export class Simulation {
     }
 
     /**
-     * Invokes each node's step function and updates the grid.
+     * @public
+     * Invokes each [Node's](./node.ts) step function and updates the grid.
      * @param socket - socket to emit data to
      */
     public step (socket : Socket) {
@@ -170,7 +184,8 @@ export class Simulation {
     }
 
     /**
-     * Simulates entire generation by invoking each node's step function times STEPS_PER_GENERATION.
+     * @public
+     * Simulates entire generation by invoking each [Node's](./node.ts) step function times [STEPS_PER_GENERATION](../../config/env/.env).
      * @param socket - socket to emit data to
      */
     public async generation (socket : Socket) {
@@ -185,6 +200,7 @@ export class Simulation {
     }
 
     /**
+     * @public
      * Starts simulation
      * @param socket - socket to emit data to
      */
@@ -242,8 +258,9 @@ export class Simulation {
     }
 
     /**
-     * @param node - node to be checked
-     * @returns boolean whether node is inside the grid's boundaries
+     * @private
+     * @param node - [Node](./node.ts) to be checked
+     * @returns boolean whether [Node](./node.ts) is inside the grid's boundaries
      */
     private nodeInsideBoundaries (node : Node) : boolean {
         for (const square of this.level) {
@@ -256,6 +273,7 @@ export class Simulation {
     }
 
     /**
+     * @public
      * stores genome of every surviving node
      */
     public storeGenomes () {

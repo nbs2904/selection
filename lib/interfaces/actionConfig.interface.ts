@@ -1,4 +1,3 @@
-import { actionList } from "./../actions/action";
 export interface ActionConfig {
     /** Id of the action neuron. */
     id: string;

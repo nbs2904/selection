@@ -1,0 +1,43 @@
+{
+    "$schema": "https://developer.microsoft.com/json-schemas/tsdoc/v0/tsdoc.schema.json",
+    "tagDefinitions": [
+        {
+            "tagName": "@extends",
+            "syntaxKind": "modifier"
+        },
+        {
+            "tagName": "@protected",
+            "syntaxKind": "block"
+        },
+        {
+            "tagName": "@private",
+            "syntaxKind": "block"
+        },
+        {
+            "tagName": "@abstract",
+            "syntaxKind": "block"
+        },
+        {
+            "tagName": "@constructor",
+            "syntaxKind": "block"
+        },
+        {
+            "tagName": "@alias",
+            "syntaxKind": "block"
+        }
+    ],
+    "supportForTags": {
+        "@extends": true,
+        "@protected": true,
+        "@readonly": true,
+        "@public": true,
+        "@private": true,
+        "@returns": true,
+        "@abstract": true,
+        "@link": true,
+        "@constructor": true,
+        "@alias": true,
+        "@param": true,
+        "@see": true
+    }
+}

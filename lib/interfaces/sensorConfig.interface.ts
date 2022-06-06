@@ -13,6 +13,6 @@ export interface SensorConfig {
     senses: string[];
     /** activation function are listed in lib/functions */
     activationFunction: (input : number) => number;
-    /** map of {@link Connection Connections} */
+    /** map of [Connections](./connection.interface.ts) */
     connections: Connection[];
 }

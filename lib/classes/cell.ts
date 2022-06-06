@@ -1,24 +1,33 @@
 // * classes
 import { Color } from "@classes/color";
 
+
 /**
  * Cell of a simulation's grid
- * @property {boolean} occupied - whether this cell is occupied by a node
- * @property {@link Color} - color of the node that currently occupies this cell
+ * A cell can be occupied, if so it stores the color of the current [Node](./node.ts) occupying it.
  */
 export class Cell {
+    /** @public Whether or not the cell is currently occupied by a [Node](./node.ts) */
     public occupied : boolean;
+
+    /** @public If Cell is occupied, it stores the [Color](./color.ts) of the respective [Node](./node.ts) */
     public color : Color | undefined;
 
+    /**
+     * @constructor
+     * @param occupied - Whether or not the cell is currently occupied by a [Node](./node.ts)
+     * @param color - If Cell is occupied it stores the [Color](./color.ts) of the respective [Node](./node.ts)
+     */
     public constructor (occupied? : boolean, color? : Color) {
         this.occupied = occupied || false;
         this.color = color || undefined;
     }
 
     /**
-     * updates the cell's properties
-     * @param occupied {boolean} - whether this cell is occupied by a node
-     * @param color {@link Color} - color of the node that currently occupies this cell
+     * @public
+     * Updates the cell's properties
+     * @param occupied - Whether this cell is occupied by a [Node](./node.ts)
+     * @param color - [Color](./color.ts) of the [Node](./node.ts) that currently occupies this cell
      */
     public update (occupied : boolean, color? : Color) {
         this.occupied = occupied;
@@ -26,6 +35,7 @@ export class Cell {
     }
 
     /**
+     * @public
      * resets cell object:
      *  - occupied is set to false
      *  - color is set to undefined

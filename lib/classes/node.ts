@@ -34,25 +34,39 @@ const MAX_NUMBER_INNER_NEURONS = +(process.env.MAX_NUMBER_INNER_NEURONS || 4) as
 
 /**
  * Instances respresent an independent entity that can be spawned onto a grid.
- * @property {string} id
- * @property {number} lifespan - number of steps before the node dies
- * @property {method} updateNodePosition - function is bound to the simulation and is called every step
- * @property {@link Sensation} - list of sensations that the node is currently experiencing
- * @property {@link Genome} - genome of the node
- * @property {@link Brain} - brain of the node
- * @property {@link Color} - Color of the node
  */
 export class Node {
+    /** @public unique identifier for Node instance */
     public id : string;
+
+    /** @public determines how many steps a Node survives */
     public lifespan = +process.env.STEP_PER_GENERATION || 200;
+
+    /** @public function which is bound to the simulation and is called every step to update position */
     public updateNodePosition : (node : Node, newPosition : Position) => boolean;
     
+    /** 
+     * @private List of sensations that the node is experiencing 
+     * @see [Sensation](../interfaces/sensation.interface.ts)
+    */
     private sensation : Sensation;
+
+    /** @private [Genome](../interfaces/genome.interface.ts) of the Node */
     private genome : Genome;
+
+    /** @private [Color](./color.ts) of the Node */
     private color : Color;
 
+    /** @private [Brain](./brain.ts) of the Node */
     private brain : Brain;
 
+    /**
+     * @constructor
+     * @param id - unique identifier for Node instance
+     * @param genome - [Genome](../interfaces/genome.interface.ts) of the Node
+     * @param position - [Position](./position.ts) of the Node (set randomnly if not provided)
+     * @param color - [Color](./color.ts) of the Node (set randomnly if not provided)
+     */
     public constructor (id : string, genome? : Genome, position? : Position, color? : Color) {
         this.id = id;
         this.color = color || new Color(randomInteger(255), randomInteger(255), randomInteger(255));
@@ -77,8 +91,9 @@ export class Node {
     }
 
     /**
-     * Getter function for x coordinate
-     * @returns x coordinate
+     * @public
+     * Getter function for x-coordinate
+     * @returns x-coordinate
      */
 
     public get x () : number {
@@ -86,14 +101,16 @@ export class Node {
     }
 
     /**
-     * Getter function for y coordinate
-     * @returns y coordinate
+     * @public
+     * Getter function for y-coordinate
+     * @returns y-coordinate
      */
     public get y () : number {
         return this.sensation.y;
     }
     
     /**
+     * @public
      * Getter function to receive color of node
      * @returns Color
      */
@@ -102,6 +119,7 @@ export class Node {
     }
 
     /**
+     * @public
      * Getter function for age of node
      * @returns age
      */
@@ -110,7 +128,8 @@ export class Node {
     }
 
     /**
-     * Getter function of {@link Sensation} object of node
+     * @public
+     * Getter function of [Sensation](../interfaces/sensation.interface.ts) object of node
      * @returns Sensation
      */
     public get getSensation () : Sensation {
@@ -118,6 +137,7 @@ export class Node {
     }
 
     /**
+     * @public
      * Invokes brain.compute() and increases age of node by one
      */
     public act () {
@@ -127,8 +147,9 @@ export class Node {
     
     
     /**
+     * @public
      * moves node along x axis by one step
-     * @param {number} direction - can be either 1 or -1
+     * @param direction - can be either 1 or -1
      */
     public async moveX (direction : number) {
         if(direction != 1 && direction != -1) {
@@ -148,8 +169,9 @@ export class Node {
     }
        
     /**
+     * @public
      * moves node along y axis by one step
-     * @param {number} direction - can be either 1 or -1
+     * @param direction - can be either 1 or -1
      */
     public async moveY (direction : number) {
         if(direction != 1 && direction != -1) {
@@ -169,6 +191,7 @@ export class Node {
     }
 
     /**
+     * @public
      * moves node in the direction it moved during the last step
      */
     public async moveFwd () {
@@ -185,6 +208,7 @@ export class Node {
     }
 
     /**
+     * @public
      * moves node in the opposite direction it moved during the last step
      */
     public async moveBwd () {
@@ -201,6 +225,7 @@ export class Node {
     }
 
     /**
+     * @public
      * moves node in a random direction
      */
     public async moveRnd () {
@@ -234,12 +259,12 @@ export class Node {
         }
     }
 
+    // TODO update every (env file) reference with link
+
     /**
+     * @public
      * Copies genome when a new offspring is spawned. 
-     * The MUTATE_PROBABILITY (env file) determines how likley a mutation will occur during every step.
-     * @returns object:
-     * { genome: {@link Genome},
-     * hasMutated: {boolean} }
+     * The [MUTATE_PROBABILITY](../../config/env/.env) determines how likley a mutation will occur during every step.
      */
     public copyGenome () : { genome : Genome, hasMutated : boolean } {
         // TODO add another connection by chance
@@ -370,9 +395,10 @@ export class Node {
     }
 
     /**
+     * @public
      * Generates an offspring.
-     * @param {method} cellOccupied - Method is bound to a simulation instance, to check whether a cell is already occupied before spawning the offspring onto the grid.
-     * @returns {Node} the offspring
+     * @param cellOccupied - Method is bound to a simulation instance, to check whether a cell is already occupied before spawning the offspring onto the grid.
+     * @returns offspring as a {@link Node} instance
      */
     public reproduce (cellOccupied : (position : Position) => boolean) : Node {
         const id = nanoid(10);
@@ -406,8 +432,9 @@ export class Node {
     }
 
     /**
+     * @public
      * Stores the genome of the node as a JSON file.
-     * @param {string} simulationId - Genome is stored in a folder with the name of the simulation Id.
+     * @param simulationId - [Genome](../interfaces/genome.interface.ts) is stored in a folder with the name of the simulation Id.
      */
     public storeGenome (simulationId : string) {
         saveGenome(this.genome, this.id, `lib/simulations/${ simulationId }`);

@@ -3,25 +3,33 @@ import { Connection } from "@interfaces/connection.interface";
 
 // * functions
 // TODO experiment with activationFunctions
+// TODO fix links
 import { tanh } from "@functions/tanh";
 
-// * utility
-import { randomFloat } from "@utility/randomNumber";
-
-// * config
-const BIAS_RANGE = +(process.env.BIAS_RANGE || 4) as number;
 
 /**
  * Base Neuron Class
- * @property {string} id
- * @property {number} bias
- * @property {(input : number) => number} activationFunction
+ * @abstract
  */
 export abstract class Neuron {
+    /** 
+     * @public unique identifier of Neuron
+     * @readonly
+     */
     public readonly id : string;
+
+    /** @protected used to offset Neurons input */
     protected bias : number;
+
+    /** @protected function bound to Node, to change its state */
     protected activationFunction : (input : number) => number;
 
+    /**
+     * @constructor
+     * @param id - unique identifier of {@link Neuron} 
+     * @param bias - used to offset {@link Neuron} input
+     * @param activationFunction - function used to determine Neuron output
+     */
     constructor (id : string, bias : number, activationFunction : (input : number) => number) {
         this.id = id;
         this.bias = bias;
@@ -29,7 +37,8 @@ export abstract class Neuron {
     }
 
     /**
-     * Abstract method to be invoked by child classes
+     * @abstract
+     * @public Abstract method to be invoked by child classes
      */
     public abstract fire() : void;
 }
@@ -37,14 +46,21 @@ export abstract class Neuron {
 
 /**
  * InnerNeuron class can be seen as hidden layer of a node's genome
- * @extends {{@link Neuron}
- * @property {@link Connection Connection[]} - list of connections to other neurons
- * @property {number} input - sum of inputs
+ * @extends Class {@link Neuron}
  */
 export class InnerNeuron extends Neuron {
+    /** @public list of connections to other neurons */
     public connections : Connection[];
+
+    /** @public sum of inputs */
     public input : number;
 
+    /**
+     * @constructor
+     * @param id - unique identifier of InnerNeuron
+     * @param bias - used to offset InnerNeuron input
+     * @param connections - list of connections to other neurons
+     */
     constructor (id : string, bias? : number, connections? : Connection[]) {
         super(id, bias, tanh);
 
@@ -53,6 +69,7 @@ export class InnerNeuron extends Neuron {
     }
 
     /**
+     * @public
      * Increases input of every connecting neuron, using the own activationFunction, own input, weight, and bias. 
      */
     public fire () {

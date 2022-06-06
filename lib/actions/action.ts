@@ -4,20 +4,28 @@ import { Neuron } from "@classes/neuron";
 // * actions
 import * as moveActions from "@actions/move.action";
 
-
+// TODO fix links
 /**
- * Actions function as the output neruons of a node's genome
- * @extends {{@link Neuron}
- * @property {string} id
- * @property {number} bias ranges between -BIAS_RANGE and BIAS_RANGE (env file)
- * @property {number} input - neurons can receive input from other neurons
- * @property {(input : number) => number} activationFunction
- * @property {(input? : number) => Promise<void>} actionFunction - bound function to node that will be called when action fires
+ * Actions function as the output neurons of a node's genome
+ * @extends [Neuron]()
 */
+
 export class Action extends Neuron {
+    /** @public input to be passed to the activation function */
     public input = 0;
+    /**
+     * @private Function bound to Node that is called, when Action fires.
+     * @param input - either -1 or 1
+     */
     private actionFunction : (input? : number) => Promise<void>;
 
+    /**
+     * @constructor
+     * @param id - unique identifier of Action
+     * @param bias - used to offset Action input
+     * @param activationFunction - function used to determine Action output
+     * @param actionFunction - function bound to Action, to change its state
+     */
     constructor (id : string, bias : number, activationFunction : (input : number) => number, actionFunction : (input? : number) => Promise<void>) {
         super(id, bias, activationFunction);
 
@@ -25,16 +33,17 @@ export class Action extends Neuron {
     }
     
     /**
-     * @returns {number} input and bias that have been passed through the activation function
+     * @readonly
+     * @returns input and bias that have been passed through the activation function
     */
     public get output () : number {
         return this.activationFunction(this.input + this.bias);
     }
     
     /**
-     *  invokes actionFunction, causing node to change state 
+     *  @public invokes actionFunction, causing node to change state 
     */
-    public fire () {
+    public fire () : void {
         if(this.output < 0) {
             this.actionFunction(-1);
         } else {
