@@ -1,9 +1,8 @@
 /**
  * Generates pseudo-random number between min and max (inclusive)
- * @param max included
- * @param min included (0 if omitted)
- * @throws {RangeError} if min > max
- * @returns integer
+ * @param max - included
+ * @param min - included (0 if omitted)
+ * @throws if min \> max
  */
 export function randomInteger (max : number, min? : number) : number {
     if(max < min) throw new Error("max must be greater than or equal to min");
@@ -15,9 +14,9 @@ export function randomInteger (max : number, min? : number) : number {
 
 /**
  * Generates pseudo-random number between min and max (inclusive)
- * @param max included
- * @param min included (0 if omitted)
- * @throws {RangeError} if min > max
+ * @param max - included
+ * @param min - included (0 if omitted)
+ * @throws if min \> max
  * @returns float
  */
 export function randomFloat (max : number, min? : number) : number {

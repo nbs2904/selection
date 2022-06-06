@@ -17,8 +17,8 @@ import { equals } from "@utility/equals";
 
 /**
  * Determines fire order of a genome's inner neurons.
- * @param  genome {@link Genome} to optimise 
- * @returns {string[]} array of neuron ids in fire order
+ * @param genome - [Genome](../interfaces/genome.interface.ts) to optimise 
+ * @returns array of [Neuron](../classes/neuron.ts) ids in fire order
  */
 export function getFireOrder (genome : Genome) : string[]{
     const potentials : {
@@ -114,12 +114,12 @@ export function getFireOrder (genome : Genome) : string[]{
 }
 
 /**
- * Removes unnecessary neurons or connections from a genome. Based on following factors:
- * - neurons with no incoming connections
- * - neurons with no outgoing connections
- * - whether the following neuron of one neuron or sensor has already been fired.
- * @param genome {@link Genome} to streamline
- * @returns optmised {@link Genome}	
+ * Removes unnecessary [Neurons](../classes/neuron.ts) or [Connections](../interfaces/connection.interface.ts) from a [Genome](../interfaces/genome.interface.ts). Based on following factors:
+ * - [Neurons](../classes/neuron.ts) with no incoming [Connections](../interfaces/connection.interface.ts)
+ * - [Neurons](../classes/neuron.ts) with no outgoing [Connections](../interfaces/connection.interface.ts)
+ * - Whether the following [Neuron](../classes/neuron.ts) of one [Neuron](../classes/neuron.ts) or [Sensor](../sensors/sensor.ts) has already been fired.
+ * @param genome - [Genome](../interfaces/genome.interface.ts) to streamline
+ * @returns optmised [Genome](../interfaces/genome.interface.ts)	
  */
 export function streamlineGenome (genome : Genome) : Genome {
     let fireOrder : string[] = [];
@@ -223,28 +223,6 @@ export function streamlineGenome (genome : Genome) : Genome {
         }
     }
 
-    
-    // ? check if connections are valid
-    // ? every sensor
-    // for (const [, sensor] of Object.entries(genome.sensors)) {
-    //     for (const [connectionName] of Object.entries(sensor.connections)) {
-    //         if (!(connectionName in genome.innerNeurons || connectionName in genome.actions)) {
-    //             throw new Error("Connection is invalid");
-                
-    //         }
-    //     }
-    // }
-
-    // ? every neuron
-    // for (const [, neuron] of Object.entries(genome.innerNeurons)) {
-    //     for (const [connectionName] of Object.entries(neuron.connections)) {
-    //         if (!(connectionName in genome.innerNeurons || connectionName in genome.actions)) {
-    //             throw new Error("Connection is invalid");
-                
-    //         }
-    //     }
-    // }
-
     // ? update fireOrder for inner Neurons
     genome.fireOrder = getFireOrder(genome);
 
@@ -253,9 +231,9 @@ export function streamlineGenome (genome : Genome) : Genome {
 
 
 /**
- * Sorting algorithm used to determine fire order of inner neurons. Neurons are sorted by following criteria:
- * 1. Neuron with the highest potential will fire first
- * 2. If multiple neurons have the same potential the one with the most connections will fire first
+ * Sorting algorithm used to determine fire order of [Inner Neuron](../classes/neuron.ts). [Neurons](../classes/neuron.ts) are sorted by following criteria:
+ * 1. [Neuron](../classes/neuron.ts) with the highest [Potential](../classes/potential.ts) will fire first.
+ * 2. If multiple [Neurons](../classes/neuron.ts) have the same [Potential](../classes/potential.ts) the one with the most connections will fire first.
  */
 export function sortFunction (firstNeuron : { id: string, potential: Potential }, secondNeuron : { id: string, potential: Potential }) {
     if(firstNeuron.potential.potential !== secondNeuron.potential.potential) {

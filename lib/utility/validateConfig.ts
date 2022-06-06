@@ -10,8 +10,8 @@ const actionNames = [ "MoveX", "MoveY", "MoveBwd", "MoveFwd", "MoveRnd" ];
 const sensorNames = [ "XPos", "YPos", "Age" ];
 
 /**
- * @param config {@link Config} to validate
- * @returns boolean whether config is valid
+ * Checks whether given [Config](../interfaces/config.interface.ts) is valid
+ * @param config - [Config](../interfaces/config.interface.ts) to validate
  */
 export function validateConfig (config : Config) : boolean {
     try {

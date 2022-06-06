@@ -23,8 +23,8 @@ const CONNECTION_WEIGHT_RANGE = +(process.env.CONNECTION_WEIGHT_RANGE || 8) as n
 const BIAS_RANGE = +(process.env.BIAS_RANGE || 8) as number;
 
 /**
- * Generates a random genome according to config file in the root directory. (.env)
- * @returns {{{@link Genome
+ * Generates a random [Genome](../interfaces/genome.interface.ts) according to [config file](../../config/env/.env)
+ * @returns [Genome](../interfaces/genome.interface.ts)
  */
 export function randomGenome () : Genome{
     let genome : Genome = {

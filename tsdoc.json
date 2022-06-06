@@ -38,6 +38,7 @@
         "@constructor": true,
         "@alias": true,
         "@param": true,
-        "@see": true
+        "@see": true,
+        "@throws": true
     }
 }

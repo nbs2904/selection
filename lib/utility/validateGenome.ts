@@ -11,9 +11,8 @@ const MAX_NUMBER_GENOME_SIZE = +(process.env.MAX_NUMBER_GENOME_SIZE || 10) as nu
 const MAX_CONNECTIONS = +(process.env.MAX_CONNECTIONS || 4) as number;
 
 /**
- * Checks if genome is valid based on config file in root directory (.env)
- * @param genome {@link Genome} to validate
- * @returns boolean whether genome is valid 
+ * Checks if [Genome](../interfaces/genome.interface.ts) is valid based on [Config file](../interfaces/config.interface.ts).
+ * @param genome - [Genome](../interfaces/genome.interface.ts) to validate
  */
 export function validateGenome (genome : Genome) : boolean {
     // ? check MAX_NUMBER_INNER_NEURONS
