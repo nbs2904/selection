@@ -13,12 +13,6 @@ import * as ageSensors from "@sensors/age.sensor";
 /**
  * Sensors function as the input of a node's genome using the node's sensation.
  * @extends [Neuron](../classes/neuron.ts)
- * @property {string} id
- * @property {number} bias ranges between -BIAS_RANGE and BIAS_RANGE (env file)
- * @property {@link Sensation} bound to node
- * @property {string[]} senses - list of sensations sensor can access
- * @property {(input : number) => number} activationFunction
- * @property {@link Connection connections[]} - list of connections to other neurons
  */
 export class Sensor extends Neuron {
     /**
