@@ -17,7 +17,7 @@ import { upperLeft } from "./lib/levels/corner.level";
 // * logger
 const logger = require("@config/logs/log4js").server;
 
-import  express = require("express");
+import express = require("express");
 const app = express();
 const http = require("http");
 const server = http.createServer(app);
