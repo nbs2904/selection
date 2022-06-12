@@ -1,10 +1,10 @@
 /* eslint-disable no-prototype-builtins */
 
 // * actions
-import { actionNames } from "@actions/action";
+import actionNames from "@actions/names.json";
 
 // * sensots
-import { sensorNames } from "@sensors/sensor";
+import sensorNames from "@sensors/names.json";
 
 // * classes
 import { Potential } from "@classes/potential";

@@ -4,10 +4,10 @@ import { randomGenome } from "@utility/randomGenome";
 import { randomFloat, randomInteger } from "@utility/randomNumber";
 
 // * actions
-import { actionNames } from "@actions/action";
+import actionNames from "@actions/names.json";
 
 // * sensors
-import { sensorNames } from "@sensors/sensor";
+import sensorNames from "@sensors/names.json";
 
 // * classes
 import { Brain } from "@classes/brain";

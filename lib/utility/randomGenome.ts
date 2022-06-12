@@ -1,8 +1,8 @@
 // * actions
-import { actionNames } from "@actions/action";
+import actionNames from "@actions/names.json";
 
 // * sensors
-import { sensorNames } from "@sensors/sensor";
+import sensorNames from "@sensors/names.json";
 
 // * interfaces
 import { Genome } from "@interfaces/genome.interface";

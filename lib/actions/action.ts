@@ -61,6 +61,3 @@ export const actionList = {
     "MoveX": moveActions.moveX,
     "MoveY": moveActions.moveY,
 };
-
-// TODO move array to independent file
-export const actionNames = [ "MoveX", "MoveY", "MoveBwd", "MoveFwd", "MoveRnd" ];

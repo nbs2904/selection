@@ -17,7 +17,9 @@
         },
         "outDir": "./build",
         "sourceMap": true,
-        "alwaysStrict": true
+        "alwaysStrict": true,
+        "resolveJsonModule": true,
+        "esModuleInterop": true
     },
     "exclude": [ "node_modules" ]
 }

@@ -4,10 +4,8 @@ import { Config } from "@interfaces/config.interface";
 // * logger
 const logger = require("@config/logs/log4js").utils;
 
-
-// TODO import names from independent file
-const actionNames = [ "MoveX", "MoveY", "MoveBwd", "MoveFwd", "MoveRnd" ];
-const sensorNames = [ "XPos", "YPos", "Age" ];
+import actionNames from "@actions/names.json";
+import sensorNames from "@sensors/names.json";
 
 /**
  * Checks whether given [Config](../interfaces/config.interface.ts) is valid
