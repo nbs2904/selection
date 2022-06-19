@@ -13,14 +13,18 @@ export class Cell {
     /** @public If Cell is occupied, it stores the [Color](./color.ts) of the respective [Node](./node.ts) */
     public color : Color | undefined;
 
+    /** @public Id of node that is currently occupying the cell */
+    public nodeId : string | undefined;
+
     /**
      * @constructor
      * @param occupied - Whether or not the cell is currently occupied by a [Node](./node.ts)
      * @param color - If Cell is occupied it stores the [Color](./color.ts) of the respective [Node](./node.ts)
      */
-    public constructor (occupied? : boolean, color? : Color) {
+    public constructor (occupied? : boolean, color? : Color, nodeId? : string) {
         this.occupied = occupied || false;
         this.color = color || undefined;
+        this.nodeId = nodeId || undefined;
     }
 
     /**
@@ -29,9 +33,10 @@ export class Cell {
      * @param occupied - Whether this cell is occupied by a [Node](./node.ts)
      * @param color - [Color](./color.ts) of the [Node](./node.ts) that currently occupies this cell
      */
-    public update (occupied : boolean, color? : Color) {
+    public update (occupied : boolean, color? : Color, nodeId? : string) {
         this.occupied = occupied;
         this.color = color || undefined;
+        this.nodeId = nodeId || undefined;
     }
 
     /**
@@ -43,5 +48,6 @@ export class Cell {
     public reset () {
         this.occupied = false;
         this.color = undefined;
+        this.nodeId = undefined;
     }
 }

@@ -44,6 +44,9 @@ export class Node {
 
     /** @public function which is bound to the simulation and is called every step to update position */
     public updateNodePosition : (node : Node, newPosition : Position) => boolean;
+
+    /** @public function which is bound to the simulation and is called when kill action function is invoked */
+    public killNode : (x : number, y: number, lastDirection : Position) => boolean;
     
     /** 
      * @private List of sensations that the node is experiencing 
@@ -257,6 +260,15 @@ export class Node {
             // ? update lastDirection
             this.sensation.lastDirection = new Position(xDirection, yDirection);
         }
+    }
+
+    /**
+     * @public
+     * kills node if one is right in front of it
+     */
+    public async kill () {
+        console.log("kill");
+        this.killNode(this.sensation.x, this.sensation.y, this.sensation.lastDirection);
     }
 
     /**

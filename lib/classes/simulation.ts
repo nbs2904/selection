@@ -119,6 +119,30 @@ export class Simulation {
     }
 
     /**
+     * Kills [Node](./node.ts) in front of the [Node](./node.ts) that invoked the function.
+     * @param x - x coordinate of the node that plans on killing
+     * @param y - y coordinate of the node that plans on killing
+     * @param lastDirection - last direction of the node that plans on killing
+     * @returns whether or not a node in front of the node that plans on killing was killed
+     */
+
+    // TODO every time a cell is updated, nodeId should be updated as well
+    public killNode (x : number, y : number, lastDirection : Position) : boolean {
+        const nodeId = this.grid[x + lastDirection.x][y + lastDirection.y].nodeId;
+
+        if(nodeId === undefined) {
+            return false;
+        } else {
+            delete this.nodes[nodeId];
+            this.livingNodesCount--;
+
+            this.grid[x + lastDirection.x][y + lastDirection.y].reset();
+
+            return true;
+        }
+    }
+
+    /**
      * @public
      * spawns a new [Node](./node.ts) onto the grid
      * @param node - to be spawned, if parameter is not provided a new [Node](./node.ts) will be generated
@@ -139,6 +163,8 @@ export class Simulation {
                 throw new Error(`Cell at (${ node.x }, ${ node.y }) occupied.`);
             } else {
                 node.updateNodePosition = this.updateNodePosition.bind(this);
+                node.killNode = this.killNode.bind(this);
+
                 this.grid[node.x][node.y].update(true, node.getColor);
                 this.nodes[node.id] = node;
                 this.livingNodesCount++;
@@ -157,6 +183,7 @@ export class Simulation {
     
             const newNode = new Node(id, randomGenome(), position);
             newNode.updateNodePosition = this.updateNodePosition.bind(this);
+            newNode.killNode = this.killNode.bind(this);
                 
             this.grid[newNode.x][newNode.y].update(true, newNode.getColor);
                 

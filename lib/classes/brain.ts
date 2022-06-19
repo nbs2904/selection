@@ -32,7 +32,7 @@ export class Brain {
      * @constructor
      * @param genome - Genome of Node, used to generate a working Brain
      * @param sensation - Sensation which is bound to Node to get access to current states
-     * @param actionFunctions - Function of Node that shall be called upon firing determined Action Neuron
+     * @param actionFunctions - Function of Node that shall be called upon firing the determined Action Neuron.
      */
     constructor (genome : Genome, sensation : Sensation, actionFunctions : { [key : string] : () => void }) {
         this.innerNeuronsFireOrder = genome.fireOrder;
