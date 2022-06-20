@@ -89,7 +89,8 @@ export class Node {
             MoveY: this.moveY.bind(this),
             MoveFwd: this.moveFwd.bind(this),
             MoveBwd: this.moveBwd.bind(this),
-            MoveRnd: this.moveRnd.bind(this)
+            MoveRnd: this.moveRnd.bind(this),
+            Kill: this.kill.bind(this)
         });
     }
 
@@ -267,7 +268,7 @@ export class Node {
      * kills node if one is right in front of it
      */
     public async kill () {
-        console.log("kill");
+        logger.debug("Node is being killed.");
         this.killNode(this.sensation.x, this.sensation.y, this.sensation.lastDirection);
     }
 

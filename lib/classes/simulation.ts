@@ -113,7 +113,7 @@ export class Simulation {
         }
 
         this.grid[node.x][node.y].reset();
-        this.grid[newPosition.x][newPosition.y].update(true, node.getColor);
+        this.grid[newPosition.x][newPosition.y].update(true, node.getColor, node.id);
 
         return true;
     }
@@ -125,10 +125,11 @@ export class Simulation {
      * @param lastDirection - last direction of the node that plans on killing
      * @returns whether or not a node in front of the node that plans on killing was killed
      */
-
-    // TODO every time a cell is updated, nodeId should be updated as well
     public killNode (x : number, y : number, lastDirection : Position) : boolean {
-        const nodeId = this.grid[x + lastDirection.x][y + lastDirection.y].nodeId;
+        // TODO check if x + lastDirection.x is in bounds as well as y + lastDirection.y
+        const nodeId = this.grid[x + lastDirection.x][y + lastDirection.y].occupied ? this.grid[x + lastDirection.x][y + lastDirection.y].nodeId : undefined;
+
+        logger.debug(`Node is trying to kill node ${ nodeId }`);
 
         if(nodeId === undefined) {
             return false;
@@ -165,7 +166,7 @@ export class Simulation {
                 node.updateNodePosition = this.updateNodePosition.bind(this);
                 node.killNode = this.killNode.bind(this);
 
-                this.grid[node.x][node.y].update(true, node.getColor);
+                this.grid[node.x][node.y].update(true, node.getColor, node.id);
                 this.nodes[node.id] = node;
                 this.livingNodesCount++;
     
@@ -185,7 +186,7 @@ export class Simulation {
             newNode.updateNodePosition = this.updateNodePosition.bind(this);
             newNode.killNode = this.killNode.bind(this);
                 
-            this.grid[newNode.x][newNode.y].update(true, newNode.getColor);
+            this.grid[newNode.x][newNode.y].update(true, newNode.getColor, newNode.id);
                 
             this.nodes[newNode.id] = newNode;
             this.livingNodesCount++;

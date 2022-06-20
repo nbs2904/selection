@@ -3,6 +3,7 @@ import { Neuron } from "@classes/neuron";
 
 // * actions
 import * as moveActions from "@actions/move.action";
+import * as killActions from "@actions/kill.action";
 
 /**
  * Actions function as the output neurons of a node's genome
@@ -51,6 +52,8 @@ export class Action extends Neuron {
     }
 }
 
+
+// TODO update
 /**
  * map of action names to actions
  */
@@ -60,4 +63,5 @@ export const actionList = {
     "MoveBwd": moveActions.moveBwd,
     "MoveX": moveActions.moveX,
     "MoveY": moveActions.moveY,
+    "Kill": killActions.kill
 };

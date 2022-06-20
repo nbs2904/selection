@@ -3,5 +3,6 @@
     "MoveY",
     "MoveBwd", 
     "MoveFwd",
-    "MoveRnd"
+    "MoveRnd",
+    "Kill"
 ]
