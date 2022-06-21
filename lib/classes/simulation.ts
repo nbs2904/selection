@@ -126,8 +126,11 @@ export class Simulation {
      * @returns whether or not a node in front of the node that plans on killing was killed
      */
     public killNode (x : number, y : number, lastDirection : Position) : boolean {
-        // TODO check if x + lastDirection.x is in bounds as well as y + lastDirection.y
-        const nodeId = this.grid[x + lastDirection.x][y + lastDirection.y].occupied ? this.grid[x + lastDirection.x][y + lastDirection.y].nodeId : undefined;
+        let nodeId = undefined;
+
+        if (x + lastDirection.x >= 0 && x + lastDirection.x < GRID_SIZE && y + lastDirection.y >= 0 && y + lastDirection.y < GRID_SIZE) {
+            nodeId = this.grid[x + lastDirection.x][y + lastDirection.y].occupied ? this.grid[x + lastDirection.x][y + lastDirection.y].nodeId : undefined;
+        }
 
         logger.debug(`Node is trying to kill node ${ nodeId }`);
 
@@ -203,6 +206,7 @@ export class Simulation {
      */
     public step (socket : Socket) {
         logger.info(`Generation: ${ this.currentGeneration }, Step: ${ this.currentStep }, Nodes: ${ this.livingNodesCount }`);
+        if(this.livingNodesCount === 0) return;
         for (const [ , node ] of Object.entries(this.nodes)) {
             node.act();
         }
@@ -221,6 +225,7 @@ export class Simulation {
         for (let step = 0; step < STEPS_PER_GENERATION; step++) {
             this.step(socket);
             await sleep(sleepInterval);
+            if(this.livingNodesCount === 0) return;
         }
 
         this.currentGeneration++;

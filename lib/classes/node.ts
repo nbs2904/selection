@@ -63,6 +63,8 @@ export class Node {
     /** @private [Brain](./brain.ts) of the Node */
     private brain : Brain;
 
+    // TODO init lastDirection randomly at the beginning
+
     /**
      * @constructor
      * @param id - unique identifier for Node instance
@@ -266,10 +268,26 @@ export class Node {
     /**
      * @public
      * kills node if one is right in front of it
+     * if node has not moved yet and therefore has no set direction, a random direction is set.
      */
     public async kill () {
-        logger.debug("Node is being killed.");
-        this.killNode(this.sensation.x, this.sensation.y, this.sensation.lastDirection);
+        if (Math.abs(this.sensation.lastDirection.x) + Math.abs(this.sensation.lastDirection.y) > 0){
+            this.killNode(this.sensation.x, this.sensation.y, this.sensation.lastDirection);
+        } else {
+            let vectorIsNull = true;
+            let direction : Position;
+
+            // TODO remove when sensation.lastDirection is assigned upon init
+            while(vectorIsNull){
+                direction = new Position(randomInteger(1, -1), randomInteger(1, -1));
+
+                if (Math.abs(direction.x) + Math.abs(direction.y) > 0){
+                    vectorIsNull = false;
+                }
+            }
+
+            this.killNode(this.sensation.x, this.sensation.y, direction);
+        }
     }
 
     /**
