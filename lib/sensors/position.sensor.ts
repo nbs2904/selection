@@ -55,4 +55,10 @@ export function yPosSensor (bias : number, sensation : Sensation, connections : 
     return new Sensor(config.id, config.bias, config.sensation, config.senses, config.activationFunction, config.connections);
 }
 
+// TODO - add population count
+// TODO - add random sensor
+// TODO - add borderYDinstance sensor
+// TODO - add borderXDinstance sensor
+// TODO - add nearest border sensor
+
 

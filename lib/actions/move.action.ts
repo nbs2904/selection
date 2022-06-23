@@ -86,3 +86,15 @@ export function moveY (bias : number, actionFunction : (input : number) => Promi
 
     return new Action(config.id, config.bias, config.activationFunction, config.actionFunction);
 }
+
+// TODO - add moveL
+
+// TODO - add moveR
+
+// TODO - add moveN
+
+// TODO - add moveS
+
+// TODO - add moveE
+
+// TODO - add moveW
