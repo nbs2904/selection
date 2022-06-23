@@ -63,8 +63,6 @@ export class Node {
     /** @private [Brain](./brain.ts) of the Node */
     private brain : Brain;
 
-    // TODO init lastDirection randomly at the beginning
-
     /**
      * @constructor
      * @param id - unique identifier for Node instance
@@ -76,11 +74,20 @@ export class Node {
         this.id = id;
         this.color = color || new Color(randomInteger(255), randomInteger(255), randomInteger(255));
 
+        // ? init last direction randomly
+        const lastDirectionInit = new Position(randomInteger(1, -1), 0);
+
+        if (lastDirectionInit.x === 0) {
+            while(lastDirectionInit.y === 0) {
+                lastDirectionInit.y = randomInteger(1, -1);
+            }
+        }
+
         this.sensation = {
             age: 0,
             x: position !== undefined ? position.x : randomInteger(GRID_SIZE - 1),
             y: position !== undefined ? position.y : randomInteger(GRID_SIZE - 1),
-            lastDirection: new Position(0, 0)
+            lastDirection: lastDirectionInit
         };
 
         this.genome = genome || randomGenome();
@@ -265,29 +272,20 @@ export class Node {
         }
     }
 
+    // TODO - add moveL
+    // TODO - add moveR
+    // TODO - add moveN
+    // TODO - add moveS
+    // TODO - add moveE
+    // TODO - add moveW
+
     /**
      * @public
      * kills node if one is right in front of it
      * if node has not moved yet and therefore has no set direction, a random direction is set.
      */
-    public async kill () {
-        if (Math.abs(this.sensation.lastDirection.x) + Math.abs(this.sensation.lastDirection.y) > 0){
-            this.killNode(this.sensation.x, this.sensation.y, this.sensation.lastDirection);
-        } else {
-            let vectorIsNull = true;
-            let direction : Position;
-
-            // TODO remove when sensation.lastDirection is assigned upon init
-            while(vectorIsNull){
-                direction = new Position(randomInteger(1, -1), randomInteger(1, -1));
-
-                if (Math.abs(direction.x) + Math.abs(direction.y) > 0){
-                    vectorIsNull = false;
-                }
-            }
-
-            this.killNode(this.sensation.x, this.sensation.y, direction);
-        }
+    public async kill (){
+        this.killNode(this.sensation.x, this.sensation.y, this.sensation.lastDirection);
     }
 
     /**
