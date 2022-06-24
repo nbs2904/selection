@@ -58,10 +58,16 @@ export class Action extends Neuron {
  * map of action names to actions
  */
 export const actionList = {
-    "MoveRnd": moveActions.moveRnd,
-    "MoveFwd": moveActions.moveFwd,
-    "MoveBwd": moveActions.moveBwd,
     "MoveX": moveActions.moveX,
     "MoveY": moveActions.moveY,
+    "MoveFwd": moveActions.moveFwd,
+    "MoveBwd": moveActions.moveBwd,
+    "MoveL": moveActions.moveL,
+    "MoveR": moveActions.moveR,
+    "MoveN": moveActions.moveN,
+    "MoveS": moveActions.moveS,
+    "MoveE": moveActions.moveE,
+    "MoveW": moveActions.moveW,
+    "MoveRnd": moveActions.moveRnd,
     "Kill": killActions.kill
 };

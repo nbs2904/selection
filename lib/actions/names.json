@@ -1,8 +1,14 @@
 [
     "MoveX",
     "MoveY",
-    "MoveBwd", 
     "MoveFwd",
+    "MoveBwd", 
+    "MoveL",
+    "MoveR",
+    "MoveN",
+    "MoveS",
+    "MoveE",
+    "MoveW",
     "MoveRnd",
     "Kill"
 ]

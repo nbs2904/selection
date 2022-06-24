@@ -98,6 +98,12 @@ export class Node {
             MoveY: this.moveY.bind(this),
             MoveFwd: this.moveFwd.bind(this),
             MoveBwd: this.moveBwd.bind(this),
+            MoveL: this.moveL.bind(this),
+            MoveR: this.moveR.bind(this),
+            MoveN: this.moveN.bind(this),
+            MoveS: this.moveS.bind(this),
+            MoveE: this.moveE.bind(this),
+            MoveW: this.moveW.bind(this),
             MoveRnd: this.moveRnd.bind(this),
             Kill: this.kill.bind(this)
         });
@@ -272,12 +278,85 @@ export class Node {
         }
     }
 
-    // TODO - add moveL
-    // TODO - add moveR
-    // TODO - add moveN
-    // TODO - add moveS
-    // TODO - add moveE
-    // TODO - add moveW
+    /**
+     * @public
+     * moves node left relative to last direction
+     */
+    public async moveL () {
+        if (this.sensation.lastDirection.x === 0) {
+            if (this.sensation.lastDirection.y === 1) {
+                this.moveX(-1);
+            } else if (this.sensation.lastDirection.y === -1) {
+                this.moveX(1);
+            } else {
+                throw new Error(`lastDirection must only point in one direction: { x: ${ this.sensation.lastDirection.x }, y: ${ this.sensation.lastDirection.y } }`);
+            }
+        } else if (this.sensation.lastDirection.y === 0) {
+            if (this.sensation.lastDirection.x === 1) {
+                this.moveY(1);
+            } else if (this.sensation.lastDirection.x === -1) {
+                this.moveY(-1);
+            } else {
+                throw new Error(`lastDirection must only point in one direction: { x: ${ this.sensation.lastDirection.x }, y: ${ this.sensation.lastDirection.y } }`);
+            }
+        }
+    }
+
+    /**
+     * @public
+     * moves node right relative to last direction
+     */
+    public async moveR () {
+        if (this.sensation.lastDirection.x === 0) {
+            if (this.sensation.lastDirection.y === 1) {
+                this.moveX(1);
+            } else if (this.sensation.lastDirection.y === -1) {
+                this.moveX(-1);
+            } else {
+                throw new Error(`lastDirection must only point in one direction: { x: ${ this.sensation.lastDirection.x }, y: ${ this.sensation.lastDirection.y } }`);
+            }
+        } else if (this.sensation.lastDirection.y === 0) {
+            if (this.sensation.lastDirection.x === 1) {
+                this.moveY(-1);
+            } else if (this.sensation.lastDirection.x === -1) {
+                this.moveY(1);
+            } else {
+                throw new Error(`lastDirection must only point in one direction: { x: ${ this.sensation.lastDirection.x }, y: ${ this.sensation.lastDirection.y } }`);
+            }
+        }
+    }
+
+    /**
+     * @public
+     * moves node north
+     */
+    public async moveN () {
+        this.moveY(1);
+    }
+
+    /**
+     * @public
+     * moves node south
+     */
+    public async moveS () {
+        this.moveY(-1);
+    }
+
+    /**
+     * @public
+     * moves node east
+     */
+    public async moveE () {
+        this.moveX(1);
+    }
+
+    /**
+     * @public
+     * moves node west
+     */
+    public async moveW () {
+        this.moveX(-1);
+    }
 
     /**
      * @public

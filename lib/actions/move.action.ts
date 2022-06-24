@@ -87,14 +87,103 @@ export function moveY (bias : number, actionFunction : (input : number) => Promi
     return new Action(config.id, config.bias, config.activationFunction, config.actionFunction);
 }
 
-// TODO - add moveL
+/**
+ * moveL Action Blue Print
+ * @param bias - bias of the action is set upon creation
+ * @param actionFunction - function bound to Node, in order to change state when action fires
+ */
+export function moveL (bias : number, actionFunction : (input : number) => Promise<void>) {
+    const config : ActionConfig = {
+        id: "MoveL",
+        bias: bias,
+        activationFunction: tanh,
+        actionFunction: actionFunction
+    };
 
-// TODO - add moveR
+    return new Action(config.id, config.bias, config.activationFunction, config.actionFunction);
+}
 
-// TODO - add moveN
 
-// TODO - add moveS
+/**
+ * moveR Action Blue Print
+ * @param bias - bias of the action is set upon creation
+ * @param actionFunction - function bound to Node, in order to change state when action fires
+ */
+export function moveR (bias : number, actionFunction : (input : number) => Promise<void>) {
+    const config : ActionConfig = {
+        id: "MoveR",
+        bias: bias,
+        activationFunction: tanh,
+        actionFunction: actionFunction
+    };
 
-// TODO - add moveE
+    return new Action(config.id, config.bias, config.activationFunction, config.actionFunction);
+}
 
-// TODO - add moveW
+
+/**
+ * moveN Action Blue Print
+ * @param bias - bias of the action is set upon creation
+ * @param actionFunction - function bound to Node, in order to change state when action fires
+ */
+export function moveN (bias : number, actionFunction : (input : number) => Promise<void>) {
+    const config : ActionConfig = {
+        id: "MoveN",
+        bias: bias,
+        activationFunction: tanh,
+        actionFunction: actionFunction
+    };
+
+    return new Action(config.id, config.bias, config.activationFunction, config.actionFunction);
+}
+
+
+/**
+ * moveS Action Blue Print
+ * @param bias - bias of the action is set upon creation
+ * @param actionFunction - function bound to Node, in order to change state when action fires
+ */
+export function moveS (bias : number, actionFunction : (input : number) => Promise<void>) {
+    const config : ActionConfig = {
+        id: "MoveS",
+        bias: bias,
+        activationFunction: tanh,
+        actionFunction: actionFunction
+    };
+
+    return new Action(config.id, config.bias, config.activationFunction, config.actionFunction);
+}
+
+
+/**
+ * moveE Action Blue Print
+ * @param bias - bias of the action is set upon creation
+ * @param actionFunction - function bound to Node, in order to change state when action fires
+ */
+export function moveE (bias : number, actionFunction : (input : number) => Promise<void>) {
+    const config : ActionConfig = {
+        id: "MoveE",
+        bias: bias,
+        activationFunction: tanh,
+        actionFunction: actionFunction
+    };
+
+    return new Action(config.id, config.bias, config.activationFunction, config.actionFunction);
+}
+
+
+/**
+ * moveW Action Blue Print
+ * @param bias - bias of the action is set upon creation
+ * @param actionFunction - function bound to Node, in order to change state when action fires
+ */
+export function moveW (bias : number, actionFunction : (input : number) => Promise<void>) {
+    const config : ActionConfig = {
+        id: "MoveW",
+        bias: bias,
+        activationFunction: tanh,
+        actionFunction: actionFunction
+    };
+
+    return new Action(config.id, config.bias, config.activationFunction, config.actionFunction);
+}
