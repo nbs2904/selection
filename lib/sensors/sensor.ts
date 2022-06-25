@@ -8,6 +8,7 @@ import { Sensation } from "@interfaces/sensation.interface";
 // * sensors
 import * as positionSensors from "@sensors/position.sensor";
 import * as ageSensors from "@sensors/age.sensor";
+import * as functionSensors from "@sensors/function.sensor";
 
 
 /**
@@ -65,7 +66,10 @@ export class Sensor extends Neuron {
      */
     public fire () {
         this.input = this.senses
-            .map(sense => this.sensation[sense])
+            .map(sense => {
+                if (typeof this.sensation[sense] === "function") return this.sensation[sense]();
+                return this.sensation[sense];
+            })
             .reduce((sum, current) => sum + current);
         
         // ? send output to every connected neuron, using the activationFunction, bias, and the respective weight.
@@ -75,11 +79,13 @@ export class Sensor extends Neuron {
     }
 }
 
+// TODO keep up to dates
 /**
  * map of sensor names to sensors
  */
 export const sensorList = {
     "XPos": positionSensors.xPosSensor,
     "YPos": positionSensors.yPosSensor,
-    "Age": ageSensors.ageSensor
+    "Age": ageSensors.ageSensor,
+    "Random": functionSensors.randomSensor
 };

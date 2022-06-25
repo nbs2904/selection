@@ -9,5 +9,7 @@ export interface Sensation {
     /** age of node */
     age? : number;
     /** last direction node moved (class Position used as a vector)*/
-    lastDirection? : Position
+    lastDirection? : Position,
+    /** random input sensor */
+    random?: () => number;
 }

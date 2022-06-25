@@ -87,7 +87,8 @@ export class Node {
             age: 0,
             x: position !== undefined ? position.x : randomInteger(GRID_SIZE - 1),
             y: position !== undefined ? position.y : randomInteger(GRID_SIZE - 1),
-            lastDirection: lastDirectionInit
+            lastDirection: lastDirectionInit,
+            random: () => randomFloat(1, 0)
         };
 
         this.genome = genome || randomGenome();
