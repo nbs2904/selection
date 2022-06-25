@@ -18,3 +18,5 @@ export const westHalf : Level = [
 export const eastHalf : Level = [
     [ GRID_SIZE / 2, 0, GRID_SIZE, GRID_SIZE ] 
 ];
+
+// TODO add more levels

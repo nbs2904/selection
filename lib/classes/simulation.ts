@@ -132,8 +132,6 @@ export class Simulation {
             nodeId = this.grid[x + lastDirection.x][y + lastDirection.y].occupied ? this.grid[x + lastDirection.x][y + lastDirection.y].nodeId : undefined;
         }
 
-        logger.debug(`Node is trying to kill node ${ nodeId }`);
-
         if(nodeId === undefined) {
             return false;
         } else {
