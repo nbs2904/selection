@@ -398,8 +398,6 @@ export class Node {
      * The [MUTATE_PROBABILITY](../../config/env/.env) determines how likley a mutation will occur during every step.
      */
     public copyGenome () : { genome : Genome, hasMutated : boolean } {
-        // TODO add another connection by chance
-
         let genomeCopy : Genome = {
             sensors: {},
             innerNeurons: {},
