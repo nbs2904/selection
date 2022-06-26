@@ -6,13 +6,14 @@ const config : Config = require("dotenv").config({path: __dirname + "/config/env
 if(!validateConfig(config)) process.exit(1);
 const NODE_ENV = process.env.NODE_ENV;
 const PORT = +(process.env.PORT || 3000) as number;
+const LEVEL = process.env.LEVEL || "westHalf";
 
 // * classes
 import { Simulation } from "@classes/simulation";
 import { Config } from "@interfaces/config.interface";
 
 // * levels
-import { upperLeft } from "./lib/levels/corner.level";
+import levels from "@levels/level";
 
 // * logger
 const logger = require("@config/logs/log4js").server;
@@ -36,13 +37,11 @@ app.get("/", function (req : express.req, res : express.res) {
 io.on("connection", async (socket : typeof Socket) => {
     logger.info(`Socket "${ socket.id }" connected`);
 
-    socket.emit("setConfig", {config, level: upperLeft});    
+    socket.emit("setConfig", {config, level: levels[LEVEL]});    
 
-
-    const simulation = new Simulation(upperLeft);
+    const simulation = new Simulation(levels[LEVEL]);
     await simulation.run(socket);
-    
-    
+        
     socket.on("disconnect", () => {
         logger.info(`Socket "${ socket.id }" disconnected`);
         process.exit(0);
