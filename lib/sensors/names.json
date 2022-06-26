@@ -2,5 +2,8 @@
     "XPos", 
     "YPos", 
     "Age",
-    "Random"
+    "Random",
+    "Population",
+    "BorderXDistance",
+    "BorderYDistance"
 ]

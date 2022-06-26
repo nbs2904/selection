@@ -47,6 +47,9 @@ export class Node {
 
     /** @public function which is bound to the simulation and is called when kill action function is invoked */
     public killNode : (x : number, y: number, lastDirection : Position) => boolean;
+
+    /** @public function whic is bound to the simulation and is called when population sensor fires */
+    public population : () => number;
     
     /** 
      * @private List of sensations that the node is experiencing 
@@ -88,7 +91,10 @@ export class Node {
             x: position !== undefined ? position.x : randomInteger(GRID_SIZE - 1),
             y: position !== undefined ? position.y : randomInteger(GRID_SIZE - 1),
             lastDirection: lastDirectionInit,
-            random: () => randomFloat(1, 0)
+            random: () => randomFloat(1, 0),
+            population: () => this.population(),
+            borderXDistance: () => this.borderXDistance(),
+            borderYDistance: () => this.borderYDistance()
         };
 
         this.genome = genome || randomGenome();
@@ -154,6 +160,24 @@ export class Node {
      */
     public get getSensation () : Sensation {
         return this.sensation;
+    }
+
+    /**
+     * @public
+     * Returns distance to right border of grid
+     * @returns number
+     */
+    public borderYDistance () : number {
+        return GRID_SIZE - 1 - this.x;
+    }
+
+    /**
+     * @public
+     * Returns distance to top border of grid
+     * @returns number
+     */
+    public borderXDistance () : number {
+        return GRID_SIZE - 1 - this.y;
     }
 
     /**

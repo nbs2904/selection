@@ -87,5 +87,8 @@ export const sensorList = {
     "XPos": positionSensors.xPosSensor,
     "YPos": positionSensors.yPosSensor,
     "Age": ageSensors.ageSensor,
-    "Random": functionSensors.randomSensor
+    "Random": functionSensors.randomSensor,
+    "Population": functionSensors.populationSensor,
+    "BorderXDistance": functionSensors.borderXDistance,
+    "BorderYDistance": functionSensors.borderYDistance
 };

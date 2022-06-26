@@ -12,4 +12,10 @@ export interface Sensation {
     lastDirection? : Position,
     /** random input sensor */
     random?: () => number;
+    /** current living population in simulation */
+    population?: () => number,
+    /** distance to top border of the grid */
+    borderXDistance?: () => number,
+    /** distance to right border of the grid */
+    borderYDistance?: () => number,
 }

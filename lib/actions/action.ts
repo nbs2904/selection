@@ -53,7 +53,6 @@ export class Action extends Neuron {
 }
 
 
-// TODO update
 /**
  * map of action names to actions
  */
