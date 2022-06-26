@@ -79,7 +79,6 @@ export class Sensor extends Neuron {
     }
 }
 
-// TODO keep up to dates
 /**
  * map of sensor names to sensors
  */

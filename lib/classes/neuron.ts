@@ -2,7 +2,6 @@
 import { Connection } from "@interfaces/connection.interface";
 
 // * functions
-// TODO experiment with activationFunctions
 import { tanh } from "@functions/tanh";
 
 
