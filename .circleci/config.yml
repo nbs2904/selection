@@ -7,5 +7,5 @@ workflows:
   run_unit_test:
     jobs:
       - node/test:
-        - version: "latest"
-        - pkg-manager: npm
+        version: "latest"
+        pkg-manager: npm
