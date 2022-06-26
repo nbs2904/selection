@@ -6,7 +6,7 @@ const logger = require("@config/logs/log4js").utils;
 
 import actionNames from "@actions/names.json";
 import sensorNames from "@sensors/names.json";
-import levels from "@levels/level";
+import levels from "@levels/names.json";
 
 /**
  * Checks whether given [Config](../interfaces/config.interface.ts) is valid
@@ -50,7 +50,7 @@ export function validateConfig (config : Config) : boolean {
         if(+config.MAX_NUMBER_INNER_NEURONS > +config.MIN_NUMBER_GENOME_SIZE - 2) throw Error("MAX_NUMBER_INNER_NEURONS must be smaller than MIN_NUMBER_GENOME_SIZE by at least 2.");
         if(+config.MAX_NUMBER_INNER_NEURONS + sensorNames.length + actionNames.length < config.MIN_NUMBER_GENOME_SIZE) throw Error("MIN_NUMBER_GENOME_SIZE is too big to generate a valid genome.");
 
-        if(!(config.LEVEL in levels)) throw new Error(`LEVEL must be one of the following: [ ${ Object.keys(levels).join(", ") } ]\n"${ config.LEVEL }" was given.`);
+        if(!(levels.includes(config.LEVEL))) throw new Error(`LEVEL must be one of the following: [ ${ levels.join(", ") } ]\n"${ config.LEVEL }" was given.`);
 
         return true;
         
