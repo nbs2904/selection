@@ -4,8 +4,8 @@ orbs:
   node: circleci/node@4.7
 
 workflows:
-  run_unit_test:
+  run_unit_tests:
     jobs:
       - node/test:
-        version: "latest"
-        pkg-manager: npm
+          version: "16.10"
+          pkg-manager: npm
