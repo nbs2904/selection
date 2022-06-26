@@ -9,6 +9,5 @@ workflows:
       - node/test:
           version: "16.10"
           pkg-manager: npm
-
-store_test_results:
-  path: test-results
+    store_test_results:
+      path: test-results
