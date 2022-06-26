@@ -22,3 +22,10 @@ export const lowerLeft : Level = [
 export const lowerRight : Level = [
     [ GRID_SIZE / 2, GRID_SIZE / 2, GRID_SIZE, GRID_SIZE ]
 ];
+
+export const allCorners : Level = [
+    [ 0, 0, GRID_SIZE / 5, GRID_SIZE / 5 ],
+    [ GRID_SIZE - GRID_SIZE / 5, 0, GRID_SIZE, GRID_SIZE / 5 ],
+    [ 0, GRID_SIZE - GRID_SIZE / 5, GRID_SIZE / 5, GRID_SIZE ],
+    [ GRID_SIZE - GRID_SIZE / 5, GRID_SIZE - GRID_SIZE / 5, GRID_SIZE, GRID_SIZE ]
+];
