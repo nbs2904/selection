@@ -1,4 +1,6 @@
-# selection
+# Selection
+
+[![nbs2904](https://circleci.com/gh/nbs2904/selection.svg?style=svg)](https://github.com/nbs2904/selection)
 
 ## Preface
 The goal behind this code is to simulate natural selection. This repository is an attempt to recreate something similiar to David R. Miller's [biosim4](https://github.com/davidrmiller/biosim4) project, whose work was a great inspiration.
@@ -6,7 +8,7 @@ The goal behind this code is to simulate natural selection. This repository is a
 Please feel free to fork this project, play around with it and add changes. I would love to see your work. Should any questions arise, please contact me by opening an issue.
 
 ## Outline
-- [selection](#selection)
+- [Selection](#selection)
   - [Preface](#preface)
   - [Outline](#outline)
   - [Nodes](#nodes)
