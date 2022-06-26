@@ -6,6 +6,7 @@ const logger = require("@config/logs/log4js").utils;
 
 import actionNames from "@actions/names.json";
 import sensorNames from "@sensors/names.json";
+import levels from "@levels/level";
 
 /**
  * Checks whether given [Config](../interfaces/config.interface.ts) is valid
@@ -27,7 +28,7 @@ export function validateConfig (config : Config) : boolean {
         if (!("MAX_CONNECTIONS" in config)) throw new Error("MAX_CONNECTIONS seems to be missing in your configuration. Please refer to the .env file in your root directory.");
         if (!("CONNECTION_WEIGHT_RANGE" in config)) throw new Error("CONNECTION_WEIGHT_RANGE seems to be missing in your configuration. Please refer to the .env file in your root directory.");
         if (!("BIAS_RANGE" in config)) throw new Error("BIAS_RANGE seems to be missing in your configuration. Please refer to the .env file in your root directory.");
-        
+        if (!("LEVEL" in config)) throw new Error("LEVEL seems to be missing in your configuration. Please refer to the .env file in your root directory.");
     
         if (!Number(config.PORT)) throw new Error("PORT must be a number.");
         if (!Number(config.PXL_HEIGHT)) throw new Error("PXL_HEIGHT must be a number.");
@@ -48,6 +49,8 @@ export function validateConfig (config : Config) : boolean {
         if(+config.MIN_NUMBER_GENOME_SIZE > +config.MAX_NUMBER_GENOME_SIZE) throw new Error("MIN_NUMBER_GENOME_SIZE must be smaller than MAX_NUMBER_GENOME_SIZE.");
         if(+config.MAX_NUMBER_INNER_NEURONS > +config.MIN_NUMBER_GENOME_SIZE - 2) throw Error("MAX_NUMBER_INNER_NEURONS must be smaller than MIN_NUMBER_GENOME_SIZE by at least 2.");
         if(+config.MAX_NUMBER_INNER_NEURONS + sensorNames.length + actionNames.length < config.MIN_NUMBER_GENOME_SIZE) throw Error("MIN_NUMBER_GENOME_SIZE is too big to generate a valid genome.");
+
+        if(!(config.LEVEL in levels)) throw new Error(`LEVEL must be one of the following: [ ${ Object.keys(levels).join(", ") } ]\n"${ config.LEVEL }" was given.`);
 
         return true;
         

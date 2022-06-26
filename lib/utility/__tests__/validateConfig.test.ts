@@ -48,6 +48,9 @@ describe("Utility - validateConfig", () => {
         expect(validateConfig(config as Config)).toBe(false);
 
         config["BIAS_RANGE"] = 1;
+        expect(validateConfig(config as Config)).toBe(false);
+
+        config["LEVEL"] = "southHalf";
         expect(validateConfig(config as Config)).toBe(true);
 
     });
@@ -67,7 +70,8 @@ describe("Utility - validateConfig", () => {
             MAX_NUMBER_GENOME_SIZE: "NAN",
             MAX_CONNECTIONS: "NAN",
             CONNECTION_WEIGHT_RANGE: "NAN",
-            BIAS_RANGE: "NAN"
+            BIAS_RANGE: "NAN",
+            LEVEL: "northHalf"
         };
 
         expect(validateConfig(config)).toBe(false);
@@ -130,7 +134,8 @@ describe("Utility - validateConfig", () => {
             MAX_NUMBER_GENOME_SIZE: 10,
             MAX_CONNECTIONS: 10,
             CONNECTION_WEIGHT_RANGE: 10,
-            BIAS_RANGE: 10
+            BIAS_RANGE: 10,
+            LEVEL: "northHalf"
         };
 
         expect(validateConfig(config)).toBe(true);
@@ -148,6 +153,9 @@ describe("Utility - validateConfig", () => {
         config.MAX_NUMBER_INNER_NEURONS = 8;
         config.MAX_NUMBER_GENOME_SIZE = 110;
         config.MIN_NUMBER_GENOME_SIZE =  100;
-        expect(validateConfig(config)).toBe(false);        
+        expect(validateConfig(config)).toBe(false);  
+        
+        config.LEVEL = "";
+        expect(validateConfig(config)).toBe(false);
     });
 });

@@ -1,5 +1,3 @@
-// TODO keep up to date
-
 export interface Config {
     /** The Port the server listens to */
     PORT: string | number,
@@ -28,5 +26,7 @@ export interface Config {
     /** Connection weight range: from -([CONNECTION_WEIGHT_RANGE](../../config/env/.env)/2) to ([CONNECTION_WEIGHT_RANGE](../../config/env/.env)/2) */
     CONNECTION_WEIGHT_RANGE: string | number,
     /** Neuron bias range: from -([BIAS_RANGE](../../config/env/.env)/2) to ([BIAS_RANGE](../../config/env/.env)/2) */
-    BIAS_RANGE: string | number
+    BIAS_RANGE: string | number,
+    /** Level the simulation should used. (See [level.ts](../levels/level.ts) to have a look at all levels) */
+    LEVEL: string
 }
