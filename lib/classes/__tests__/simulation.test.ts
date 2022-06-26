@@ -177,10 +177,10 @@ describe("Classes - Simulation", () => {
 
         await simulation.run(mockSocket);
 
-        expect(resetSpy).toHaveBeenCalledTimes(1);
+        expect(resetSpy).toHaveBeenCalledTimes(2);
         expect(updateSpy).toHaveBeenCalledTimes(2);
         expect(reproduceSpy).toHaveBeenCalledTimes(1);
-        expect(nodeInsideBoundariesSpy).toHaveBeenCalledTimes(1);
+        expect(nodeInsideBoundariesSpy).toHaveBeenCalledTimes(2);
         expect(spawnNodeSpy).toHaveBeenCalledTimes(2);
         expect(generationSpy).toHaveBeenCalledTimes(2);
         expect(storeGenomesSpy).toHaveBeenCalledTimes(1);

@@ -119,6 +119,15 @@ export class Simulation {
     }
 
     /**
+     * @public
+     * Getter function for current living population of simulation
+     * @returns number of currently living Nodes
+     */
+    public getPopulation () : number {
+        return this.livingNodesCount;
+    }
+
+    /**
      * Kills [Node](./node.ts) in front of the [Node](./node.ts) that invoked the function.
      * @param x - x coordinate of the node that plans on killing
      * @param y - y coordinate of the node that plans on killing
@@ -166,6 +175,7 @@ export class Simulation {
             } else {
                 node.updateNodePosition = this.updateNodePosition.bind(this);
                 node.killNode = this.killNode.bind(this);
+                node.population = this.getPopulation.bind(this);
 
                 this.grid[node.x][node.y].update(true, node.getColor, node.id);
                 this.nodes[node.id] = node;
@@ -186,6 +196,7 @@ export class Simulation {
             const newNode = new Node(id, randomGenome(), position);
             newNode.updateNodePosition = this.updateNodePosition.bind(this);
             newNode.killNode = this.killNode.bind(this);
+            newNode.population = this.getPopulation.bind(this);
                 
             this.grid[newNode.x][newNode.y].update(true, newNode.getColor, newNode.id);
                 
@@ -245,24 +256,35 @@ export class Simulation {
             }
         }
 
-        // TODO determine how many offsprings can spawn
         for (let generation = 0; generation < MAX_GENERATION; generation++) {
             const offsprings : Node[] = [];
             await this.generation(socket);
 
-            for (const [ ,node ] of Object.entries(this.nodes)) {
-                this.grid[node.x][node.y].reset();
+            while (offsprings.length < POPULATION) {
+                for (const [ ,node ] of Object.entries(this.nodes)) {
+                    this.grid[node.x][node.y].reset();
                 
-                if(this.nodeInsideBoundaries(node)) {
-                    const offspring = node.reproduce(this.cellOccupied.bind(this));
-                    offsprings.push(offspring);
-                    // ? block cell before adding all offsprings at once
-                    this.grid[offspring.x][offspring.y].update(true);
+                    if(this.nodeInsideBoundaries(node)) {
+                        const offspring = node.reproduce(this.cellOccupied.bind(this));
+                        offsprings.push(offspring);
+                        // ? block cell before adding all offsprings at once
+                        this.grid[offspring.x][offspring.y].update(true);
+                    } else {
+                        delete this.nodes[node.id];
+                        this.livingNodesCount--;
+                    }
+                    
+                    if (POPULATION === offsprings.length) {
+                        break;
+                    }
                 }
 
-                delete this.nodes[node.id];
-                this.livingNodesCount--;
+                // ? if no node survived, break out of loop
+                if (Object.entries(this.nodes).length === 0) {
+                    break;
+                }
             }
+
 
             if(offsprings.length === 0) {
                 logger.warn("No survivors");
@@ -270,6 +292,9 @@ export class Simulation {
 
                 break;
             }
+            
+            this.nodes = {};
+            this.livingNodesCount = 0;
 
             for (const offspring of offsprings) {
                 try {
