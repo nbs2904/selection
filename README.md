@@ -3,6 +3,8 @@
 ## Preface
 The goal behind this code is to simulate natural selection. This repository is an attempt to recreate something similiar to David R. Miller's [biosim4](https://github.com/davidrmiller/biosim4) project, whose work was a great inspiration.
 
+Please feel free to fork this project, play around with it and add changes. I would love to see your work. Should any questions arise, please contact me by opening an issue.
+
 ## Outline
 - [selection](#selection)
   - [Preface](#preface)
@@ -15,6 +17,7 @@ The goal behind this code is to simulate natural selection. This repository is a
   - [Config](#config)
   - [Build Process](#build-process)
   - [Execution](#execution)
+  - [Graphs](#graphs)
 
 
 
@@ -78,3 +81,9 @@ To run the programm in development mode, run the following command:
 npm run dev
 ```
 This will use the typescript files, therefore no transpilation is necessary.
+
+## Graphs
+After every successful simulation, every genome of the surviving nodes will be stored in the [simulations](lib/simulations/) folder.
+Executing the [main.py](lib/python/main.py) script will generate a graph of the simulation and store the images in the [genomes/images](lib/genomes/images/) folder.
+
+Before execution, the dependencies in the [requirements.txt](lib/python/requirements.txt) should be installed and the path to the respective simulation directory in the [main.py](lib/python/main.py) file should be set.
