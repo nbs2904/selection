@@ -2,6 +2,7 @@ const gulp = require("gulp");
 const run = require("gulp-run-command").default;
 const ts = require("gulp-typescript");
 const eslint = require("gulp-eslint");
+const uglify = require("gulp-uglify");
 
 gulp.task("lint", () => {
     return gulp.src([ "**/*.js", "**/*.ts", "!**/node_modules/**", "!**/p5/**" ])
@@ -26,22 +27,20 @@ gulp.task("compile", () => {
 gulp.task("resolve-alias", run("npx tscpaths -p tsconfig.json -s . -o ./build"));
 
 gulp.task("copy-config", () => {
-    return gulp.src([ "index.html", "config*/env/.env", "config*/nodemon/nodemon.json", "config*/logs/log4js.js", "public*/**/*" ])
+    return gulp.src([ "index.html", "config*/env/.env", "config*/logs/log4js.js", "public*/**/*", "lib*/actions/names.json", "lib*/sensors/names.json", "lib*/levels/names.json" ])
         .pipe(gulp.dest("build"));
 });
 
-gulp.task("lint-build", () => {
-    return gulp.src([ "build/**/*.js", "!**/p5/**" ])
-        .pipe(eslint({ configFile: "./.eslintrc.json", fix: true }))
-        .pipe(eslint.format())
-        .pipe(gulp.dest(file => file.base))
-        .pipe(eslint.failAfterError());
+gulp.task("uglify", () => {
+    return gulp.src([ "build/**/*.js" ])
+        .pipe(uglify())
+        .pipe(gulp.dest("build"));
 });
 
 gulp.task("start", run("npm run start", {
     env: { NODE_ENV: "prod" }
 }));
 
-gulp.task("build", gulp.series("compile", "resolve-alias", "copy-config", "lint-build"));
+gulp.task("build", gulp.series("compile", "resolve-alias", "copy-config", "uglify"));
 
 gulp.task("default", gulp.series("lint", "test", "build", "start"));
