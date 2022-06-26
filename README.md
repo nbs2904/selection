@@ -59,6 +59,8 @@ Possible Actions are:
 ## Config
 The configuration of the simulation is stored in an [ENV-File](config/env/.env). Parameters in this file can be changed to play around with the simulation's behaviour. Before a simulation is run, the ENV-File is checked for any missing parametres. Should anything be misconfigured, the programm will exit and an error message will be displayed.
 
+When you plan on using the production build, please make changes directly to the respective [ENV-File](build/config/env/.env). Otherwise your changes will not have any affect.
+
 In order to test the source code, another [ENV-File](config/env/.env.test) will be used. Changing this file might lead to failing tests.
 
 ## Build Process
