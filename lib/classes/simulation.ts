@@ -278,6 +278,11 @@ export class Simulation {
                         break;
                     }
                 }
+                
+                // ? if last generation has been reached, no need to spawn offsprings
+                if (generation + 1 === MAX_GENERATION) {
+                    break;
+                }
 
                 // ? if no node survived, break out of loop
                 if (Object.entries(this.nodes).length === 0) {
