@@ -9,5 +9,4 @@ genomes
 simulations
 
 # files
-.env
 *.pyc
