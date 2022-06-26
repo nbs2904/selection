@@ -5,8 +5,6 @@ env
 !config/env
 build
 node_modules
-genomes
-simulations
 
 # files
 *.pyc

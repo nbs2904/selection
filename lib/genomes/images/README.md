@@ -1,0 +1,1 @@
+This folder will contain the generated images of Genomes, after executing the [main.py](../../python/main.py) script.

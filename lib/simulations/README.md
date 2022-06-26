@@ -1,0 +1,1 @@
+After every successful simulation. Genomes will be stored in this folder under subdirectories.
