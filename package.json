@@ -9,6 +9,7 @@
     "test:coverage": "jest --config=./config/jest/jest.config.js --coverage",
     "dev": "set NODE_ENV=dev && nodemon --config config/nodemon/nodemon.json",
     "start": "set NODE_ENV=prod && cd ./build && node server.js",
+    "build": "gulp build",
     "lint": "eslint --fix . --ext .js,.ts",
     "gulp": "gulp"
   },
